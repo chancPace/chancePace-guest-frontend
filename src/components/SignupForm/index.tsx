@@ -1,6 +1,6 @@
 import { SignupFormStyled } from './styled';
-import { Button, Form, Input, Checkbox } from 'antd';
-import { ChangeEvent, Children, useEffect, useState } from 'react';
+import { Form, Input, Checkbox, Button } from 'antd';
+import { useEffect, useState } from 'react';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const SignupForm = () => {
@@ -145,7 +145,13 @@ const SignupForm = () => {
                         ))}
                     </div>
                 </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        회원가입
+                    </Button>
+                </Form.Item>
             </Form>
+            <p className="formLogo">ChancePace</p>
         </SignupFormStyled>
     );
 };
