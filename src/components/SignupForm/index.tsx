@@ -1,9 +1,6 @@
 import { SignupFormStyled } from './styled';
 import { Button, Form, Input, Checkbox } from 'antd';
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { ChangeEvent, Children, useEffect, useState } from 'react';
-import { valueOrDefault } from 'chart.js/helpers';
-import { small } from 'framer-motion/client';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const SignupForm = () => {
@@ -125,8 +122,8 @@ const SignupForm = () => {
                         value="all"
                         checked={isAllChecked}
                         onChange={onAllCheck}
-                        style={{marginBottom: '10px' }}
-                    >   
+                        style={{ marginBottom: '10px' }}
+                    >
                         아래 약관에 모두 동의합니다
                     </Checkbox>
                     <div>
