@@ -1,26 +1,27 @@
 import styled from 'styled-components';
 
 export const SignupFormStyled = styled.div`
-    height: 100vh;
+    height: calc(100vh -50px);
     display: flex;
     align-items: center;
     position: relative;
     .form {
-        border: 1px solid gray;
         border-radius: ${({ theme }) => theme.borderRadius};
-        width: 400px;
+        width: 450px;
         margin: auto;
         padding: 50px;
-        background-color: white;
-        .customInput {
-            width: 300px;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 100;
+        border: 1px solid lightgray;
+        .error {
+            color: ${({ theme }) => theme.color.warning};
         }
     }
     .formLogo {
         position: absolute;
-        bottom:80%;
         left: 50%;
-        transform: translate(-80%,-50%);
-        font-size: ${({ theme }) => theme.fontSizes.xl};
+        /* top: 100%; */
+        transform: translate(-50%);
+        font-size: ${({ theme }) => theme.fontSizes.big};
     }
 `;

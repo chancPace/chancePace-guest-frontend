@@ -7,7 +7,6 @@ export const HeaderStyled = styled.div`
     top: 0;
     left: 0;
     padding: ${({theme}) => theme.spacing.sm};
-    /* background-color: gray; */
     nav {
         height: 100%;
         display: flex;

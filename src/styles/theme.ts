@@ -1,8 +1,8 @@
 export const theme = {
     color: {
         text: '#000000',
-        textDark:'#333333',
-        warning:'#e74c3c',
+        textDark: '#333333',
+        warning: '#e74c3c',
     },
     fontSizes: {
         xs: '12px', // 매우 작은 폰트
@@ -10,10 +10,11 @@ export const theme = {
         md: '16px', // 기본 폰트 크기
         lg: '18px', // 큰 폰트
         xl: '24px', // 매우 큰 폰트
+        big: '120px',
         '2xl': '30px', // 제목 및 강조용
     },
     fonts: {
-        main:'GmarketSansMedium',
+        main: 'GmarketSansMedium',
     },
     spacing: {
         xs: '4px', // 매우 작은 마진/패딩
