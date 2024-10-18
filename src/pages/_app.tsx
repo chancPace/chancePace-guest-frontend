@@ -1,16 +1,22 @@
 import Header from '@/features/Header';
-// import '@/styles/globals.css';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import { store, persistor } from '../redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Header />
-            <Component {...pageProps} />
-        </ThemeProvider>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <GlobalStyle />
+                    <Header />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </PersistGate>
+        </Provider>
     );
 }
