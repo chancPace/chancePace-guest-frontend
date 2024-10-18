@@ -68,7 +68,7 @@ const SignupForm = () => {
             smallCheckBoxs.map((checkBox) =>
                 targetValue === checkBox.value
                     ? //해당 체크박스의 checked상태를 반전시킴
-                      { ...checkBox, checked: !checkBox.checked }
+                        { ...checkBox, checked: !checkBox.checked }
                     : checkBox
             )
         );
@@ -109,14 +109,14 @@ const SignupForm = () => {
                 role,
                 agreed,
             });
+            console.log('Response:', response);
+
             message.success(response.message);
         } catch (error: unknown) {
-            if (error instanceof AxiosError) {
-                message.error(error.response?.data?.message || '회원가입 실패');
-                console.error('회원가입 요청 중 오류:', error);
+            if (error instanceof AxiosError && error.response) {
+                message.error(error.response.data.message || '회원가입 실패');
             } else {
                 message.error('알 수 없는 오류가 발생했습니다.');
-                console.error('알 수 없는 오류:', error);
             }
         }
     };
@@ -149,7 +149,7 @@ const SignupForm = () => {
                 <InputField
                     name="confirm"
                     label="비밀번호 확인"
-                    // password필드의 값에 의존한다는 뜻 
+                    // password필드의 값에 의존한다는 뜻
                     dependencies={['password']}
                     rules={[
                         { required: true, message: '비밀번호를 입력해주세요' }, // 비밀번호 확인이 비어 있을 때의 메시지
@@ -158,7 +158,7 @@ const SignupForm = () => {
                         }: {
                             getFieldValue: FormInstance['getFieldValue'];
                         }) => ({
-                            // validator: 사용자 정의 검증 함수 
+                            // validator: 사용자 정의 검증 함수
                             validator(_: RuleObject, value: string) {
                                 if (
                                     !value ||
@@ -184,11 +184,7 @@ const SignupForm = () => {
                     {errorMessage && <p className="error">{errorMessage}</p>}
                 </Form.Item>
                 <Form.Item>
-                    <Buttons
-                        onClick={() => console.log('회원가입 클릭')}
-                        loading={false}
-                        text="회원가입"
-                    />
+                    <Buttons loading={false} text="회원가입" />
                 </Form.Item>
             </Form>
         </SignupFormStyled>
