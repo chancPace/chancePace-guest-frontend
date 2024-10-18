@@ -1,6 +1,7 @@
 import { SignupFormStyled } from './styled';
 import { Form, message, FormInstance } from 'antd';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import InputField from '../InputField';
 import CheckboxGroup from '../CheckboxGroup';
 import { postSignup } from '@/pages/api/api';
@@ -21,6 +22,7 @@ interface SignupValues {
     password: string;
 }
 const SignupForm = () => {
+    const router = useRouter(); // useRouter 훅 가져오기
     //체크박스의 정보를 담고 있는 상태 배열
     const [smallCheckBoxs, setSmallCheckBoxs] = useState<CheckBoxItem[]>([
         {
@@ -68,7 +70,7 @@ const SignupForm = () => {
             smallCheckBoxs.map((checkBox) =>
                 targetValue === checkBox.value
                     ? //해당 체크박스의 checked상태를 반전시킴
-                        { ...checkBox, checked: !checkBox.checked }
+                      { ...checkBox, checked: !checkBox.checked }
                     : checkBox
             )
         );
@@ -112,6 +114,7 @@ const SignupForm = () => {
             console.log('Response:', response);
 
             message.success(response.message);
+            router.push('/login'); // Next.js 라우팅에서 로그인 페이지로 이동
         } catch (error: unknown) {
             if (error instanceof AxiosError && error.response) {
                 message.error(error.response.data.message || '회원가입 실패');
@@ -143,6 +146,11 @@ const SignupForm = () => {
                     label="비밀번호"
                     rules={[
                         { required: true, message: '비밀번호를 입력해주세요' },
+                        {
+                            pattern:
+                                /(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{10,15}/,
+                            message: '영문자, 숫자, 특수문자를 포함시켜주세요',
+                        },
                     ]}
                     isPassword
                 />
