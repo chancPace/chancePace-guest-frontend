@@ -28,7 +28,6 @@ const LoginForm = () => {
             console.log(response, 'response');
             if (response.token) {
                 Cookies.set('token', response.token, { expires: 1 });
-
                 message.success('로그인 성공');
                 dispatch(
                     loginSuccess({

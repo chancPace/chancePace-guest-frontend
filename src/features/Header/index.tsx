@@ -2,15 +2,14 @@ import { HeaderStyled } from './styled';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const Header = () => {
-    const [isLoginStatus, setIsLoginStatus] = useState(false);
-    useEffect(() => {
-        const token = Cookies.get('token');
-        if (token) {
-            setIsLoginStatus(true);
-        }
-    }, []);
+    const dispatch = useDispatch();
+    const { isLoggedIn, userInfo } = useSelector(
+        (state: RootState) => state.user
+    );
 
     return (
         <HeaderStyled>
@@ -20,10 +19,15 @@ const Header = () => {
                 </Link>
 
                 <div className="userBar">
-                    {isLoginStatus ? (
-                        <Link href="/mypage" passHref>
-                            <span>마이페이지</span>
-                        </Link>
+                    {isLoggedIn ? (
+                        <>
+                            <Link href="/host">
+                                <span>호스트 등록</span>
+                            </Link>
+                            <Link href="/mypage" passHref>
+                                <span>마이페이지</span>
+                            </Link>
+                        </>
                     ) : (
                         <Link href="/login" passHref>
                             <span>로그인</span>

@@ -8,7 +8,6 @@ import { postSignup } from '@/pages/api/api';
 import Buttons from '../Buttons';
 import { RuleObject } from 'antd/es/form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { useRouter } from 'next/router';
 
 interface CheckBoxItem {
     value: string;
