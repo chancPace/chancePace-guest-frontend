@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SignupFormStyled = styled.div`
-    height: calc(100vh -50px);
+    height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -20,8 +20,8 @@ export const SignupFormStyled = styled.div`
     .formLogo {
         position: absolute;
         left: 50%;
-        /* top: 100%; */
-        transform: translate(-50%);
+        top: 90%;
+        transform: translate(-50%, -90%);
         font-size: ${({ theme }) => theme.fontSizes.big};
     }
 `;

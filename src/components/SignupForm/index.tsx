@@ -6,8 +6,8 @@ import CheckboxGroup from '../CheckboxGroup';
 import { postSignup } from '@/pages/api/api';
 import Buttons from '../Buttons';
 import { RuleObject } from 'antd/es/form';
-import { AxiosError } from 'axios';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { useRouter } from 'next/router';
 
 interface CheckBoxItem {
     value: string;
@@ -21,6 +21,7 @@ interface SignupValues {
     password: string;
 }
 const SignupForm = () => {
+    const router = useRouter();
     //체크박스의 정보를 담고 있는 상태 배열
     const [smallCheckBoxs, setSmallCheckBoxs] = useState<CheckBoxItem[]>([
         {
@@ -68,7 +69,7 @@ const SignupForm = () => {
             smallCheckBoxs.map((checkBox) =>
                 targetValue === checkBox.value
                     ? //해당 체크박스의 checked상태를 반전시킴
-                        { ...checkBox, checked: !checkBox.checked }
+                      { ...checkBox, checked: !checkBox.checked }
                     : checkBox
             )
         );
@@ -80,6 +81,7 @@ const SignupForm = () => {
         setIsAllChecked(smallCheckBoxs.every((x) => x.checked));
     }, [smallCheckBoxs]);
 
+    const [duplicateError, setDuplicateError] = useState('');
     //회원가입 처리 함수
     //values-> 폼 필드의 값들
     const handleSignup = async (values: SignupValues) => {
@@ -110,13 +112,14 @@ const SignupForm = () => {
                 agreed,
             });
             console.log('Response:', response);
+            router.push('/login');
 
             message.success(response.message);
-        } catch (error: unknown) {
-            if (error instanceof AxiosError && error.response) {
-                message.error(error.response.data.message || '회원가입 실패');
+        } catch (error: any) {
+            if (error.response && error.response.status === 400) {
+                setDuplicateError('이미 존재하는 아이디입니다.');
             } else {
-                message.error('알 수 없는 오류가 발생했습니다.');
+                message.error(error.response.data.message || '회원가입 실패');
             }
         }
     };
@@ -125,7 +128,16 @@ const SignupForm = () => {
         <SignupFormStyled>
             <p className="formLogo">ChancePace</p>
             {/* onFinish: 폼이 성공적으로 전송될때 */}
-            <Form name="signup" className="form" onFinish={handleSignup}>
+            <Form
+                name="signup"
+                className="form"
+                onFinish={handleSignup}
+                initialValues={{
+                    email: 'test1@daum.net', // 기본값으로 설정할 이메일
+                    password: 'password1234!', // 기본값으로 설정할 비밀번호
+                    confirm: 'password1234!',
+                }}
+            >
                 <InputField
                     name="email"
                     label="이메일"
@@ -135,6 +147,16 @@ const SignupForm = () => {
                         {
                             type: 'email',
                             message: '메일주소가 유효하지 않습니다',
+                        },
+                        {
+                            validator: async () => {
+                                if (duplicateError) {
+                                    return Promise.reject(
+                                        new Error(duplicateError)
+                                    );
+                                }
+                                return Promise.resolve();
+                            },
                         },
                     ]}
                 />
