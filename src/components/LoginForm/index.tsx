@@ -4,7 +4,7 @@ import { Form, message } from 'antd';
 import Buttons from '../Buttons';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { postLogin } from '@/pages/api/api';
+import { postLogin } from '@/pages/api/userApi';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -25,21 +25,21 @@ const LoginForm = () => {
         const { email, password } = values;
         try {
             const response = await postLogin({ email, password });
-            console.log(response, 'response');
+            // console.log(response, 'response');
             if (response.token) {
+                setEmailError(null);
+                setPasswordError(null);
                 Cookies.set('token', response.token, { expires: 1 });
                 message.success('로그인 성공');
                 dispatch(
                     loginSuccess({
-                        email: response.response.email,
-                        name: response.response.name,
-                        role: response.response.role,
+                        email: response.data.email,
+                        name: response.data.name,
+                        role: response.data.role,
                         token: response.token,
                     })
                 );
                 router.push('/');
-            } else {
-                message.error(response.message || '로그인 실패');
             }
         } catch (error: any) {
             if (error.response && error.response.status === 404) {

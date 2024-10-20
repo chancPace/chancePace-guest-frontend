@@ -1,7 +1,5 @@
 import { HeaderStyled } from './styled';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 

@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import Footer from '@/features/Footer';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <GlobalStyle />
                     <Header />
                     <Component {...pageProps} />
+                    <Footer />
                 </ThemeProvider>
             </PersistGate>
         </Provider>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import InputField from '../InputField';
 import CheckboxGroup from '../CheckboxGroup';
-import { postSignup } from '@/pages/api/api';
+import { postSignup } from '@/pages/api/userApi';
 import Buttons from '../Buttons';
 import { RuleObject } from 'antd/es/form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
