@@ -2,6 +2,7 @@ export const theme = {
     color: {
         text: '#000000',
         textDark: '#333333',
+        textlight: '#dee2e6',
         warning: '#e74c3c',
     },
     fontSizes: {
@@ -10,6 +11,8 @@ export const theme = {
         md: '16px', // 기본 폰트 크기
         lg: '18px', // 큰 폰트
         xl: '24px', // 매우 큰 폰트
+        xxl: '50px',
+        xxxl: '80px',
         big: '120px',
         '2xl': '30px', // 제목 및 강조용
     },
