@@ -1,11 +1,11 @@
 import { HeaderStyled } from './styled';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { FiUser } from 'react-icons/fi';
 
 const Header = () => {
-    const dispatch = useDispatch();
-    const { isLoggedIn, userInfo } = useSelector(
+    const { isLoggedIn } = useSelector(
         (state: RootState) => state.user
     );
 
@@ -20,11 +20,14 @@ const Header = () => {
                     {isLoggedIn ? (
                         <>
                             <Link href="/host">
-                                <span>호스트 등록</span>
+                                <p className='hostMenuBar'>호스트 센터</p>
                             </Link>
-                            <Link href="/mypage" passHref>
-                                <span>마이페이지</span>
-                            </Link>
+                            <p>
+                                <span>
+                                    <FiUser />
+                                </span>
+                                MyPage
+                            </p>
                         </>
                     ) : (
                         <Link href="/login" passHref>

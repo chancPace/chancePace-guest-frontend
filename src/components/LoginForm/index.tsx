@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { loginSuccess } from '@/redux/slices/userSlice';
+import { AxiosError } from 'axios'; // AxiosError 타입을 import
 
 interface loginvalues {
     email: string;
@@ -41,10 +42,15 @@ const LoginForm = () => {
                 );
                 router.push('/');
             }
-        } catch (error: any) {
-            if (error.response && error.response.status === 404) {
+        } catch (error) {
+            const axiosError = error as AxiosError; // error를 AxiosError로 캐스팅
+
+            if (axiosError.response && axiosError.response.status === 404) {
                 setEmailError('존재하지 않는 회원입니다.');
-            } else if (error.response && error.response.status === 401) {
+            } else if (
+                axiosError.response &&
+                axiosError.response.status === 401
+            ) {
                 setPasswordError('비밀번호가 틀렸습니다');
             } else {
                 message.error('로그인에 실패했습니다.');
@@ -105,6 +111,3 @@ const LoginForm = () => {
     );
 };
 export default LoginForm;
-function dispatch() {
-    throw new Error('Function not implemented.');
-}

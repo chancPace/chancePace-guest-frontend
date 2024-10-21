@@ -4,28 +4,29 @@ export const MainStyled = styled.div`
     width: 95%;
     margin: auto;
     margin-bottom: 100px;
-    .searchbarBg {
-        height: 200px;
+    margin-top: 50px;
+    .searchbar {
+        height: 100px;
         display: flex;
         align-items: center;
     }
     .trendingSpot {
-        background-color: #eb5b00;
         align-items: center;
         justify-content: space-between;
-        padding: 20px;
         position: relative;
+        background-color: white;
 
         .trendingSpotLeft {
             position: absolute;
-            top: 50%;
+            top: 1%;
             left: 5%;
-            transform: translate(-5%, -50%);
+            transform: translate(-5%, -1%);
             z-index: 100000;
+            color: white;
+            mix-blend-mode: difference;
             .trendingSpotTitle {
                 font-size: ${({ theme }) => theme.fontSizes.xxxl};
-                color: white;
-                /* color: ; */
+                border-bottom: 2px solid white;
             }
         }
         .trendingSpotRight {
@@ -33,15 +34,24 @@ export const MainStyled = styled.div`
             justify-content: flex-end;
             width: 100%;
             .slider {
-                width: 85%;
+                width: 90%;
             }
         }
     }
     .category {
         width: 100%;
-        justify-content: center;
-        display: flex;
         margin-top: 100px;
+        .categoryTitle {
+            text-align: center;
+            font-size: ${({ theme }) => theme.fontSizes.xxl};
+            background-color: gray;
+            color: white;
+        }
+        .categoryList {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
     }
     .placeSection {
         width: 100%;
@@ -51,7 +61,7 @@ export const MainStyled = styled.div`
             color: ${({ theme }) => theme.color.textDark};
         }
         .swiper-button-next {
-            right: 10px; 
+            right: 10px;
             top: 40%;
         }
         .swiper-button-prev {
@@ -60,16 +70,43 @@ export const MainStyled = styled.div`
         }
         .itemListTitle {
             font-size: ${({ theme }) => theme.fontSizes.xxl};
+            margin-bottom: 15px;
+            font-weight: bold;
         }
         .buttonBox {
+            margin-top: 20px;
             width: 100%;
             text-align: center;
         }
     }
 
     .itemList {
+        place-items: center;
+        width: 100%;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        justify-content: center;
+        gap: 10px;
+    }
+    @media screen and (max-width: 480px) {
+        .placeSection {
+            .itemListTitle {
+                font-size: ${({ theme }) => theme.fontSizes.lg};
+            }
+        }
+    }
+    @media screen and (min-width: 481px) and (max-width: 768px) {
+        .placeSection {
+            .itemListTitle {
+                font-size: ${({ theme }) => theme.fontSizes.xl};
+            }
+        }
+        .itemList {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+    }
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+    }
+    @media screen and (min-width: 1025px) {
     }
 `;

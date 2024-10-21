@@ -1,6 +1,5 @@
 import React from "react"
 import { CategoryStyled } from "./styled"
-import { CardGridProps } from "antd/es/card"
 interface CategoryProps {
     x:string;
 }

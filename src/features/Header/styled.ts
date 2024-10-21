@@ -6,9 +6,10 @@ export const HeaderStyled = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    font-size: ${({ theme }) => theme.fontSizes.md};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
     background-color: white;
     z-index: 1000000;
+
     nav {
         width: 95%;
         height: 100%;
@@ -21,8 +22,21 @@ export const HeaderStyled = styled.div`
             font-size: ${({ theme }) => theme.fontSizes.xl};
         }
         .userBar {
-            span {
+            display: flex;
+            align-items: center;
+            >p {
                 margin-left: 25px;
+                cursor: pointer;
+            }
+            .hostMenuBar {
+                padding: 10px;
+                background-color: gray;
+                color: white;
+                border-radius: 8px;
+            }
+            span {
+                margin-right: 5px;
+                cursor: pointer;
             }
         }
     }

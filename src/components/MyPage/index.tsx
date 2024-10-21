@@ -1,5 +1,5 @@
 import { MyPageStyled } from './styled';
-import { useDispatch, UseDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/userSlice';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';

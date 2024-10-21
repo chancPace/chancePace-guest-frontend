@@ -8,6 +8,8 @@ import { postSignup } from '@/pages/api/userApi';
 import Buttons from '../Buttons';
 import { RuleObject } from 'antd/es/form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { AxiosError } from 'axios'; // AxiosError 타입을 import
+
 
 interface CheckBoxItem {
     value: string;
@@ -115,8 +117,9 @@ const SignupForm = () => {
             router.push('/login');
 
             message.success(response.message);
-        } catch (error: any) {
-            if (error.response && error.response.status === 400) {
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status === 400) {
                 setDuplicateError('이미 존재하는 아이디입니다.');
             } else {
                 message.error('회원가입 실패');

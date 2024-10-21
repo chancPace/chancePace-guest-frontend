@@ -1,5 +1,4 @@
 import { ItemListStyled } from './styled';
-import { space } from '@/utill/datas';
 interface ItemListProps {
     x: {
         spaceName: string;

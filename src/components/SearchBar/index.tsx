@@ -4,12 +4,10 @@ import { useState } from 'react';
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [isSearched, setIsSearched] = useState(false); // 검색 상태 관리
 
     const onSearch = (value: string) => {
         console.log(value);
         setSearchTerm(''); // 검색 후 입력창 비우기
-        setIsSearched(true); // 검색 완료 상태 변경
     };
 
     return (

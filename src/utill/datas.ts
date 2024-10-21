@@ -1,4 +1,3 @@
-import { text } from 'stream/consumers';
 import s1 from '../assets/image/space1.jpg';
 import s2 from '../assets/image/space2.jpg';
 import s3 from '../assets/image/space3.jpg';
@@ -179,7 +178,7 @@ const space = [
     },
 ];
 
-const category = ['a','b','c','d','e','f','g','h','i','j','k']
+const category = ['category1','category2','category3','category4','category5','category6','category7','category8','category9','category10']
 
 
 export { hostMainImg, explanation, procedure, space, category };

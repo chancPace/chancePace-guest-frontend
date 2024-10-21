@@ -1,25 +1,23 @@
 import styled from 'styled-components';
 
 export const ItemListStyled = styled.div<{ isTrending?: boolean }>`
-    width: ${({ isTrending }) => (isTrending ? '320px' : '290px')};
-    height: ${({ isTrending }) => (isTrending ? '310px' : '280px')};
     background-color: ${({ isTrending }) =>
-        isTrending ? 'rgba(255,255,255,0.2)' : 'none'};
+        isTrending ? 'rgba(255,255,255,0.9)' : 'none'};
+    width: 95%;
+    height: 100%;
     border: ${({ isTrending }) =>
         isTrending ? 'none' : '1px solid lightgray'};
-    margin: 10px;
     border-radius: ${({ theme }) => theme.borderRadius};
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     cursor: pointer;
     .itemImg {
         margin: auto;
-        width: 95%;
+        width: 100%;
+        display: flex;
+        align-items: center;
         border-radius: ${({ theme }) => theme.borderRadius};
         .img {
             width: 100%;
-            border-radius: ${({ theme }) => theme.borderRadius};
+            border-radius: 8px 8px 0 0;
         }
     }
     .itemText {
