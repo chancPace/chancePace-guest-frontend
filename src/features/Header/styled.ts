@@ -8,7 +8,7 @@ export const HeaderStyled = styled.div`
     left: 0;
     font-size: ${({ theme }) => theme.fontSizes.md};
     background-color: white;
-    z-index: 1000;
+    z-index: 1000000;
     nav {
         width: 95%;
         height: 100%;

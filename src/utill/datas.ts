@@ -63,7 +63,7 @@ const space = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [], //공간사진
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
     },
     {
         spaceName: '아늑한 회의실',
@@ -79,7 +79,7 @@ const space = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [], //공간사진
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
     },
     {
         spaceName: '아늑한 회의실',
@@ -95,7 +95,71 @@ const space = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [], //공간사진
+        spaceImg:[s1_1,s1_2,s1_3], //공간사진
+    },
+    {
+        spaceName: '아늑한 회의실',
+        spaceLocation: '서울, 대한민국',
+        description: '회의에 필요한 모든 편의 시설을 갖춘 편안한 공간입니다.',
+        spacePrice: 100000,
+        discount: 10000,
+        amenities: ['WiFi, 화이트보드, 프로젝터'],
+        cleanTime: 30,
+        spaceStatus: 'AVAILABLE',
+        isOpen: true,
+        caution:['대여 시간보다 적게 사용 하더라도 대관비는 환불되지 않습니다.','- 기물 파손 및 청소 등의 사유로 보증금을 호스트에게 입금하여야 합니다.'], //주의사항
+        category: '파티룸', //카테고리
+        Minimum: 3, //최소인원
+        Maximum: 6, //최대인원
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
+    },
+    {
+        spaceName: '아늑한 회의실',
+        spaceLocation: '서울, 대한민국',
+        description: '회의에 필요한 모든 편의 시설을 갖춘 편안한 공간입니다.',
+        spacePrice: 100000,
+        discount: 10000,
+        amenities: ['WiFi, 화이트보드, 프로젝터'],
+        cleanTime: 30,
+        spaceStatus: 'AVAILABLE',
+        isOpen: true,
+        caution:['대여 시간보다 적게 사용 하더라도 대관비는 환불되지 않습니다.','- 기물 파손 및 청소 등의 사유로 보증금을 호스트에게 입금하여야 합니다.'], //주의사항
+        category: '파티룸', //카테고리
+        Minimum: 3, //최소인원
+        Maximum: 6, //최대인원
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
+    },
+    {
+        spaceName: '아늑한 회의실',
+        spaceLocation: '서울, 대한민국',
+        description: '회의에 필요한 모든 편의 시설을 갖춘 편안한 공간입니다.',
+        spacePrice: 100000,
+        discount: 10000,
+        amenities: ['WiFi, 화이트보드, 프로젝터'],
+        cleanTime: 30,
+        spaceStatus: 'AVAILABLE',
+        isOpen: true,
+        caution:['대여 시간보다 적게 사용 하더라도 대관비는 환불되지 않습니다.','- 기물 파손 및 청소 등의 사유로 보증금을 호스트에게 입금하여야 합니다.'], //주의사항
+        category: '파티룸', //카테고리
+        Minimum: 3, //최소인원
+        Maximum: 6, //최대인원
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
+    },
+    {
+        spaceName: '아늑한 회의실',
+        spaceLocation: '서울, 대한민국',
+        description: '회의에 필요한 모든 편의 시설을 갖춘 편안한 공간입니다.',
+        spacePrice: 100000,
+        discount: 10000,
+        amenities: ['WiFi, 화이트보드, 프로젝터'],
+        cleanTime: 30,
+        spaceStatus: 'AVAILABLE',
+        isOpen: true,
+        caution:['대여 시간보다 적게 사용 하더라도 대관비는 환불되지 않습니다.','- 기물 파손 및 청소 등의 사유로 보증금을 호스트에게 입금하여야 합니다.'], //주의사항
+        category: '파티룸', //카테고리
+        Minimum: 3, //최소인원
+        Maximum: 6, //최대인원
+        spaceImg: [s1_1,s1_2,s1_3], //공간사진
     },
     {
         spaceName: '아늑한 회의실',
@@ -115,5 +179,7 @@ const space = [
     },
 ];
 
+const category = ['a','b','c','d','e','f','g','h','i','j','k']
 
-export { hostMainImg, explanation, procedure, space };
+
+export { hostMainImg, explanation, procedure, space, category };
