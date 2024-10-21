@@ -1,20 +1,19 @@
 import { HostInfoStyled } from './styled';
 import { explanation } from '@/utill/datas';
-
-const HostInfo = () => {
+interface HostInfoProps {
+    x: {
+        img: { src: string };
+        title: string;
+        text: string;
+    };
+    i: number;
+}
+const HostInfo: React.FC<HostInfoProps> = ({ x, i }) => {
     return (
-        <HostInfoStyled>
-            <div className="info">
-                {explanation?.map((x, i) => {
-                    return (
-                        <div key={i}>
-                            <img src={x.img.src} alt={x.img.src}></img>
-                            <p className='hostTitle'>{x.title}</p>
-                            <p className='hostText'>{x.text}</p>
-                        </div>
-                    );
-                })}
-            </div>
+        <HostInfoStyled key={i} className="info">
+            <img className='hostInfoImg' src={x.img.src} alt={x.img.src} />
+            <p className="hostTitle">{x.title}</p>
+            <p className="hostText">{x.text}</p>
         </HostInfoStyled>
     );
 };

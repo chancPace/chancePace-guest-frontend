@@ -2,13 +2,18 @@ import { RootState } from '@/redux/store';
 import { MainStyled } from './styled';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import SearchBar from '@/components/SearchBar';
+import ItemList from '@/components/ItemList';
 
 const MainPage = () => {
     const user = useSelector((state: RootState) => state.user);
 
     return (
         <MainStyled>
-            <div>메인페이지입니다</div>
+            <div className='searchbarBg'>
+                <SearchBar />
+            </div>
+            <ItemList></ItemList>
         </MainStyled>
     );
 };
