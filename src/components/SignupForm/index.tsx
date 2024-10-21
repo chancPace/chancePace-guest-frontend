@@ -119,7 +119,7 @@ const SignupForm = () => {
             if (error.response && error.response.status === 400) {
                 setDuplicateError('이미 존재하는 아이디입니다.');
             } else {
-                message.error(error.response.data.message || '회원가입 실패');
+                message.error('회원가입 실패');
             }
         }
     };

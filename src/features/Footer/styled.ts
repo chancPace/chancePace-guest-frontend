@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const FooterStyled = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.sm};
     border-top: 1px solid black;
+    padding: 20px;
     .footer1 {
         display: flex;
         flex-wrap: wrap;
@@ -31,7 +32,11 @@ export const FooterStyled = styled.div`
         }
     }
     .footer4 {
-        display: flex;
-        justify-content: space-between;
+        text-align: center;
+        margin-top: 20px;
+        > p:nth-of-type(2) {
+            margin-top: 5px;
+            cursor: pointer;
+        }
     }
 `;
