@@ -7,25 +7,26 @@ import Category from '@/components/Category';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Autoplay, Navigation } from 'swiper/modules';
+import TrendingSpot from '@/components/TrendingSpot';
 
 const MainPage = () => {
-
     return (
         <MainStyled>
             <div className="trendingSpot">
                 <div className="trendingSpotLeft">
-                    <p className="trendingSpotTitle">Trending Spots</p>
+                    <p className="trendingSpotTitle">TrendingSpot</p>
                 </div>
                 <div className="trendingSpotRight">
                     <div className="slider">
                         <Swiper
                             spaceBetween={30}
                             autoplay={{
-                                delay: 2000, // 3초마다 슬라이드 전환
+                                delay: 2000,
                                 disableOnInteraction: false,
                             }}
-                            loop={true} // 무한 반복
-                            modules={[Autoplay]} // 모듈 사용 선언
+                            loop={true}
+                            navigation={true}
+                            modules={[Autoplay, Navigation]}
                             breakpoints={{
                                 480: {
                                     slidesPerView: 1, // 480px 이하에서는 한 슬라이드만 보이게 설정
@@ -37,18 +38,17 @@ const MainPage = () => {
                                     slidesPerView: 3, // 769px 이상 1024px 이하에서는 세 슬라이드
                                 },
                                 1025: {
-                                    slidesPerView: 3, // 1025px 이상에서는 네 슬라이드
+                                    slidesPerView: 4, // 1025px 이상에서는 네 슬라이드
                                 },
                             }}
                         >
-                            {space.map((x, i) => (
-                                <SwiperSlide key={i}>
-                                    <ItemList
-                                        x={x}
-                                        isTrending={true} // 새로운 prop 추가
-                                    />
-                                </SwiperSlide>
-                            ))}
+                            {space.map((x, i) => {
+                                return (
+                                    <SwiperSlide key={i}>
+                                        <TrendingSpot x={x} />
+                                    </SwiperSlide>
+                                );
+                            })}
                         </Swiper>
                     </div>
                 </div>
@@ -104,7 +104,6 @@ const MainPage = () => {
                 <p className="itemListTitle">추천 장소</p>
                 <div className="itemList">
                     {space.map((x, i) => {
-                        console.log(x);
                         return <ItemList x={x} key={i} />;
                     })}
                 </div>
@@ -116,7 +115,6 @@ const MainPage = () => {
                 <p className="itemListTitle">주간 인기 장소</p>
                 <div className="itemList">
                     {space.map((x, i) => {
-                        console.log(x);
                         return <ItemList x={x} key={i} />;
                     })}
                 </div>

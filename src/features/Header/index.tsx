@@ -5,9 +5,7 @@ import { RootState } from '@/redux/store';
 import { FiUser } from 'react-icons/fi';
 
 const Header = () => {
-    const { isLoggedIn } = useSelector(
-        (state: RootState) => state.user
-    );
+    const { isLoggedIn } = useSelector((state: RootState) => state.user);
 
     return (
         <HeaderStyled>
@@ -20,7 +18,7 @@ const Header = () => {
                     {isLoggedIn ? (
                         <>
                             <Link href="/host">
-                                <p className='hostMenuBar'>호스트 센터</p>
+                                <p className="hostMenuBar">호스트 센터</p>
                             </Link>
                             <p>
                                 <span>
@@ -30,9 +28,14 @@ const Header = () => {
                             </p>
                         </>
                     ) : (
-                        <Link href="/login" passHref>
-                            <span>로그인</span>
-                        </Link>
+                        <>
+                            <Link href="/host">
+                                <p className="hostMenuBar">호스트 센터</p>
+                            </Link>
+                            <Link href="/login" passHref>
+                                <p>로그인</p>
+                            </Link>
+                        </>
                     )}
                 </div>
             </nav>

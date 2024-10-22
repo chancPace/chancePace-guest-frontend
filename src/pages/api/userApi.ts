@@ -1,21 +1,13 @@
 import axios, { AxiosError } from 'axios';
+import { SignupData, LoginData } from '@/types';
 
 //url가져오기
 const API_URL = 'http://localhost:4000/api/user/';
-interface signupData {
-    email: string;
-    password: string;
-    role: string;
-    agreed: boolean;
-}
-interface loginData {
-    email: string;
-    password: string;
-}
+
 interface ErrorResponseData {
     message: string;
 }
-export const postSignup = async (userData: signupData) => {
+export const postSignup = async (userData: SignupData) => {
     try {
         //axios.post(): 첫번째-> url, 두번째 -> 보낼 데이터
         const response = await axios.post(`${API_URL}signup`, userData);
@@ -35,7 +27,7 @@ export const postSignup = async (userData: signupData) => {
     }
 };
 
-export const postLogin = async (userData: loginData) => {
+export const postLogin = async (userData: LoginData) => {
     try {
         const response = await axios.post(`${API_URL}login`, userData);
         return response.data;

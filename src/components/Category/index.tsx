@@ -1,7 +1,8 @@
 import React from "react"
 import { CategoryStyled } from "./styled"
+import { CategoryType } from "@/types";
 interface CategoryProps {
-    x:string;
+    x:CategoryType;
 }
 const Category: React.FC<CategoryProps> = ({ x}) => {
     return(

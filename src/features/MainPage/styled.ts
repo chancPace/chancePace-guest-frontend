@@ -11,22 +11,21 @@ export const MainStyled = styled.div`
         align-items: center;
     }
     .trendingSpot {
-        align-items: center;
-        justify-content: space-between;
+        margin: auto;
         position: relative;
         background-color: white;
-
         .trendingSpotLeft {
             position: absolute;
             top: 1%;
             left: 5%;
             transform: translate(-5%, -1%);
             z-index: 100000;
-            color: white;
-            mix-blend-mode: difference;
+            color: black;
+            /* mix-blend-mode: difference; */
             .trendingSpotTitle {
                 font-size: ${({ theme }) => theme.fontSizes.xxxl};
-                border-bottom: 2px solid white;
+                border-bottom: 2px solid black;
+                font-weight: bold;
             }
         }
         .trendingSpotRight {
@@ -106,6 +105,10 @@ export const MainStyled = styled.div`
         }
     }
     @media screen and (min-width: 769px) and (max-width: 1024px) {
+        .itemList {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
     }
     @media screen and (min-width: 1025px) {
     }

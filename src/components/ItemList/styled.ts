@@ -4,20 +4,24 @@ export const ItemListStyled = styled.div<{ isTrending?: boolean }>`
     background-color: ${({ isTrending }) =>
         isTrending ? 'rgba(255,255,255,0.9)' : 'none'};
     width: 95%;
-    height: 100%;
+    height: 350px;
     border: ${({ isTrending }) =>
         isTrending ? 'none' : '1px solid lightgray'};
     border-radius: ${({ theme }) => theme.borderRadius};
     cursor: pointer;
     .itemImg {
         margin: auto;
-        width: 100%;
+        /* width: 100%; */
+        height: 270px;
         display: flex;
         align-items: center;
         border-radius: ${({ theme }) => theme.borderRadius};
+        object-fit: cover;
         .img {
             width: 100%;
             border-radius: 8px 8px 0 0;
+            height: 100%;
+            object-fit: cover;
         }
     }
     .itemText {
@@ -32,7 +36,7 @@ export const ItemListStyled = styled.div<{ isTrending?: boolean }>`
             }
             &:nth-of-type(2) {
                 font-size: ${({ theme }) => theme.fontSizes.sm};
-                color: ${({ theme }) => theme.color.textDark};
+                color: gray;
             }
             &:nth-of-type(3) {
                 font-size: ${({ theme }) => theme.fontSizes.sm};

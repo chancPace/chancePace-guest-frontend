@@ -1,26 +1,17 @@
+import { useRouter } from 'next/router';
 import { ItemListStyled } from './styled';
+import { Space } from '@/types';
 interface ItemListProps {
-    x: {
-        spaceName: string;
-        spaceLocation: string;
-        description: string;
-        spacePrice: number;
-        discount: number;
-        amenities: string[];
-        cleanTime: number;
-        spaceStatus: string;
-        isOpen: boolean;
-        caution: string[];
-        category: string;
-        Minimum: number;
-        Maximum: number;
-        spaceImg: { src: string }[]; // 배열로 수정
-    };
+    x: Space;
     isTrending?: boolean; // 새로운 prop 추가
 }
 const ItemList: React.FC<ItemListProps> = ({ x, isTrending }) => {
+    const router = useRouter();
+    const handleClick = () => {
+        router.push(`/spacedetail/${x.id}`);
+    };
     return (
-        <ItemListStyled isTrending={isTrending}>
+        <ItemListStyled isTrending={isTrending} onClick={handleClick}>
             <div className="itemImg">
                 <img
                     src={x.spaceImg[0].src}

@@ -10,11 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { loginSuccess } from '@/redux/slices/userSlice';
 import { AxiosError } from 'axios'; // AxiosError 타입을 import
-
-interface loginvalues {
-    email: string;
-    password: string;
-}
+import { LoginData } from '@/types';
 
 const LoginForm = () => {
     const router = useRouter();
@@ -22,7 +18,7 @@ const LoginForm = () => {
     const [emailError, setEmailError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
 
-    const handleLogin = async (values: loginvalues) => {
+    const handleLogin = async (values: LoginData) => {
         const { email, password } = values;
         try {
             const response = await postLogin({ email, password });

@@ -1,4 +1,5 @@
-import Host from "@/components/Host"
+import Host from "./Host"
+
 
 const host = () => {
     return(

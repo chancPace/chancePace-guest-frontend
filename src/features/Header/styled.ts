@@ -24,7 +24,7 @@ export const HeaderStyled = styled.div`
         .userBar {
             display: flex;
             align-items: center;
-            >p {
+            p {
                 margin-left: 25px;
                 cursor: pointer;
             }

@@ -9,6 +9,7 @@ import Buttons from '../Buttons';
 import { RuleObject } from 'antd/es/form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { AxiosError } from 'axios'; // AxiosError 타입을 import
+import { SignupData } from '@/types';
 
 
 interface CheckBoxItem {
@@ -18,10 +19,6 @@ interface CheckBoxItem {
     required: boolean;
 }
 
-interface SignupValues {
-    email: string;
-    password: string;
-}
 const SignupForm = () => {
     const router = useRouter(); // useRouter 훅 가져오기
     //체크박스의 정보를 담고 있는 상태 배열
@@ -86,7 +83,7 @@ const SignupForm = () => {
     const [duplicateError, setDuplicateError] = useState('');
     //회원가입 처리 함수
     //values-> 폼 필드의 값들
-    const handleSignup = async (values: SignupValues) => {
+    const handleSignup = async (values: SignupData) => {
         const { email, password } = values;
         const allChecked = smallCheckBoxs.every((checkbox) => {
             if (checkbox.required) {
