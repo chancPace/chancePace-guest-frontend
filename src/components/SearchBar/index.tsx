@@ -15,7 +15,6 @@ const SearchBar = () => {
             <Input.Search
                 placeholder="검색어를 입력해주세요"
                 allowClear
-                // enterButton="검색"
                 size="middle"
                 onSearch={onSearch}
                 value={searchTerm} // state 값에 따라 값 설정
@@ -25,8 +24,8 @@ const SearchBar = () => {
                     <Button
                         type="primary"
                         style={{
-                            backgroundColor: 'gray',
-                            borderColor: 'gray',
+                            backgroundColor: '#8c73d8',
+                            borderColor: '#8c73d8',
                         }}
                     >
                         검색

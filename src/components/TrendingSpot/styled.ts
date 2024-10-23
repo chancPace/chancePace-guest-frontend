@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const TrendingSpotStyled = styled.div`
     width: 100%;
     text-align: center;
-    width: 280px;
-    height: 500px;
+    height: 480px;
     border-radius: ${({ theme }) => theme.borderRadius};
     margin: auto;
     object-fit: cover;
@@ -14,10 +13,12 @@ export const TrendingSpotStyled = styled.div`
     position: relative;
     img {
         width: 100%;
-        height: 90%;
+        height: 100%;
         border-radius: ${({ theme }) => theme.borderRadius};
         cursor: pointer;
+        object-fit: cover;
     }
+
     .trandingSpotText {
         position: absolute;
         bottom: 5%;
@@ -25,10 +26,9 @@ export const TrendingSpotStyled = styled.div`
         transform: translate(-5%, -5%);
         color: white;
         text-align: left;
-        >p:first-child {
+        > p:first-child {
             margin-bottom: 10px;
             font-size: ${({ theme }) => theme.fontSizes.xl};
-
         }
     }
 `;

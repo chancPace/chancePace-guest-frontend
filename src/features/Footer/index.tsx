@@ -1,5 +1,5 @@
 import { FooterStyled } from './styled';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/slices/userSlice';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -13,12 +13,6 @@ const Footer = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    //로그아웃 핸들러 함수
-    const handleLogout = () => {
-        Cookies.remove('token');
-        dispatch(logout());
-        router.push('/');
-    };
     return (
         <FooterStyled>
             <div className="footer1">
@@ -53,7 +47,6 @@ const Footer = () => {
             </div>
             <div className="footer4">
                 <p>Copyright ⓒ2024 chancepace All rights reserved. </p>
-                <p onClick={handleLogout}>로그아웃</p>
             </div>
         </FooterStyled>
     );
