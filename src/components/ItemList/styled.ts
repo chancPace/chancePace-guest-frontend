@@ -3,10 +3,9 @@ import styled from 'styled-components';
 export const ItemListStyled = styled.div<{ isTrending?: boolean }>`
     background-color: ${({ isTrending }) =>
         isTrending ? 'rgba(255,255,255,0.9)' : 'none'};
-    width: 95%;
+    width: 100%;
     height: 350px;
-    border: ${({ isTrending }) =>
-        isTrending ? 'none' : '1px solid lightgray'};
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922);
     border-radius: ${({ theme }) => theme.borderRadius};
     cursor: pointer;
     .itemImg {
@@ -24,23 +23,37 @@ export const ItemListStyled = styled.div<{ isTrending?: boolean }>`
             object-fit: cover;
         }
     }
-    .itemText {
-        padding: 5px;
+    .item-bottom {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        p {
-            margin-bottom: 5px;
-            &:nth-of-type(1) {
-                font-weight: bold;
+        justify-content: space-between;
+        padding: 5px;
+
+        .itemText {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            p {
+                margin-bottom: 5px;
+                &:nth-of-type(1) {
+                    font-weight: bold;
+                    color: #363636;
+                }
+                &:nth-of-type(2) {
+                    font-size: ${({ theme }) => theme.fontSizes.sm};
+                    color: gray;
+                }
+                &:nth-of-type(3) {
+                    font-size: ${({ theme }) => theme.fontSizes.sm};
+                }
             }
-            &:nth-of-type(2) {
-                font-size: ${({ theme }) => theme.fontSizes.sm};
-                color: gray;
-            }
-            &:nth-of-type(3) {
-                font-size: ${({ theme }) => theme.fontSizes.sm};
-            }
+        }
+        .bookmark-icon {
+            font-size: 1.2rem;
+            color: lightgray;
+        }
+        .bookmark-icon.active {
+            font-size: 1.2rem;
+            color: #8c73d8;
         }
     }
 `;

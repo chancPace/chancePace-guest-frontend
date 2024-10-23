@@ -4,6 +4,8 @@ import { ItemDetailStyled } from './styled';
 import ImgSection from '../ImgSection';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
+import KakaoMap from '../KakaoMap';
+import ReservationSticky from '../ReservationSticky';
 
 interface ItemDetailProps {
     space: Space;
@@ -30,7 +32,9 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                     <p>
                         <span>편의시설:</span> {space.amenities.join(', ')}
                     </p>
-                    <div className="map">지도 넣기</div>
+                    <div className="map">
+                        <KakaoMap latitude={37.5665} longitude={126.978} />
+                    </div>
                 </div>
             ),
         },
@@ -61,8 +65,17 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                 <p>{space.spaceName}</p>
                 <p>{space.spaceLocation}</p>
             </div>
-            <div className='tabWrap'>
-                <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            <div className='detailBottom'>
+                <div className="tabWrap">
+                    <Tabs
+                        defaultActiveKey="1"
+                        items={items}
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="paymentSection">
+                    <ReservationSticky price={space.spacePrice}/>
+                </div>
             </div>
         </ItemDetailStyled>
     );

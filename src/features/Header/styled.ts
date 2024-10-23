@@ -10,6 +10,7 @@ export const HeaderStyled = styled.div`
   background-color: white;
   z-index: 1000000;
 
+
   nav {
     width: 95%;
     height: 100%;
@@ -30,7 +31,7 @@ export const HeaderStyled = styled.div`
       }
       .hostMenuBar {
         padding: 10px;
-        background-color: gray;
+        background-color: #8c73d8;
         color: white;
         border-radius: 8px;
       }

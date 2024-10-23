@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HostStyled = styled.div`
     background-color: white;
     width: 100%;
-
+    padding: 10px;
     .infoTitle {
         font-size: ${({ theme }) => theme.fontSizes.xxl};
         margin-top: 100px;

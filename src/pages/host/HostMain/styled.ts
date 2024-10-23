@@ -16,11 +16,11 @@ export const HostMainStyled = styled.div`
         width: 100%;
         position: relative;
         display: grid;
+        gap: 10px;
         place-items: center;
         grid-template-columns: repeat(3, 1fr);
         img {
-            width: 95%;
-            margin-bottom: 5px;
+            width: 100%;
             border-radius: ${({ theme }) => theme.borderRadius};
         }
         .mainTitle {

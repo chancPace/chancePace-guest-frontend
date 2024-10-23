@@ -13,13 +13,11 @@ const MainPage = () => {
     return (
         <MainStyled>
             <div className="trendingSpot">
-                <div className="trendingSpotLeft">
-                    <p className="trendingSpotTitle">TrendingSpot</p>
-                </div>
+                <p className="trendingSpotTitle">이달의 공간</p>
                 <div className="trendingSpotRight">
                     <div className="slider">
                         <Swiper
-                            spaceBetween={30}
+                            spaceBetween={10}
                             autoplay={{
                                 delay: 2000,
                                 disableOnInteraction: false,
@@ -54,7 +52,7 @@ const MainPage = () => {
                 </div>
             </div>
             <div className="category">
-                <p className="categoryTitle">Find your perfect space now</p>
+                <p className="categoryTitle">최적의 장소를 찾아보세요!</p>
                 <div className="categoryList">
                     {category.map((x, i) => {
                         return <Category x={x} key={i} />;
@@ -65,9 +63,10 @@ const MainPage = () => {
                 <SearchBar />
             </div>
             <div className="placeSection">
-                <p className="itemListTitle">New Place</p>
+                <p className="itemListTitle">새로운 장소</p>
                 <Swiper
-                    spaceBetween={30}
+                    className="swiper"
+                    spaceBetween={15}
                     autoplay={{
                         delay: 2000,
                         disableOnInteraction: false,
@@ -77,16 +76,16 @@ const MainPage = () => {
                     modules={[Autoplay, Navigation]}
                     breakpoints={{
                         480: {
-                            slidesPerView: 2, // 480px 이하에서는 한 슬라이드만 보이게 설정
+                            slidesPerView: 2,
                         },
                         768: {
-                            slidesPerView: 2, // 481px 이상 768px 이하에서는 두 슬라이드
+                            slidesPerView: 2,
                         },
                         1024: {
-                            slidesPerView: 3, // 769px 이상 1024px 이하에서는 세 슬라이드
+                            slidesPerView: 3,
                         },
                         1025: {
-                            slidesPerView: 4, // 1025px 이상에서는 네 슬라이드
+                            slidesPerView: 4,
                         },
                     }}
                 >
@@ -97,7 +96,7 @@ const MainPage = () => {
                     ))}
                 </Swiper>
                 <div className="buttonBox">
-                    <Button>New Place 더보기</Button>
+                    <Button className="button">New Place 더보기</Button>
                 </div>
             </div>
             <div className="placeSection">
@@ -108,7 +107,7 @@ const MainPage = () => {
                     })}
                 </div>
                 <div className="buttonBox">
-                    <Button>추천 장소 더보기</Button>
+                    <Button className="button">추천 장소 더보기</Button>
                 </div>
             </div>
             <div className="placeSection">
@@ -119,7 +118,7 @@ const MainPage = () => {
                     })}
                 </div>
                 <div className="buttonBox">
-                    <Button>인기 장소 더보기</Button>
+                    <Button className="button">인기 장소 더보기</Button>
                 </div>
             </div>
         </MainStyled>
