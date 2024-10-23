@@ -1,9 +1,6 @@
-import Host from "./Host"
+import HostPage from '../../features/HostPage';
 
-
-const host = () => {
-    return(
-        <Host />
-    )
+const Host = () => {
+  return <HostPage />;
 };
-export default host;
+export default Host;
