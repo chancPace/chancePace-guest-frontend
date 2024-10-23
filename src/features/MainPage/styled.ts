@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const MainStyled = styled.div`
-    width: 95%;
+    width: 100%;
+    padding: 10px;
     margin: auto;
     margin-bottom: 100px;
     margin-top: 50px;
@@ -12,21 +13,13 @@ export const MainStyled = styled.div`
     }
     .trendingSpot {
         margin: auto;
-        position: relative;
-        background-color: white;
-        .trendingSpotLeft {
-            position: absolute;
-            top: 1%;
-            left: 5%;
-            transform: translate(-5%, -1%);
+        .trendingSpotTitle {
+            font-weight: bold;
+            color: #363636;
+            /* text-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922); */
+            font-size: 35px;
+            margin-left: 10%;
             z-index: 100000;
-            color: black;
-            /* mix-blend-mode: difference; */
-            .trendingSpotTitle {
-                font-size: ${({ theme }) => theme.fontSizes.xxxl};
-                border-bottom: 2px solid black;
-                font-weight: bold;
-            }
         }
         .trendingSpotRight {
             display: flex;
@@ -43,8 +36,7 @@ export const MainStyled = styled.div`
         .categoryTitle {
             text-align: center;
             font-size: ${({ theme }) => theme.fontSizes.xxl};
-            background-color: gray;
-            color: white;
+            color: #8c73d8;
         }
         .categoryList {
             display: flex;
@@ -68,14 +60,24 @@ export const MainStyled = styled.div`
             top: 40%;
         }
         .itemListTitle {
-            font-size: ${({ theme }) => theme.fontSizes.xxl};
+            font-size: 35px;
             margin-bottom: 15px;
             font-weight: bold;
+            color: #363636;
         }
         .buttonBox {
             margin-top: 20px;
             width: 100%;
             text-align: center;
+            .button {
+                background-color: white;
+                color: black;
+                &:hover {
+                    background-color: #8c73d8;
+                    color: white;
+                    border: 0;
+                }
+            }
         }
     }
 
@@ -84,7 +86,7 @@ export const MainStyled = styled.div`
         width: 100%;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        gap: 12px;
     }
     @media screen and (max-width: 480px) {
         .placeSection {

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const HostInfoStyled = styled.div`
-    text-align: center;
-    width: 90%;
+    text-align: center; 
     .hostInfoImg {
         width: 300px;
         height: 100%;

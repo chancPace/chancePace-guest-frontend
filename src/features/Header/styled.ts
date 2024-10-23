@@ -30,7 +30,7 @@ export const HeaderStyled = styled.div`
             }
             .hostMenuBar {
                 padding: 10px;
-                background-color: gray;
+                background-color: #8c73d8;
                 color: white;
                 border-radius: 8px;
             }
