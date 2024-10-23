@@ -6,7 +6,7 @@ export const ImgSectionStyled = styled.div`
     justify-content: space-between;
     height: 400px;
     .mainImg {
-        width: 49%;
+        width: 49.5%;
         img {
             width: 100%;
             height: 100%;
@@ -16,10 +16,8 @@ export const ImgSectionStyled = styled.div`
         }
     }
     .smallImgs {
-        width: 49%;
+        width: 50%;
         height: 400px;
-        display: flex;
-        flex-direction: column;
         overflow: hidden;
         .swiper {
             width: 100%;
@@ -38,13 +36,5 @@ export const ImgSectionStyled = styled.div`
                 border-radius: ${({ theme }) => theme.borderRadius};
             }
         }
-        /* img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background-color: red;
-            cursor: pointer;
-            border-radius: ${({ theme }) => theme.borderRadius};
-        } */
     }
 `;

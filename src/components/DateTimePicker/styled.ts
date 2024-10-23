@@ -39,23 +39,22 @@ export const DateTimePickerStyled = styled.div`
         border: 1px solid #ddd;
         font-size: 16px;
     }
-    .time-select {
-        display: flex;
-        align-items: center;
+
+    .swiper-container {
+        position: relative;
         margin-top: 20px;
-        width: 100%;
-        overflow-x: auto; /* 가로 스크롤을 가능하게 설정 */
-        white-space: nowrap; /* 시간 슬롯들이 한 줄로 나타나게 설정 */
-        scroll-behavior: smooth; /* 스크롤이 부드럽게 이동하게 설정 */
-        &::-webkit-scrollbar {
-            display: none;
-        }
+        margin: auto;
+        /* width: 95%; */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Swiper와 네비게이션 버튼을 수평으로 정렬 */
         .time-slot {
+            /* background-color: gray; */
+            width: 95%;
             padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -66,6 +65,27 @@ export const DateTimePickerStyled = styled.div`
         }
         .unselected {
             color: black;
+        }
+        .custom-prev,
+        .custom-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #6a5acd;
+        }
+
+        .custom-prev {
+            left: 0;
+            margin-right: 5px;
+        }
+
+        .custom-next {
+            right: 0;
+            margin-left: 5px;
         }
     }
 `;
