@@ -1,6 +1,6 @@
-import MyPage from "@/components/MyPage"
+import MyPage from '@/components/MyPage';
 
 const mypage = () => {
-    return (<MyPage />);
+  return <MyPage />;
 };
 export default mypage;
