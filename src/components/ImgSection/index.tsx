@@ -24,11 +24,41 @@ const ImgSection: React.FC<ImageSectionProps> = ({ mainImg, smallImgs }) => {
                     grid={{
                         rows: 2,
                     }}
-                    spaceBetween={30}
+                    spaceBetween={5}
                     pagination={{
                         clickable: true,
                     }}
                     modules={[Grid, Pagination]}
+                    breakpoints={{
+                        // 화면 너비가 1024px 이상일 때
+                        1024: {
+                            slidesPerView: 3, // 슬라이드 3개
+                            grid: {
+                                rows: 2, // 2줄 설정
+                            },
+                        },
+                        // 화면 너비가 768px 이상일 때
+                        768: {
+                            slidesPerView: 2, // 슬라이드 2개
+                            grid: {
+                                rows: 2, // 2줄 설정
+                            },
+                        },
+                        // 화면 너비가 640px 이상일 때
+                        640: {
+                            slidesPerView: 1, // 슬라이드 1개
+                            grid: {
+                                rows: 2, // 2줄 설정
+                            },
+                        },
+                        // 화면 너비가 480px 이하일 때
+                        480: {
+                            slidesPerView: 1, // 슬라이드 1개
+                            grid: {
+                                rows: 2, // 2줄 설정
+                            },
+                        },
+                    }}
                     className="mySwiper"
                 >
                     {smallImgs.map((x, i) => (
