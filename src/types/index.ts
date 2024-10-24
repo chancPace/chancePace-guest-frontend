@@ -1,28 +1,30 @@
 export interface SignupData {
-    email:string;
-    password: string;
-    role:string;
-    agreed: boolean;
+  email: string;
+  password: string;
+  role: string;
+  agreed: boolean;
 }
 
 export interface LoginData {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface HostMainImg {
-    src: string;
+  src: string;
 }
 
 export interface Explanation {
-    img: { src: string };
-    title: string;
-    text: string;
+  img: { src: string };
+  title: string;
+  text: string;
 }
 
 export interface Procedure {
-    title: string;
-    text: string;
+  index: string;
+  img: { src: string };
+  title: string;
+  text: string;
 }
 
 export interface Space {
@@ -45,4 +47,4 @@ export interface Space {
     businessEndTime: number,
 }
 
-export type CategoryType = string
+export type CategoryType = string;
