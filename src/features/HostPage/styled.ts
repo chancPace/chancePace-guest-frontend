@@ -49,25 +49,36 @@ export const HostStyled = styled.div`
 
   .infoTitle {
     font-size: ${({ theme }) => theme.fontSizes.xxl};
-    margin-top: 100px;
-    text-align: center;
+    margin-left: 100px;
+  }
+  .en {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: gray;
+    text-transform: uppercase;
   }
   .hostInfo {
     width: 100%;
+    height: 400px;
     display: flex;
-    justify-content: center;
-    align-items: top;
+    justify-content: space-evenly;
+    align-items: center;
     text-align: center;
   }
   .procedureTitle {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    text-align: center;
-    margin-top: 100px;
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+    font-weight: bold;
+    text-align: left;
+    margin-left: 100px;
+    margin-bottom: 20px;
   }
   .hostProcedure {
+    margin: 0 auto;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
+    box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.5);
   }
   .go {
     margin: 100px 0 50px 0;
@@ -82,6 +93,7 @@ export const HostStyled = styled.div`
       margin-left: 20px;
     }
   }
+
   @media screen and (max-width: 480px) {
     .infoTitle {
       text-align: center;
