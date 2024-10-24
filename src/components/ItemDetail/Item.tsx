@@ -24,14 +24,8 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                     <p className="detail-title">[공간 정보]</p>
                     <p>{space.description}</p>
                     <p>{space.spacePrice.toLocaleString()}원</p>
-                    <p>
-                        <span>최소 인원:</span> {space.Minimum}명
-                    </p>
-                    <p>
-                        <span>최대 인원:</span> {space.Maximum}명
-                    </p>
                     <div>
-                        <p className='detail-title'>[편의 시설]</p>
+                        <p className="detail-title">[편의 시설]</p>
                         {space.amenities.map((amenity, index) => (
                             <p key={index} style={{ marginBottom: '16px' }}>
                                 - {amenity}
@@ -69,6 +63,7 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
             />
             <div className="spaceTitle">
                 <p>{space.spaceName}</p>
+                <p>최대 인원 {space.Maximum}명</p>
                 <p>{space.spaceLocation}</p>
             </div>
             <div className="detailBottom">

@@ -60,17 +60,12 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
                 className="custom-datepicker"
                 minDate={new Date()} // 오늘 이전 날짜는 선택 불가
             />
+            <p className="time-select-title">시간선택</p>
             <div className="swiper-container">
                 <Swiper
-                    modules={[A11y, Navigation]}
                     spaceBetween={0}
                     slidesPerView={5}
-                    navigation={{
-                        prevEl: '.custom-prev', // 이전 버튼 커스텀
-                        nextEl: '.custom-next', // 다음 버튼 커스텀
-                    }}
                     pagination={{ clickable: true }}
-                    scrollbar={{ draggable: true }}
                 >
                     {timeSlots.map((time, index) => (
                         <SwiperSlide key={index}>
@@ -83,19 +78,19 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
                                 onClick={() => handleTimeClick(index)}
                             >
                                 {`${time}:00`}
-                            </div>
-                            <div className="price">
-                                {price.toLocaleString()}원
+                                <div className="price">
+                                    {price.toLocaleString()}원
+                                </div>
                             </div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
-                <button className="custom-prev">
+                {/* <button className="custom-prev">
                     <IoMdArrowDropleftCircle />
                 </button>
                 <button className="custom-next">
                     <IoMdArrowDroprightCircle />
-                </button>
+                </button> */}
             </div>
         </DateTimePickerStyled>
     );
