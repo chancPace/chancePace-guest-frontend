@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
 export const DateTimePickerStyled = styled.div`
+    width: 100%;
     .custom-datepicker {
         background-color: inherit;
-        border: 0;
+        border: 1px solid gray;
+        border-radius: 8px;
+        width: 200px;
+        height: 35px;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .react-datepicker {
         background-color: #ffff; /* 달력 배경색 */
@@ -58,7 +65,9 @@ export const DateTimePickerStyled = styled.div`
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
+        .price {
+            font-size: 10px;
+        }
         .selected {
             background-color: #6a5acd;
             color: white;

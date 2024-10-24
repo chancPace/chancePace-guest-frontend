@@ -27,6 +27,9 @@ export const ItemDetailStyled = styled.div`
                     width: 100%;
                     height: 250px;
                 }
+                .detail-title {
+                    font-weight: bold;
+                }
             }
         }
         .paymentSection {
@@ -34,7 +37,7 @@ export const ItemDetailStyled = styled.div`
             position: sticky;
             top: 70px;
             right: 0%;
-            align-self: flex-start; /* Ensures it sticks at the top of the section */
+            align-self: flex-start;
             justify-content: flex-end;
 
         }

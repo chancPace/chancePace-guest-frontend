@@ -21,6 +21,7 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
             label: '공간 정보',
             children: (
                 <div className="tab">
+                    <p className="detail-title">[공간 정보]</p>
                     <p>{space.description}</p>
                     <p>{space.spacePrice.toLocaleString()}원</p>
                     <p>
@@ -29,11 +30,16 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                     <p>
                         <span>최대 인원:</span> {space.Maximum}명
                     </p>
-                    <p>
-                        <span>편의시설:</span> {space.amenities.join(', ')}
-                    </p>
+                    <div>
+                        <p className='detail-title'>[편의 시설]</p>
+                        {space.amenities.map((amenity, index) => (
+                            <p key={index} style={{ marginBottom: '16px' }}>
+                                - {amenity}
+                            </p>
+                        ))}
+                    </div>
                     <div className="map">
-                        <KakaoMap latitude={37.5665} longitude={126.978} />
+                        <KakaoMap address={space.spaceLocation} />
                     </div>
                 </div>
             ),
@@ -65,7 +71,7 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                 <p>{space.spaceName}</p>
                 <p>{space.spaceLocation}</p>
             </div>
-            <div className='detailBottom'>
+            <div className="detailBottom">
                 <div className="tabWrap">
                     <Tabs
                         defaultActiveKey="1"
@@ -74,7 +80,11 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
                     />
                 </div>
                 <div className="paymentSection">
-                    <ReservationSticky price={space.spacePrice}/>
+                    <ReservationSticky
+                        price={space.spacePrice}
+                        businessStartTime={space.businessStartTime}
+                        businessEndTime={space.businessEndTime}
+                    />
                 </div>
             </div>
         </ItemDetailStyled>
