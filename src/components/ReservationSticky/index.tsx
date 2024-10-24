@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ReservationStickyStyled } from './styled';
 import DateTimePicker from '../DateTimePicker';
 

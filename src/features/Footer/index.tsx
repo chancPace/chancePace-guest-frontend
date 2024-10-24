@@ -1,8 +1,4 @@
 import { FooterStyled } from './styled';
-import { useDispatch } from 'react-redux';
-import { logout } from '@/redux/slices/userSlice';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
 import { CiLocationOn } from 'react-icons/ci';
 import { CiMail } from 'react-icons/ci';
 import { CiTimer } from 'react-icons/ci';
@@ -10,8 +6,7 @@ import { CiTimer } from 'react-icons/ci';
 import { CiHeadphones } from 'react-icons/ci';
 
 const Footer = () => {
-    const dispatch = useDispatch();
-    const router = useRouter();
+
 
     return (
         <FooterStyled>

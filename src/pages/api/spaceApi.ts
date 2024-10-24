@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { SiAwsamplify } from 'react-icons/si';
+// import axios from 'axios';
+// import { SiAwsamplify } from 'react-icons/si';
 
-const API_URL = 'http://localhost:4000/api/space/';
+// const API_URL = 'http://localhost:4000/api/space/';
 
 // export const getSpaceDetail = async (id: string) => {
 //     try {
