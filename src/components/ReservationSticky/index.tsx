@@ -5,20 +5,20 @@ import DateTimePicker from '../DateTimePicker';
 
 interface PaymentStickyProps {
     price: number;
+    businessEndTime:number;
+    businessStartTime:number;
 }
-const PaymentSticky: React.FC<PaymentStickyProps> = ({ price }) => {
-
-
-
-
- 
+const PaymentSticky: React.FC<PaymentStickyProps> = ({ price, businessEndTime,businessStartTime }) => {
 
     return (
         <ReservationStickyStyled>
             <p>
-                <span>{price}원</span>/시간
+                <span>{price.toLocaleString()}원</span> / 시간
             </p>
-            <DateTimePicker />
+            <DateTimePicker businessStartTime={businessStartTime}
+            businessEndTime={businessEndTime}
+            price={price}
+            />
         </ReservationStickyStyled>
     );
 };

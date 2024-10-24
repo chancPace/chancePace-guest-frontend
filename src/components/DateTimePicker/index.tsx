@@ -12,13 +12,24 @@ import {
     IoMdArrowDropleftCircle,
     IoMdArrowDroprightCircle,
 } from 'react-icons/io';
-
-const DateTimePicker = () => {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+interface DateTimePickerProps {
+    businessStartTime: number;
+    businessEndTime: number;
+    price: number;
+}
+const DateTimePicker: React.FC<DateTimePickerProps> = ({
+    businessEndTime,
+    businessStartTime,
+    price,
+}) => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [startTime, setStartTime] = useState<number | null>(null);
     const [endTime, setEndTime] = useState<number | null>(null);
 
-    const timeSlots = Array.from({ length: 24 }, (_, i) => i);
+    const timeSlots = Array.from(
+        { length: businessEndTime - businessStartTime + 1 },
+        (_, i) => businessStartTime + i
+    );
 
     const handleTimeClick = (index: number) => {
         if (startTime === null || (startTime !== null && endTime !== null)) {
@@ -43,16 +54,17 @@ const DateTimePicker = () => {
         <DateTimePickerStyled>
             <DatePicker
                 dateFormat="yyyy.MM.dd"
-                minDate={new Date()}
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
-                inline
+                placeholderText="날짜를 선택해주세요"
+                className="custom-datepicker"
+                minDate={new Date()} // 오늘 이전 날짜는 선택 불가
             />
             <div className="swiper-container">
                 <Swiper
                     modules={[A11y, Navigation]}
                     spaceBetween={0}
-                    slidesPerView={6}
+                    slidesPerView={5}
                     navigation={{
                         prevEl: '.custom-prev', // 이전 버튼 커스텀
                         nextEl: '.custom-next', // 다음 버튼 커스텀
@@ -70,7 +82,10 @@ const DateTimePicker = () => {
                                 }`}
                                 onClick={() => handleTimeClick(index)}
                             >
-                                {`${time}시`}
+                                {`${time}:00`}
+                            </div>
+                            <div className="price">
+                                {price.toLocaleString()}원
                             </div>
                         </SwiperSlide>
                     ))}

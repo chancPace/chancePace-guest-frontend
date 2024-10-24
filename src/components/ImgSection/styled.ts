@@ -13,6 +13,10 @@ export const ImgSectionStyled = styled.div`
             object-fit: cover;
             cursor: pointer;
             border-radius: ${({ theme }) => theme.borderRadius};
+            &:hover {
+                opacity: 0.8;
+                transition: 0.5s;
+            }
         }
     }
     .smallImgs {
@@ -34,7 +38,36 @@ export const ImgSectionStyled = styled.div`
                 height: 100%;
                 object-fit: cover;
                 border-radius: ${({ theme }) => theme.borderRadius};
+                cursor: pointer;
+                &:hover {
+                    opacity: 0.8;
+                    transition: 0.5s;
+                }
             }
+        }
+    }
+`;
+
+export const PreviewOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000000;
+    cursor: pointer;
+
+    .previewImageContainer {
+        width: 80%;
+        height: 80%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     }
 `;

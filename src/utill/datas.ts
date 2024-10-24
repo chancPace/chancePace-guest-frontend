@@ -13,11 +13,17 @@ import s1_3 from '../assets/image/s1-3.jpg';
 import s1_4 from '../assets/image/s1-4.jpg';
 import s1_5 from '../assets/image/s1-5.jpg';
 import s1_6 from '../assets/image/s1-6.jpg';
-import { HostMainImg, Explanation, Procedure, Space , CategoryType} from '@/types';
+import {
+    HostMainImg,
+    Explanation,
+    Procedure,
+    Space,
+    CategoryType,
+} from '@/types';
 
-const hostMainImg:HostMainImg[] = [s1, s2, s3, s4, s5, s6];
+const hostMainImg: HostMainImg[] = [s1, s2, s3, s4, s5, s6];
 
-const explanation:Explanation[] = [
+const explanation: Explanation[] = [
     {
         img: icon1,
         title: '쉽고 빠른 예약관리',
@@ -53,12 +59,17 @@ const procedure: Procedure[] = [
 const space: Space[] = [
     {
         id: 1,
-        spaceName: '아늑한 회의실',
-        spaceLocation: '서울, 대한민국',
-        description: '회의에 필요한 모든 편의 시설을 갖춘 편안한 공간입니다.',
+        spaceName: '별의순간 홍대1분',
+        spaceLocation: '서울시 서초구 잠원동 164',
+        description: '반짝이는 순간을 위한 모임공간, 별의순간',
         spacePrice: 100000,
         discount: 10000,
-        amenities: ['WiFi, 화이트보드, 프로젝터'],
+        amenities: [
+            '책상,의자,TV,소파,칠판 등 모든 가구가 이동식으로 설계되어 모임의 성격에 맞게 변형이 가능',
+            '삼성 스마트TV 모니터, 모듈 소파/ 책상 및 의자, 얼음정수기, 공기청정기,블루투스 스피커, 이동식 칠판, 노트북 ,행거,보조의자2개',
+            '[내부시설]내부 단독 화장실, 별도 손세정용 세면대,',
+            '[주차] 1시간 무료, 초과시 시간당 3000원',
+        ],
         cleanTime: 30,
         spaceStatus: 'AVAILABLE',
         isOpen: true,
@@ -69,7 +80,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_4, s1_1,s1_5, s1_2, s1_3], //공간사진
+        spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3,s1_1,s1_2], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 2,
@@ -89,7 +102,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_5, s1_1,s1_4, s1_2, s1_3,s1_5,s1_6,s1_1], //공간사진
+        spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3, s1_5, s1_6, s1_1], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 3,
@@ -109,7 +124,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_6, s1_4,s1_5, s1_2, s1_3], //공간사진
+        spaceImg: [s1_6, s1_4, s1_5, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 4,
@@ -130,6 +147,8 @@ const space: Space[] = [
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
         spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 5,
@@ -149,7 +168,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_5,s1_1,s1_4, s1_2, s1_3], //공간사진
+        spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 6,
@@ -169,7 +190,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_6,s1_1,s1_4, s1_2, s1_3], //공간사진
+        spaceImg: [s1_6, s1_1, s1_4, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 7,
@@ -189,7 +212,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_4,s1_1,s1_5, s1_2, s1_3], //공간사진
+        spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
     {
         id: 8,
@@ -209,7 +234,9 @@ const space: Space[] = [
         category: '파티룸', //카테고리
         Minimum: 3, //최소인원
         Maximum: 6, //최대인원
-        spaceImg: [s1_5,s1_1,s1_4, s1_2, s1_3], //공간사진
+        spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
+        businessStartTime: 4,
+        businessEndTime: 20,
     },
 ];
 
