@@ -110,7 +110,7 @@ const SignupForm = () => {
                 role,
                 agreed,
             });
-            console.log('Response:', response);
+            // console.log('Response:', response);
             router.push('/login');
 
             message.success(response.message);

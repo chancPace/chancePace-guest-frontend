@@ -1,4 +1,3 @@
-import { MapStyled } from './styled';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
 interface KakaoMapProps {

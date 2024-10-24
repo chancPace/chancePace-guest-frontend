@@ -1,5 +1,4 @@
 import { Space } from '@/types';
-import { space } from '@/utill/datas';
 import { ItemDetailStyled } from './styled';
 import ImgSection from '../ImgSection';
 import { Tabs } from 'antd';

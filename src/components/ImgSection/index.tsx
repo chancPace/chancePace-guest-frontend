@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'; // Swiper Î∞è SwiperSlide Í∞
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
-import { Autoplay, Navigation, Grid, Pagination } from 'swiper/modules';
+import { Grid, Pagination } from 'swiper/modules';
 import { useState } from 'react';
 
 interface ImageSectionProps {
