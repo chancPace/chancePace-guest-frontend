@@ -12,7 +12,6 @@ interface ItemListProps {
 const ItemList: React.FC<ItemListProps> = ({ x, isTrending }) => {
     const router = useRouter();
     const [isBookmarked, setIsBookmarked] = useState(false);
-console.log(isBookmarked,'북마크')
     const handleClick = () => {
         router.push(`/spacedetail/${x.id}`);
     };
@@ -39,7 +38,7 @@ console.log(isBookmarked,'북마크')
                 </div>
                 <FontAwesomeIcon
                     icon={faBookmark}
-                    className={`bookmark-icon ${isBookmarked ? 'active' : ''}`} 
+                    className={`bookmark-icon ${isBookmarked ? 'active' : ''}`}
                     onClick={toggleBookmark}
                 />
             </div>

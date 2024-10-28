@@ -11,7 +11,6 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { AxiosError } from 'axios'; // AxiosError 타입을 import
 import { SignupData } from '@/types';
 
-
 interface CheckBoxItem {
     value: string;
     children: string;
@@ -110,7 +109,6 @@ const SignupForm = () => {
                 role,
                 agreed,
             });
-            // console.log('Response:', response);
             router.push('/login');
 
             message.success(response.message);

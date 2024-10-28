@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const DateTimePickerStyled = styled.div`
     width: 100%;
+    .react-datepicker-popper {
+        z-index: 9999999;
+    }
     .custom-datepicker {
         background-color: inherit;
         border: 1px solid gray;
@@ -18,9 +21,13 @@ export const DateTimePickerStyled = styled.div`
         border: 2px solid #f0f0f0; /* 테두리 색상 */
         padding: 10px;
         font-family: Arial, sans-serif; /* 폰트 */
+        z-index: 1000;
     }
     .react-datepicker__triangle {
         display: none;
+    }
+    .react-datepicker__portal {
+        z-index: 1050;
     }
     .react-datepicker__header {
         background-color: #ffff; /* 헤더 배경 */
@@ -49,6 +56,12 @@ export const DateTimePickerStyled = styled.div`
     .time-select-title {
         text-align: left;
         margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .selected-time-info {
+        font-size: 14px;
+        color: #6b5b95;
     }
     .swiper-container {
         position: relative;
@@ -59,9 +72,8 @@ export const DateTimePickerStyled = styled.div`
         align-items: center;
         background-color: lightgray;
         .time-slot {
-            /* border: 1px solid white; */
             width: 100%;
-            padding: 10px;
+            padding: 15px 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -72,23 +84,22 @@ export const DateTimePickerStyled = styled.div`
         .price {
             font-size: 10px;
         }
+        .time-boundary {
+            text-align: left;
+            font-size: 12px;
+            color: #333;
+            position: relative;
+            /* margin-bottom: 5px; */
+            border-bottom: 0.5px solid white;
+            padding: 5px 0;
+            z-index: -10;
+        }
         .selected {
             background-color: #6a5acd;
             color: white;
         }
         .unselected {
             color: black;
-        }
-        .custom-prev,
-        .custom-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: #6a5acd;
         }
     }
 `;

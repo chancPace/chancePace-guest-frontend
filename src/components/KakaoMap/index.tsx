@@ -4,6 +4,24 @@ interface KakaoMapProps {
     address: string;
 }
 
+interface AddressSearchResult {
+    address_name: string;
+    y: string; // 위도 (latitude) 좌표를 문자열로 반환
+    x: string; // 경도 (longitude) 좌표를 문자열로 반환
+    address_type: string;
+    road_address?: {
+        address_name: string;
+        building_name: string;
+        main_building_no: string;
+        region_1depth_name: string;
+        region_2depth_name: string;
+        road_name: string;
+        sub_building_no: string;
+        underground_yn: string;
+        zone_no: string;
+    };
+}
+
 const KakaoMap: React.FC<KakaoMapProps> = ({ address }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [coordinates, setCoordinates] = useState({
@@ -22,7 +40,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ address }) => {
 
         //해당 주소를 기반으로 (latitude, longitude)를 반환
         //좌표값은 setCoordinates로 상태를 업데이트하여 저장
-        geocoder.addressSearch(address, (result: any[], status: string) => {
+        geocoder.addressSearch(address, (result: AddressSearchResult[], status: string) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 const { y: latitude, x: longitude } = result[0];
                 setCoordinates({

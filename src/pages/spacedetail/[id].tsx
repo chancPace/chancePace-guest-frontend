@@ -1,4 +1,4 @@
-import ItemDetail from '@/components/ItemDetail/Item';
+import ItemDetail from '@/components/ItemDetail';
 import { GetServerSideProps } from 'next';
 import { space as spaceData } from '@/utill/datas'; // space를 spaceData로 변경
 import { Space } from '@/types';

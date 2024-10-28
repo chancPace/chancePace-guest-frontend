@@ -14,6 +14,11 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ space }) => {
         console.log(key);
     };
 
+   
+
+
+
+
     const items: TabsProps['items'] = [
         {
             key: '1',

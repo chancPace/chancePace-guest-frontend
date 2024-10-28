@@ -5,4 +5,14 @@ export const ReservationStickyStyled = styled.div`
     background-color: aliceblue;
     text-align: center;
     padding: 10px;
+    position: relative;
+    .pay-button {
+        padding: 10px;
+        border: 0;
+        position: absolute;
+        top: 98%;
+        left: 50%;
+        transform: translate(-50%, -98%);
+        cursor: pointer;
+    }
 `;
