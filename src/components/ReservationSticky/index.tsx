@@ -3,6 +3,7 @@ import DateTimePicker from '../DateTimePicker';
 import { useRouter } from 'next/router';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 interface PaymentStickyProps {
     price: number;
@@ -54,7 +55,14 @@ const PaymentSticky: React.FC<PaymentStickyProps> = ({
                 price={price}
                 onTimeSelect={setTotalTime}
             />
-            <div className="people-check"></div>
+            <div className="additional-people">
+                <p>인원추가</p>
+                <div className="form">
+                    <PlusCircleOutlined />
+                    <div className="additional"></div>
+                    <MinusCircleOutlined />
+                </div>
+            </div>
             <button
                 className="pay-button"
                 onClick={handlePayment}
