@@ -12,6 +12,9 @@ const GlobalStyle = createGlobalStyle`
 }
 body {
     padding-top: 70px;
+    .ant-message {
+    z-index: 9000000 !important; 
+  }
 }
 `;
 

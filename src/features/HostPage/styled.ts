@@ -34,7 +34,7 @@ export const HostStyled = styled.div`
       left: 10%;
       transform: translate(-10%, -50%);
       color: white;
-      mix-blend-mode: normal; /* 텍스트가 배경에 따라 색이 바뀜 */
+      mix-blend-mode: normal; 
       font-weight: bold;
       span {
         display: inline-block;
@@ -42,7 +42,7 @@ export const HostStyled = styled.div`
         animation: colorChange 0.1s forwards;
         animation-delay: calc(0.1s * var(--i)); /* 각 글자에 지연 시간 적용 */
         color: white;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Reduced shadow blur, increased opacity */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
       }
     }
   }

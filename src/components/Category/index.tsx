@@ -5,6 +5,9 @@ interface CategoryProps {
     x: CategoryType;
 }
 const Category: React.FC<CategoryProps> = ({ x }) => {
+    
+
+
     return (
         <CategoryStyled>
             {x.mainCategory}
