@@ -10,7 +10,6 @@ export const HeaderStyled = styled.div`
   background-color: white;
   z-index: 1000000;
 
-
   nav {
     width: 95%;
     height: 100%;
@@ -26,7 +25,6 @@ export const HeaderStyled = styled.div`
       display: flex;
       align-items: center;
       p {
-        margin-left: 25px;
         cursor: pointer;
       }
       .hostMenuBar {
@@ -34,6 +32,7 @@ export const HeaderStyled = styled.div`
         background-color: #8c73d8;
         color: white;
         border-radius: 8px;
+        margin-right: 25px;
       }
       span {
         margin-right: 5px;
@@ -46,9 +45,6 @@ export const HeaderStyled = styled.div`
         height: 70px;
       }
       .headerToggle {
-        background-color: coral;
-        width: 150px;
-        height: 300px;
         position: absolute;
         right: 2.5%;
       }
