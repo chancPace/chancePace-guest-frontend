@@ -1,7 +1,6 @@
 import { MainStyled } from './styled';
 import SearchBar from '@/components/SearchBar';
 import ItemList from '@/components/ItemList';
-import { space,  } from '@/utill/datas';
 import {  message } from 'antd';
 import Category from '@/components/Category';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -82,7 +81,7 @@ const MainPage = () => {
                 },
               }}
             >
-              {space.map((x, i) => {
+              {newSpace.map((x, i) => {
                 return (
                   <SwiperSlide key={i}>
                     <TrendingSpot x={x} />

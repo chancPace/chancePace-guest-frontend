@@ -16,13 +16,7 @@ import s1_6 from '../assets/image/s1-6.jpg';
 import login from '@/assets/image/feed.svg';
 import house from '@/assets/image/house.svg';
 import allow from '@/assets/image/party-popper.svg';
-import {
-  HostMainImg,
-  Explanation,
-  Procedure,
-  Space,
-  CategoryType,
-} from '@/types';
+import { HostMainImg, Explanation, Procedure, Space } from '@/types';
 
 const hostMainImg: HostMainImg[] = [s1, s2, s3, s4, s5, s6];
 
@@ -99,8 +93,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3, s1_1, s1_2], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -125,8 +119,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3, s1_5, s1_6, s1_1], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -151,8 +145,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_6, s1_4, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -177,8 +171,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -203,8 +197,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -229,8 +223,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_6, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -255,8 +249,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
   {
@@ -281,31 +275,10 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: 4,
-    businessEndTime: 20,
+    businessStartTime: '4',
+    businessEndTime: '20',
     addPrice: 5000,
   },
 ];
 
-const category: CategoryType[] = [
-  {
-    mainCategory: 'category1',
-    subCategories: ['subcategory1-1', 'subcategory1-2', 'subcategory1-3'],
-  },
-  {
-    mainCategory: 'category2',
-    subCategories: ['subcategory2-1', 'subcategory2-2'],
-  },
-  {
-    mainCategory: 'category3',
-    subCategories: [
-      'subcategory3-1',
-      'subcategory3-2',
-      'subcategory3-3',
-      'subcategory3-4',
-    ],
-  },
-  // 나머지 카테고리들
-];
-
-export { hostMainImg, explanation, procedure, space, category };
+export { hostMainImg, explanation, procedure, space };

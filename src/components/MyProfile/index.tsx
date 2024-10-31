@@ -14,7 +14,7 @@ const MyProfile = () => {
   const handleLogout = () => {
     Cookies.remove('token');
     dispatch(logout());
-    router.push('http://localhost:3000/');
+    router.replace('/');
   };
   return (
     <MyProfileStyled>
