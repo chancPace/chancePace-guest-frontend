@@ -2,33 +2,61 @@ import { useEffect } from 'react';
 import { SuccessStyled } from './styled';
 import { useRouter } from 'next/router';
 import { verifyPayment } from '@/pages/api/paymentApi';
+import { addBooking } from '@/pages/api/bookingApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 const Success = () => {
-    const router = useRouter();
-    const { paymentKey, orderId, amount } = router.query;
+  const router = useRouter();
+  const {
+    paymentKey,
+    orderId,
+    amount,
+    startDate,
+    startTime,
+    endTime,
+    spaceId,
+  } = router.query;
+  const userId = useSelector((state: RootState) => state.user.userInfo?.id);
 
-    useEffect(() => {
-        if (paymentKey && orderId && amount) {
-            verifyPayment({
-                paymentKey: paymentKey as string,
-                orderId: orderId as string,
-                amount: Number(amount),
-            });
+  useEffect(() => {
+    const handleBooking = async () => {
+      if (paymentKey && orderId && amount && userId) {
+        try {
+          const paymentResult = await verifyPayment({
+            paymentKey: String(paymentKey),
+            orderId: String(orderId),
+            amount: Number(amount),
+          });
+          if (paymentResult.result) {
+            const bookingData = {
+              startDate: Array.isArray(startDate)
+                ? startDate[0]
+                : startDate || '', // string으로 변환
+              startTime: Array.isArray(startTime)
+                ? parseInt(startTime[0])
+                : parseInt(startTime || '0'),
+              endTime: Array.isArray(endTime)
+                ? parseInt(endTime[0])
+                : parseInt(endTime || '0'),
+              userId,
+              spaceId: Array.isArray(spaceId)
+                ? parseInt(spaceId[0])
+                : parseInt(spaceId || '0'),
+            };
+            await addBooking(bookingData);
+          }
+        } catch (error) {
+          console.error('예약 처리 실패', error);
         }
-    }, [paymentKey, orderId, amount]);
+      }
+    };
+    handleBooking();
+  }, [paymentKey, orderId, amount]);
 
-    // const handleVerifyPayment = async (paymentData: Payment) => {
-    //     try {
-    //         const response = await verifyPayment(paymentData);
-    //         console.log('결제 확인 응답:', response);
-    //     } catch (error) {
-    //         console.error('결제 확인 실패:', error);
-    //     }
-    // };
-
-    return (
-        <SuccessStyled>
-            <p>결제 성공</p>
-        </SuccessStyled>
-    );
+  return (
+    <SuccessStyled>
+      <p>결제 성공</p>
+    </SuccessStyled>
+  );
 };
 export default Success;

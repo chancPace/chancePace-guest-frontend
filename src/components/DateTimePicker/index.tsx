@@ -7,12 +7,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { format } from 'date-fns'; 
 
 interface DateTimePickerProps {
   businessStartTime: number;
   businessEndTime: number;
   price: number;
-  onTimeSelect: (totalTime: number, startTime: number, endTime: number) => void;
+  onTimeSelect: (
+    totalTime: number,
+    startTime: number,
+    endTime: number,
+    selectedDate: string 
+  ) => void;
 }
 const DateTimePicker = ({
   businessEndTime,
@@ -27,6 +33,7 @@ const DateTimePicker = ({
   //예약 종료시간 인덱스
   const [endTime, setEndTime] = useState<number | null>(null);
 
+
   //업체의 오픈시간부터 마감시간까지의 시간대를 배열로 만듬
   const timeSlots = Array.from(
     { length: businessEndTime - businessStartTime },
@@ -34,17 +41,20 @@ const DateTimePicker = ({
   );
 
   useEffect(() => {
-    if (startTime !== null) {
+    if (startTime !== null && selectedDate !== null) {
       //endTime이 null이면 finalEndTime을 startTime으로 지정
       //한시간을 예약가능하게 하기위해
       const finalEndTime = endTime ?? startTime;
+      const formattedDate = format(selectedDate, 'yyyy-MM-dd'); // 날짜 포맷
+
       onTimeSelect(
         finalEndTime - startTime + 1, //총 시간
         businessStartTime + startTime, //시작시간
-        businessStartTime + finalEndTime //종료시간
+        businessStartTime + finalEndTime, //종료시간
+        formattedDate // 예약 날짜
       );
     }
-  }, [startTime, endTime, onTimeSelect]);
+  }, [startTime, endTime, selectedDate, onTimeSelect]);
 
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {

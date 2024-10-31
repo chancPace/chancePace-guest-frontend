@@ -70,3 +70,11 @@ export interface UserData {
   phoneNumber?: string;
   userName?: string;
 }
+
+export interface BookingData {
+  startDate: string; // 예: ISO 형식의 날짜 문자열
+  startTime: number; // 시작 시간 (예: 시간 인덱스 또는 시간 값)
+  endTime: number; // 종료 시간
+  userId: number; // 사용자 ID
+  spaceId: number; // 공간 ID
+}

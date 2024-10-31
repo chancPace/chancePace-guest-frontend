@@ -9,20 +9,40 @@ interface PaymentStickyProps {
   price: number;
   businessEndTime: number;
   businessStartTime: number;
+  spaceId: number;
 }
 const ReservationSticky = ({
   price,
   businessEndTime,
   businessStartTime,
+  spaceId,
 }: PaymentStickyProps) => {
   const router = useRouter();
   const [totalTime, setTotalTime] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<number>(price);
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [selectedStartTime, setSelectedStartTime] = useState<number | null>(
+    null
+  );
+  const [selectedEndTime, setSelectedEndTime] = useState<number | null>(null);
 
   useEffect(() => {
     //total타임이 변경될때마다 totalPirce업데이트
     setTotalPrice(price * totalTime);
   }, [totalTime, price]);
+
+  const handleTimeSelect = (
+    totalTime: number,
+    startTime: number,
+    endTime: number,
+    date: string,
+  ) => {
+    setTotalTime(totalTime);
+    setSelectedStartTime(startTime);
+    setSelectedEndTime(endTime);
+    setStartDate(date);
+
+  };
 
   const generateOrderId = () => {
     const today = new Date();
@@ -40,6 +60,10 @@ const ReservationSticky = ({
       query: {
         orderId,
         price: totalPrice,
+        startDate,
+        startTime: selectedStartTime,
+        endTime: selectedEndTime,
+        spaceId,
       },
     });
   };
@@ -53,7 +77,7 @@ const ReservationSticky = ({
         businessStartTime={businessStartTime}
         businessEndTime={businessEndTime}
         price={price}
-        onTimeSelect={setTotalTime}
+        onTimeSelect={handleTimeSelect}
       />
       <div className="additional-people">
         <p>인원추가</p>
