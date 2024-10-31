@@ -9,8 +9,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 interface DateTimePickerProps {
-  businessStartTime: string;
-  businessEndTime: string;
+  businessStartTime: number;
+  businessEndTime: number;
   price: number;
   onTimeSelect: (totalTime: number, startTime: number, endTime: number) => void;
 }
@@ -20,29 +20,29 @@ const DateTimePicker = ({
   price,
   onTimeSelect,
 }: DateTimePickerProps) => {
-  const endTimeNumber = Number(businessEndTime.split(':')[0]);
-  const startTimeNumber = Number(businessStartTime.split(':')[0]);
   //사용자가 선택한 날짜 저장하는 상태
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  //시작시간 저장하는 상태
+  //예약 시작시간의 인덱스
   const [startTime, setStartTime] = useState<number | null>(null);
-  //종료시간 저장하는 상태
+  //예약 종료시간 인덱스
   const [endTime, setEndTime] = useState<number | null>(null);
-  // console.log(endTime, '앤드');
 
-  //업체의 오픈시간부터 마감시간까지의 시간슬롯을 배열로 만듬
+  //업체의 오픈시간부터 마감시간까지의 시간대를 배열로 만듬
   const timeSlots = Array.from(
-    { length: endTimeNumber - startTimeNumber + 1 },
-    (_, i) => startTimeNumber + i
+    { length: businessEndTime - businessStartTime },
+    (_, i) => businessStartTime + i
   );
 
   useEffect(() => {
     if (startTime !== null) {
-      const finalEndTime = endTime !== null ? endTime : startTime;
-      const calculatedTime = finalEndTime - startTime + 1;
-      const selectedStartTime = startTimeNumber + startTime;
-      const selectedEndTime = startTimeNumber + finalEndTime;
-      onTimeSelect(calculatedTime, selectedStartTime, selectedEndTime);
+      //endTime이 null이면 finalEndTime을 startTime으로 지정
+      //한시간을 예약가능하게 하기위해
+      const finalEndTime = endTime ?? startTime;
+      onTimeSelect(
+        finalEndTime - startTime + 1, //총 시간
+        businessStartTime + startTime, //시작시간
+        businessStartTime + finalEndTime //종료시간
+      );
     }
   }, [startTime, endTime, onTimeSelect]);
 
@@ -50,16 +50,18 @@ const DateTimePicker = ({
   const handleTimeClick = (index: number) => {
     if (startTime === null) {
       setStartTime(index);
-      //시작시간이 설정된 경우
-      setEndTime(null); // 초기 클릭 시 endTime을 초기화
+      setEndTime(null);
+      //end값이 null일때
     } else if (startTime !== null && endTime === null) {
       //시작 시간 이후를 클릭하면 종료시간 설정
       if (index > startTime) {
         setEndTime(index);
+        //index < startTime or index = startTime
       } else {
         setStartTime(index);
         setEndTime(null);
       }
+      //종료시간이 설정된 상태에서 새로 선택할때 시작시간 초기화
     } else {
       setStartTime(index);
       setEndTime(null);
@@ -93,10 +95,10 @@ const DateTimePicker = ({
         {startTime !== null && (
           <div className="selected-time-info">
             <p>
-              {`${startTimeNumber + startTime}:00`} ~{' '}
+              {`${businessStartTime + startTime}:00`} ~{' '}
               {endTime !== null
-                ? `${startTimeNumber + endTime + 1}:00`
-                : `${startTimeNumber + startTime + 1}:00`}
+                ? `${businessStartTime + endTime + 1}:00`
+                : `${businessStartTime + startTime + 1}:00`}
               , {endTime !== null ? endTime - startTime + 1 : 1}
               시간
             </p>

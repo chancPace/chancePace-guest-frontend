@@ -7,8 +7,8 @@ import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 interface PaymentStickyProps {
   price: number;
-  businessEndTime: string;
-  businessStartTime: string;
+  businessEndTime: number;
+  businessStartTime: number;
 }
 const ReservationSticky = ({
   price,

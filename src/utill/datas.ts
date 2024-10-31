@@ -93,8 +93,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3, s1_1, s1_2], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -119,8 +119,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3, s1_5, s1_6, s1_1], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -145,8 +145,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_6, s1_4, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -171,8 +171,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -197,8 +197,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -223,8 +223,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_6, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -249,8 +249,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_4, s1_1, s1_5, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
   {
@@ -275,8 +275,8 @@ const space: Space[] = [
     Minimum: 3, //최소인원
     Maximum: 6, //최대인원
     spaceImg: [s1_5, s1_1, s1_4, s1_2, s1_3], //공간사진
-    businessStartTime: '4',
-    businessEndTime: '20',
+    businessStartTime: 4,
+    businessEndTime: 20,
     addPrice: 5000,
   },
 ];
