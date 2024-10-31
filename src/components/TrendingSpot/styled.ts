@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const TrendingSpotStyled = styled.div`
     width: 100%;
     text-align: center;
-    height: 480px;
+    height: 380px;
     border-radius: ${({ theme }) => theme.borderRadius};
     margin: auto;
     object-fit: cover;

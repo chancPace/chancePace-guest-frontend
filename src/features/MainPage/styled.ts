@@ -29,9 +29,8 @@ export const MainStyled = styled.div`
     .trendingSpotTitle {
       font-weight: bold;
       color: #363636;
-      /* text-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922); */
       font-size: 35px;
-      margin-left: 10%;
+      /* margin-left: 10%; */
       z-index: 100000;
     }
     .trendingSpotRight {
@@ -39,7 +38,7 @@ export const MainStyled = styled.div`
       justify-content: flex-end;
       width: 100%;
       .slider {
-        width: 90%;
+        width: 100%;
       }
     }
   }
@@ -81,19 +80,13 @@ export const MainStyled = styled.div`
       font-weight: bold;
       color: #363636;
     }
-    .buttonBox {
-      margin-top: 20px;
-      width: 100%;
+    .more-link {
+      border: 1px solid lightgray;
+      width: 200px;
+      padding: 10px;
+      display: block;
       text-align: center;
-      .button {
-        background-color: white;
-        color: black;
-        &:hover {
-          background-color: #8c73d8;
-          color: white;
-          border: 0;
-        }
-      }
+      margin: 50px auto;
     }
   }
 

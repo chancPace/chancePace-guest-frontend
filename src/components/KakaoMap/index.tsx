@@ -55,7 +55,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ address }) => {
       }
     );
   };
-  
+
   //kakao 지도 api 스크립트를 동적으로 로드
   //스크립트가 로드된 후 isLoaded상태를 변경하여 kakao api사용
   useEffect(() => {
@@ -71,22 +71,28 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ address }) => {
       kakaoMapsScript.onload = () => {
         window.kakao.maps.load(() => {
           setIsLoaded(true);
-          convertAddressToCoordinates();
+          // convertAddressToCoordinates();
         });
       };
 
       document.head.appendChild(kakaoMapsScript);
     } else {
-      setIsLoaded(true); // 이미 스크립트가 로드되었으면 바로 로딩 완료
+      if (window.kakao && window.kakao.maps) {
+        setIsLoaded(true); // 이미 스크립트가 로드되었으면 바로 로딩 완료
+      }
+    }
+    // return () => {
+    //   if (existingScript) {
+    //     document.head.removeChild(existingScript);
+    //   }
+    // };
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
       convertAddressToCoordinates();
     }
-
-    return () => {
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
+  }, [isLoaded, address]);
 
   if (!isLoaded) {
     return <div>Loading map...</div>;

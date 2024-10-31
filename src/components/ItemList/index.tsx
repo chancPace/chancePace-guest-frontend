@@ -6,43 +6,38 @@ import { faBookmark } from '@fortawesome/free-solid-svg-icons'; // 아이콘 임
 import { useState } from 'react';
 
 interface ItemListProps {
-    x: Space;
-    isTrending?: boolean;
+  x: Space;
 }
-const ItemList: React.FC<ItemListProps> = ({ x, isTrending }) => {
-    const router = useRouter();
-    const [isBookmarked, setIsBookmarked] = useState(false);
-    const handleClick = () => {
-        router.push(`/spacedetail/${x.id}`);
-    };
+const ItemList = ({ x }: ItemListProps) => {
+  const router = useRouter();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const handleClick = () => {
+    router.push(`/spacedetail/${x.id}`);
+  };
 
-    const toggleBookmark = (e: React.MouseEvent) => {
-        e.stopPropagation(); //부모 요소 클릭 방지
-        setIsBookmarked(!isBookmarked);
-    };
+  const toggleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsBookmarked(!isBookmarked);
+  };
 
-    return (
-        <ItemListStyled isTrending={isTrending} onClick={handleClick}>
-            <div className="itemImg">
-                <img
-                    src={x.spaceImg[0].src}
-                    alt={x.spaceName}
-                    className="img"
-                ></img>
-            </div>
-            <div className="item-bottom">
-                <div className="itemText">
-                    <p>{x.spaceName}</p>
-                    <p>{x.spaceLocation}</p>
-                    <p>{x.spacePrice.toLocaleString()}</p>
-                </div>
-                <FontAwesomeIcon
-                    icon={faBookmark}
-                    className={`bookmark-icon ${isBookmarked ? 'active' : ''}`}
-                    onClick={toggleBookmark}
-                />
-            </div>
-        </ItemListStyled>
-    );
+  return (
+    <ItemListStyled onClick={handleClick}>
+      {/* <div className="itemImg">
+        <img src={x.spaceImg[0].src} alt={x.spaceName} className="img"></img>
+      </div> */}
+      <div className="item-bottom">
+        <div className="itemText">
+          <p>{x.spaceName}</p>
+          <p>{x.spaceLocation}</p>
+          <p>{x.spacePrice.toLocaleString()}</p>
+        </div>
+        <FontAwesomeIcon
+          icon={faBookmark}
+          className={`bookmark-icon ${isBookmarked ? 'active' : ''}`}
+          onClick={toggleBookmark}
+        />
+      </div>
+    </ItemListStyled>
+  );
 };
 export default ItemList;

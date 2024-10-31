@@ -1,8 +1,8 @@
 import { MainStyled } from './styled';
 import SearchBar from '@/components/SearchBar';
 import ItemList from '@/components/ItemList';
-import { space, category } from '@/utill/datas';
-import { Button, message } from 'antd';
+import { space,  } from '@/utill/datas';
+import {  message } from 'antd';
 import Category from '@/components/Category';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -11,24 +11,26 @@ import TrendingSpot from '@/components/TrendingSpot';
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { getCategory } from '@/pages/api/categoryApi';
+import { getSpace } from '@/pages/api/spaceApi';
+import Link from 'next/link';
 interface ErrorResponseData {
   message: string;
 }
 
 const MainPage = () => {
   const [bigCategory, setBigCategory] = useState([]);
+  const [newSpace, setNewSpace] = useState([]);
 
+  //카테고리(대분류) 띄우기
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const categoryData = await getCategory();
-        console.log(categoryData, '카테고리데이터');
         setBigCategory(
           categoryData.data.filter(
             (category: { pId: null }) => category.pId === null
           )
         );
-        console.log(bigCategory, '빅카테고리');
       } catch (error) {
         const axiosError = error as AxiosError<ErrorResponseData>;
         if (axiosError.response?.status === 500) {
@@ -38,6 +40,18 @@ const MainPage = () => {
     };
     fetchCategory();
   }, []);
+
+  useEffect(() => {
+    const fetchSpace = async () => {
+      const spaceData = await getSpace();
+      if (spaceData.data && spaceData.data.length > 0) {
+        const top8Space = spaceData.data.slice(0, 8);
+        setNewSpace(top8Space);
+      }
+    };
+    fetchSpace();
+  }, []);
+
   return (
     <MainStyled>
       <div className="trendingSpot">
@@ -47,7 +61,7 @@ const MainPage = () => {
             <Swiper
               spaceBetween={10}
               autoplay={{
-                delay: 2000,
+                delay: 3000,
                 disableOnInteraction: false,
               }}
               loop={true}
@@ -55,16 +69,16 @@ const MainPage = () => {
               modules={[Autoplay, Navigation]}
               breakpoints={{
                 480: {
-                  slidesPerView: 1, // 480px 이하에서는 한 슬라이드만 보이게 설정
+                  slidesPerView: 1,
                 },
                 768: {
-                  slidesPerView: 2, // 481px 이상 768px 이하에서는 두 슬라이드
+                  slidesPerView: 2,
                 },
                 1024: {
-                  slidesPerView: 3, // 769px 이상 1024px 이하에서는 세 슬라이드
+                  slidesPerView: 3,
                 },
                 1025: {
-                  slidesPerView: 4, // 1025px 이상에서는 네 슬라이드
+                  slidesPerView: 4,
                 },
               }}
             >
@@ -82,7 +96,7 @@ const MainPage = () => {
       <div className="category">
         <p className="categoryTitle">최적의 장소를 찾아보세요!</p>
         <div className="categoryList">
-          {category.map((x, i) => {
+          {bigCategory.map((x, i) => {
             return <Category x={x} key={i} />;
           })}
         </div>
@@ -95,10 +109,6 @@ const MainPage = () => {
         <Swiper
           className="swiper"
           spaceBetween={15}
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
           loop={true}
           navigation={true}
           modules={[Autoplay, Navigation]}
@@ -117,37 +127,37 @@ const MainPage = () => {
             },
           }}
         >
-          {space.map((x, i) => (
+          {newSpace.map((x, i) => (
             <SwiperSlide key={i}>
               <ItemList x={x} />
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="buttonBox">
-          <Button className="button">New Place 더보기</Button>
-        </div>
+        <Link href="/newspace">
+          <span className="more-link">새로운 장소 더보기</span>
+        </Link>
       </div>
       <div className="placeSection">
         <p className="itemListTitle">추천 장소</p>
         <div className="itemList">
-          {space.map((x, i) => {
+          {newSpace.map((x, i) => {
             return <ItemList x={x} key={i} />;
           })}
         </div>
-        <div className="buttonBox">
-          <Button className="button">추천 장소 더보기</Button>
-        </div>
+        <Link href="/recommendspace">
+          <span className="more-link">추천 장소 더보기</span>
+        </Link>
       </div>
       <div className="placeSection">
         <p className="itemListTitle">주간 인기 장소</p>
         <div className="itemList">
-          {space.map((x, i) => {
+          {newSpace.map((x, i) => {
             return <ItemList x={x} key={i} />;
           })}
         </div>
-        <div className="buttonBox">
-          <Button className="button">인기 장소 더보기</Button>
-        </div>
+        <Link href="/popularspace">
+          <span className="more-link">주간인기 장소 더보기</span>
+        </Link>
       </div>
     </MainStyled>
   );

@@ -46,12 +46,13 @@ export interface Space {
   Minimum: number; // 최소 인원
   Maximum: number; // 최대 인원
   spaceImg: { src: string }[]; // 공간 이미지 배열
-  businessStartTime: number;
-  businessEndTime: number;
+  businessStartTime: string;
+  businessEndTime: string;
   addPrice: number;
 }
 
 export interface CategoryType {
+  categoryName: string;
   mainCategory: string;
   subCategories: string[];
 }

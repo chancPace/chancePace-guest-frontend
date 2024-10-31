@@ -9,48 +9,47 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 interface DateTimePickerProps {
-  businessStartTime: number;
-  businessEndTime: number;
+  businessStartTime: string;
+  businessEndTime: string;
   price: number;
-  onTimeSelect: (totalTime: number) => void;
+  onTimeSelect: (totalTime: number, startTime: number, endTime: number) => void;
 }
-const DateTimePicker: React.FC<DateTimePickerProps> = ({
+const DateTimePicker = ({
   businessEndTime,
   businessStartTime,
   price,
   onTimeSelect,
-}) => {
+}: DateTimePickerProps) => {
+  const endTimeNumber = Number(businessEndTime.split(':')[0]);
+  const startTimeNumber = Number(businessStartTime.split(':')[0]);
   //사용자가 선택한 날짜 저장하는 상태
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   //시작시간 저장하는 상태
   const [startTime, setStartTime] = useState<number | null>(null);
-  console.log(startTime, '스타트타임');
   //종료시간 저장하는 상태
   const [endTime, setEndTime] = useState<number | null>(null);
-  console.log(endTime, '앤드');
-  // const [totalTime, setTotalTime] = useState<number>(1);
-  // const [totalPrice, setTotalPrice] = useState<number>(price);
+  // console.log(endTime, '앤드');
 
   //업체의 오픈시간부터 마감시간까지의 시간슬롯을 배열로 만듬
   const timeSlots = Array.from(
-    { length: businessEndTime - businessStartTime + 1 },
-    (_, i) => businessStartTime + i
+    { length: endTimeNumber - startTimeNumber + 1 },
+    (_, i) => startTimeNumber + i
   );
 
   useEffect(() => {
-    const calculatedTime =
-      startTime !== null && endTime !== null ? endTime - startTime + 1 : 1;
-
-    // setTotalTime(calculatedTime);
-    // setTotalPrice(calculatedPrice);
-    onTimeSelect(calculatedTime);
+    if (startTime !== null) {
+      const finalEndTime = endTime !== null ? endTime : startTime;
+      const calculatedTime = finalEndTime - startTime + 1;
+      const selectedStartTime = startTimeNumber + startTime;
+      const selectedEndTime = startTimeNumber + finalEndTime;
+      onTimeSelect(calculatedTime, selectedStartTime, selectedEndTime);
+    }
   }, [startTime, endTime, onTimeSelect]);
 
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
     if (startTime === null) {
       setStartTime(index);
-      // setEndTime(index);
       //시작시간이 설정된 경우
       setEndTime(null); // 초기 클릭 시 endTime을 초기화
     } else if (startTime !== null && endTime === null) {
@@ -78,13 +77,6 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
     return false;
   };
 
-  // const getTotalTime = () => {
-  //     if (startTime !== null && endTime !== null) {
-  //         return endTime - startTime + 1;
-  //     }
-  //     return 1;
-  // };
-
   return (
     <DateTimePickerStyled>
       <DatePicker
@@ -101,10 +93,10 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
         {startTime !== null && (
           <div className="selected-time-info">
             <p>
-              {`${businessStartTime + startTime}:00`} ~{' '}
+              {`${startTimeNumber + startTime}:00`} ~{' '}
               {endTime !== null
-                ? `${businessStartTime + endTime + 1}:00`
-                : `${businessStartTime + startTime + 1}:00`}
+                ? `${startTimeNumber + endTime + 1}:00`
+                : `${startTimeNumber + startTime + 1}:00`}
               , {endTime !== null ? endTime - startTime + 1 : 1}
               시간
             </p>
@@ -120,9 +112,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
               <div key={index}>
-                {/* 시간 표시 부분 */}
                 <div className="time-boundary">{`${time}`}</div>
-                {/* 시간 슬롯과 금액 표시 */}
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'
