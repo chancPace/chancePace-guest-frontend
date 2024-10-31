@@ -10,12 +10,14 @@ interface PaymentStickyProps {
   businessEndTime: number;
   businessStartTime: number;
   spaceId: number;
+  cleanTime:number
 }
 const ReservationSticky = ({
   price,
   businessEndTime,
   businessStartTime,
   spaceId,
+  cleanTime,
 }: PaymentStickyProps) => {
   const router = useRouter();
   const [totalTime, setTotalTime] = useState<number>(1);
@@ -78,6 +80,8 @@ const ReservationSticky = ({
         businessEndTime={businessEndTime}
         price={price}
         onTimeSelect={handleTimeSelect}
+        spaceId={spaceId}
+        cleanTime={cleanTime}
       />
       <div className="additional-people">
         <p>인원추가</p>

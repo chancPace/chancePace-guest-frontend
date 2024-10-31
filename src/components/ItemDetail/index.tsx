@@ -68,6 +68,7 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
             businessStartTime={space.businessStartTime}
             businessEndTime={space.businessEndTime}
             spaceId = {space.id}
+            cleanTime = {space.cleanTime}
           />
         </div>
       </div>

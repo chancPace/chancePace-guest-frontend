@@ -7,23 +7,28 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { format } from 'date-fns'; 
+import { format } from 'date-fns';
+import { getBooking } from '@/pages/api/bookingApi';
 
 interface DateTimePickerProps {
   businessStartTime: number;
   businessEndTime: number;
   price: number;
+  spaceId: number;
+  cleanTime: number;
   onTimeSelect: (
     totalTime: number,
     startTime: number,
     endTime: number,
-    selectedDate: string 
+    selectedDate: string
   ) => void;
 }
 const DateTimePicker = ({
   businessEndTime,
   businessStartTime,
   price,
+  spaceId,
+  cleanTime,
   onTimeSelect,
 }: DateTimePickerProps) => {
   //사용자가 선택한 날짜 저장하는 상태
@@ -32,7 +37,28 @@ const DateTimePicker = ({
   const [startTime, setStartTime] = useState<number | null>(null);
   //예약 종료시간 인덱스
   const [endTime, setEndTime] = useState<number | null>(null);
+  //예약된 시간 상태
+  const [bookingTime, setBookingTime] = useState<
+    { startTime: number; endTime: number }[]
+  >([]);
 
+  const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
+    try {
+      const response = await getBooking(spaceId, formattedDate);
+      console.log(response.data, '리스펀스');
+      console.log(selectedDate, '셀렉데이트');
+      setBookingTime(response.data);
+    } catch (error) {
+      console.error('예약 시간 조회 실패', error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedDate) {
+      const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+      fetchBookingTime(spaceId, formattedDate);
+    }
+  }, [selectedDate, spaceId]);
 
   //업체의 오픈시간부터 마감시간까지의 시간대를 배열로 만듬
   const timeSlots = Array.from(
@@ -89,6 +115,15 @@ const DateTimePicker = ({
     return false;
   };
 
+  //예약된 시간과 현재 슬롯 비교하기
+  const isBooking = (index: number) => {
+    return bookingTime.some((booking) => {
+      const startIndex = booking.startTime - businessEndTime;
+      const endIndex = booking.endTime - businessStartTime + cleanTime;
+      return index >= startIndex && index <= endIndex;
+    });
+  };
+  console.log(isBooking, '이즈부킹');
   return (
     <DateTimePickerStyled>
       <DatePicker
@@ -128,7 +163,7 @@ const DateTimePicker = ({
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'
-                  }`}
+                  } ${isBooking(index) ? 'booked' : ''}`}
                   onClick={() => handleTimeClick(index)}
                 >
                   <div className="price">{price.toLocaleString()}원</div>
