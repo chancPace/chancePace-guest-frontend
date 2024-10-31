@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { RootState } from '@/redux/store';
 
+
 const MyProfile = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -16,6 +17,7 @@ const MyProfile = () => {
     dispatch(logout());
     router.replace('/');
   };
+
   return (
     <MyProfileStyled>
       <p className="user-id">{userInfo?.email}</p>

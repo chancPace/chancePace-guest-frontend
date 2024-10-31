@@ -4,15 +4,27 @@ import { useEffect, useState } from 'react';
 import { checkPassword, getUser, patchProfile } from '@/pages/api/userApi';
 import { UserData } from '@/types';
 import { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { useRouter } from 'next/router';
 const { Panel } = Collapse;
 interface ErrorResponseData {
   message: string;
 }
 const MyPage = () => {
+  const router = useRouter();
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
   const [form] = Form.useForm();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(true);
+
+  useEffect(() => {
+    if (!userInfo) {
+      router.replace('/');
+    }
+  }, [userInfo]);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
