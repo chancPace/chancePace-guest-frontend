@@ -38,17 +38,15 @@ export interface Space {
   cleanTime: number;
   spaceStatus: string; // 공간의 상태 ('AVAILABLE' 또는 'UNAVAILABLE')
   isOpen: boolean; // 공간이 열려 있는지 여부
-  caution: string[]; // 주의사항 (문자열 배열)
-  category: {
-    mainCategory: string;
-    subCategory: string;
-  };
+  guidelines: string; // 주의사항 (문자열 배열)
+  category: string;
   Minimum: number; // 최소 인원
-  Maximum: number; // 최대 인원
+  maxGuests: number; // 최대 인원
   spaceImg: { src: string }[]; // 공간 이미지 배열
   businessStartTime: number;
   businessEndTime: number;
   addPrice: number;
+  spaceRating: number;
 }
 
 export interface CategoryType {
@@ -69,12 +67,46 @@ export interface UserData {
   password?: string;
   phoneNumber?: string;
   userName?: string;
+  gender?: 'MALE' | 'FEMALE';
+  role?: 'USER' | 'HOST' | 'ADMIN';
+  bankAccountName?: string;
+  bankAccountOwner?: string;
+  bankAccountNumber?: string;
 }
 
 export interface BookingData {
-  startDate: string; // 예: ISO 형식의 날짜 문자열
-  startTime: number; // 시작 시간 (예: 시간 인덱스 또는 시간 값)
-  endTime: number; // 종료 시간
-  userId: number; // 사용자 ID
-  spaceId: number; // 공간 ID
+  startDate: string;
+  startTime: number;
+  endTime: number;
+  userId: number;
+  spaceId: number;
+}
+export interface MyBookingData {
+  id: number;
+  bookingStatus: string;
+  createdAt?: string;
+  updatedAt: string;
+  endTime: number;
+  spaceId: number;
+  startDate: string;
+  startTime: number;
+  userId: number;
+  space?: Space;
+}
+
+export interface ReviewData {
+  spaceId: number;
+  reviewComment: string;
+  reviewRating: number;
+}
+export interface GetReviewData {
+  createdAt: string;
+  spaceId: number;
+  reviewComment: string;
+  reviewRating: number;
+  id: number;
+  reviewStatus: string;
+  updatedAt: string;
+  userId: 1;
+  User?: { email: string };
 }

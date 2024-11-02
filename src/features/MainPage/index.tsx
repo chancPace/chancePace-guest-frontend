@@ -1,7 +1,7 @@
 import { MainStyled } from './styled';
 import SearchBar from '@/components/SearchBar';
 import ItemList from '@/components/ItemList';
-import {  message } from 'antd';
+import { message } from 'antd';
 import Category from '@/components/Category';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -43,6 +43,7 @@ const MainPage = () => {
   useEffect(() => {
     const fetchSpace = async () => {
       const spaceData = await getSpace();
+      // console.log(spaceData, '스페이스데이터');
       if (spaceData.data && spaceData.data.length > 0) {
         const top8Space = spaceData.data.slice(0, 8);
         setNewSpace(top8Space);

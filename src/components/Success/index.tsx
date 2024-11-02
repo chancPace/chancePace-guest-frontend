@@ -36,8 +36,8 @@ const Success = () => {
                 ? parseInt(startTime[0])
                 : parseInt(startTime || '0'),
               endTime: Array.isArray(endTime)
-                ? parseInt(endTime[0])
-                : parseInt(endTime || '0'),
+                ? parseInt(endTime[0]) + 1
+                : parseInt(endTime || '0') + 1,
               userId,
               spaceId: Array.isArray(spaceId)
                 ? parseInt(spaceId[0])

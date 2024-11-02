@@ -1,15 +1,33 @@
-import { Space } from '@/types';
+import { GetReviewData, Space } from '@/types';
 import { ItemDetailStyled } from './styled';
-// import ImgSection from '../ImgSection';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import KakaoMap from '../KakaoMap';
 import ReservationSticky from '../ReservationSticky';
+import { useEffect, useState } from 'react';
+import { getReviewBySpace } from '@/pages/api/reviewApi';
+import ReviewList from '../ReviewList';
 
 interface ItemDetailProps {
   space: Space;
 }
 const ItemDetail = ({ space }: ItemDetailProps) => {
+  const [reviews, setReviews] = useState<GetReviewData[]>([]);
+  // console.log(reviews, '리뷰즈');
+  console.log(space, '스페이스');
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await getReviewBySpace(space.id);
+        setReviews(response.data);
+      } catch (error) {
+        console.error('리뷰를 불러오지 못했습니다.', error);
+      }
+    };
+    fetchReviews();
+  }, [space.id]);
+
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -33,17 +51,23 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
     {
       key: '2',
       label: '주의사항',
-      children: 'Content of Tab Pane 2',
+      children: <div>{space.guidelines}</div>,
     },
     {
       key: '3',
       label: '후기',
-      children: 'Content of Tab Pane 3',
-    },
-    {
-      key: '4',
-      label: 'Q&A',
-      children: 'Content of Tab Pane 3',
+      children: (
+        <div className="review-list">
+          {reviews.length > 0 ? (
+            reviews.map((x, i) => (
+              // console.log(review,'리뷰')
+              <ReviewList x={x} key={i} />
+            ))
+          ) : (
+            <p>등록된 후기가 없습니다.</p>
+          )}
+        </div>
+      ),
     },
   ];
 
@@ -55,7 +79,7 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
       /> */}
       <div className="spaceTitle">
         <p>{space.spaceName}</p>
-        <p>최대 인원 {space.Maximum}명</p>
+        <p>최대 인원 {space.maxGuests}명</p>
         <p>{space.spaceLocation}</p>
       </div>
       <div className="detailBottom">
@@ -67,8 +91,8 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
             price={space.spacePrice}
             businessStartTime={space.businessStartTime}
             businessEndTime={space.businessEndTime}
-            spaceId = {space.id}
-            cleanTime = {space.cleanTime}
+            spaceId={space.id}
+            cleanTime={space.cleanTime}
           />
         </div>
       </div>

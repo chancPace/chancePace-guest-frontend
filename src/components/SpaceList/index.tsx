@@ -1,27 +1,34 @@
 // components/SpaceList.tsx
 import { useEffect, useState } from 'react';
-import { getSpace } from '@/pages/api/spaceApi';
+import { getSearchSpace, getSpace } from '@/pages/api/spaceApi';
 import ItemList from '../ItemList';
 import { SpaceListStyled } from './styled';
 import { Space } from '@/types';
 
 interface SpaceListProps {
-  type: 'new' | 'popular' | 'recommended';
+  type?: 'new' | 'popular' | 'recommended';
+  query?: string;
 }
 
-const SpaceList: React.FC<SpaceListProps> = ({ type }) => {
+const SpaceList = ({ type, query }: SpaceListProps) => {
   const [spaces, setSpaces] = useState<Space[]>([]);
 
   useEffect(() => {
     const fetchSpace = async () => {
-      const spaceData = await getSpace();
-      if (spaceData?.data && spaceData.data.length > 0) {
-        let filteredSpaces;
-
-        // type에 따라 데이터를 필터링 또는 슬라이싱
+      let data;
+      if (query) {
+        data = await getSearchSpace(query);
+        console.log(data, '데이터데이터');
+      } else {
+        data = await getSpace();
+      }
+      if (data?.data) {
+        let filterSpace;
         if (type === 'new') {
-          filteredSpaces = spaceData.data.slice(0, 30); // 새로운 장소 상위 8개
+          filterSpace = data.data.slice(0, 30); // 새로운 장소 상위 8개
         }
+        setSpaces(filterSpace || data.data);
+        // console.log(spaces, '스페이시스');
         // else if (type === 'popular') {
         //   filteredSpaces = spaceData.data.filter(
         //     (space: Space) => space.isPopular
@@ -31,15 +38,15 @@ const SpaceList: React.FC<SpaceListProps> = ({ type }) => {
         //     (space: Space) => space.isRecommended
         //   ); // 추천 장소 필터링
         // }
-
-        setSpaces(filteredSpaces || []);
       }
     };
-
     fetchSpace();
-  }, [type]);
+  }, [type, query]);
 
   const getTitle = () => {
+    if (query) {
+      return `"${query}" 검색 결과`;
+    }
     switch (type) {
       case 'new':
         return '새로운 장소';
@@ -52,7 +59,7 @@ const SpaceList: React.FC<SpaceListProps> = ({ type }) => {
 
   return (
     <SpaceListStyled>
-      <h1 className="title">{getTitle()}</h1> {/* 타입에 따라 타이틀 표시 */}
+      <h1 className="title">{getTitle()}</h1>
       <div className="list">
         {spaces.map((space, i) => (
           <ItemList x={space} key={i} />

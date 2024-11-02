@@ -8,11 +8,24 @@ const API_URL = 'http://localhost:4000/api/space';
 export const getSpace = async () => {
   try {
     const response = await axios.get(`${API_URL}/get-space`);
-    return response.data
+    // console.log(response,'리스펀스')
+    return response.data;
   } catch (error) {
     const axiosError = error as AxiosError<ErrorResponseData>;
     if (axiosError.response) {
       message.error(axiosError.response.data.message);
     }
+  }
+};
+
+export const getSearchSpace = async (value: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/get-search-space`, {
+      params: { query: value },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('공간을 불러오지 못했습니다.', error);
+    throw error;
   }
 };

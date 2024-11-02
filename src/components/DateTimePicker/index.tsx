@@ -28,7 +28,6 @@ const DateTimePicker = ({
   businessStartTime,
   price,
   spaceId,
-  cleanTime,
   onTimeSelect,
 }: DateTimePickerProps) => {
   //사용자가 선택한 날짜 저장하는 상태
@@ -41,7 +40,7 @@ const DateTimePicker = ({
   const [bookingTime, setBookingTime] = useState<
     { startTime: number; endTime: number }[]
   >([]);
-
+  // console.log(businessEndTime, businessStartTime, '비즈니스타임');
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
@@ -119,11 +118,13 @@ const DateTimePicker = ({
   const isBooking = (index: number) => {
     return bookingTime.some((booking) => {
       const startIndex = booking.startTime - businessEndTime;
-      const endIndex = booking.endTime - businessStartTime + cleanTime;
+      const endIndex = booking.endTime - businessStartTime;
+      // console.log(startIndex, endIndex, '슬롯비교');
       return index >= startIndex && index <= endIndex;
     });
   };
-  console.log(isBooking, '이즈부킹');
+
+  // console.log(isBooking, '이즈부킹');
   return (
     <DateTimePickerStyled>
       <DatePicker
@@ -142,8 +143,8 @@ const DateTimePicker = ({
             <p>
               {`${businessStartTime + startTime}:00`} ~{' '}
               {endTime !== null
-                ? `${businessStartTime + endTime + 1}:00`
-                : `${businessStartTime + startTime + 1}:00`}
+                ? `${Number(businessStartTime + endTime) + 1}:00`
+                : `${Number(businessStartTime + startTime) + 1}:00`}
               , {endTime !== null ? endTime - startTime + 1 : 1}
               시간
             </p>
@@ -153,13 +154,13 @@ const DateTimePicker = ({
       <div className="swiper-container">
         <Swiper
           spaceBetween={0}
-          slidesPerView={5}
+          slidesPerView={2}
           pagination={{ clickable: true }}
         >
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
               <div key={index}>
-                <div className="time-boundary">{`${time}`}</div>
+                <div className="time-boundary">{`${Number(time)}`}</div>
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'

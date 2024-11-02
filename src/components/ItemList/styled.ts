@@ -44,6 +44,14 @@ export const ItemListStyled = styled.div`
           font-size: ${({ theme }) => theme.fontSizes.sm};
         }
       }
+      .rate {
+        display: flex;
+        .rate-number {
+          margin-left: 5px;
+          font-weight: 400;
+          font-size: 13px;
+        }
+      }
     }
     .bookmark-icon {
       font-size: 1.2rem;

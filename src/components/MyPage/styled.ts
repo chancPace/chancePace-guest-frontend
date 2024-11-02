@@ -17,39 +17,11 @@ export const MyPageStyled = styled.div`
         margin-bottom: 10px;
       }
     }
-    .user-info-bottom {
-      display: flex;
-      justify-content: center;
-      .ant-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .ant-collapse {
-        width: 500px;
-        text-align: left;
-        font-weight: bold;
-        border: 0;
-        .ant-collapse-item {
-          background-color: white;
-          border-radius: 0;
-          .ant-form-item-control-input {
-            width: 450px;
-          }
-        }
-      }
-      .ant-form-item-control-input {
-        width: 450px;
-      }
-      .ant-btn {
-        background-color: black;
-        display: flex;
-        justify-content: center;
-        width: 450px !important;
-        color: white;
-        margin-top: 10px;
-      }
-    }
+  }
+  .my-booking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   @media screen and (max-width: 480px) {
   }
