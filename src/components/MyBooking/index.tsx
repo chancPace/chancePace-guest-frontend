@@ -18,7 +18,7 @@ const MyBooking = ({ x }: MyBookingProps) => {
     const today = new Date().toDateString(); // 시간 제외한 오늘 날짜 문자열
     const bookingDate = new Date(x.startDate).toDateString(); // 시간 제외한 예약 날짜 문자열
     setIsReviewBtnVisible(today <= bookingDate);
-  }, []);
+  }, [x.startDate]);
 
   //예약내역 정보 클릭하면 해당 공간의 상세페이지로 이동
   const handleClick = () => {
