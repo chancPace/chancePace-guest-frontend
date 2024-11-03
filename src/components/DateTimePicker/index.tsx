@@ -143,10 +143,9 @@ const DateTimePicker = ({
             <p>
               {`${businessStartTime + startTime}:00`} ~{' '}
               {endTime !== null
-                ? `${Number(businessStartTime + endTime) + 1}:00`
-                : `${Number(businessStartTime + startTime) + 1}:00`}
-              , {endTime !== null ? endTime - startTime + 1 : 1}
-              시간
+                ? `${businessStartTime + endTime + 1}:00`
+                : `${businessStartTime + startTime + 1}:00`}
+              , {endTime !== null ? endTime - startTime + 1 : 1} 시간
             </p>
           </div>
         )}
@@ -160,7 +159,7 @@ const DateTimePicker = ({
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
               <div key={index}>
-                <div className="time-boundary">{`${Number(time)}`}</div>
+                <div className="time-boundary">{`${time}:00`} </div>
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'

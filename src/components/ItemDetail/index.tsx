@@ -14,8 +14,9 @@ interface ItemDetailProps {
 const ItemDetail = ({ space }: ItemDetailProps) => {
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   // console.log(reviews, '리뷰즈');
-  console.log(space, '스페이스');
-
+  // console.log(space, '스페이스');
+  console.log(typeof(space.businessEndTime),'엔드')
+  console.log(space.businessStartTime,'스타트')
   useEffect(() => {
     const fetchReviews = async () => {
       try {
