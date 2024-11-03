@@ -12,7 +12,11 @@ export const SpaceListStyled = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
-
+  .subcategory-list {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+  }
   @media screen and (max-width: 480px) {
     .list {
       grid-template-columns: repeat(1, 1fr);

@@ -29,8 +29,10 @@ export const updateRatingBySpace = async (spaceId: number) => {
   }
 };
 
-export const updateReview = async () => {
+export const updateReview = async (reviewData:ReviewData) => {
   try {
+    const response = await axios.patch(`${API_URL}/update-review`,reviewData)
+    return response.data
   } catch (error) {
     console.error('리뷰 수정 실패', error);
     throw error;

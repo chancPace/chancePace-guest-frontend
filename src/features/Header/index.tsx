@@ -3,12 +3,10 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { FiUser } from 'react-icons/fi';
-import { useState } from 'react';
-import MyProfile from '@/components/MyProfile';
+
 
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
-  const [istoggle, setIsToggle] = useState(false);
 
   return (
     <HeaderStyled>
@@ -25,19 +23,10 @@ const Header = () => {
               </Link>
               <Link
                 href="/mypage"
-                onMouseEnter={() => setIsToggle(true)}
-                onMouseLeave={() => setIsToggle(false)}
               >
                 <p>
                   <span>
                     <FiUser className="headerIcon" />
-                    {istoggle ? (
-                      <div className="headerToggle">
-                        <MyProfile />
-                      </div>
-                    ) : (
-                      <></>
-                    )}
                   </span>
                 </p>
               </Link>

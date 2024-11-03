@@ -6,22 +6,17 @@ export const MyPageStyled = styled.div`
 
   .user-info {
     text-align: center;
-    .user-info-top {
-      margin-bottom: 30px;
-      .user-img {
-        margin: auto;
-        width: 120px;
-        height: 120px;
-        background-color: gray;
-        border-radius: 50%;
-        margin-bottom: 10px;
-      }
-    }
   }
   .my-booking {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .logout {
+    width: 96.45px;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
   }
   @media screen and (max-width: 480px) {
   }

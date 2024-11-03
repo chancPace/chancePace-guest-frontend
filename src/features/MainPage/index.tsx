@@ -12,12 +12,14 @@ import { AxiosError } from 'axios';
 import { getCategory } from '@/pages/api/categoryApi';
 import { getSpace } from '@/pages/api/spaceApi';
 import Link from 'next/link';
+import router from 'next/router';
+import { CategoryType } from '@/types';
 interface ErrorResponseData {
   message: string;
 }
 
 const MainPage = () => {
-  const [bigCategory, setBigCategory] = useState([]);
+  const [bigCategory, setBigCategory] = useState<CategoryType[]>([]);
   const [newSpace, setNewSpace] = useState([]);
 
   //카테고리(대분류) 띄우기
@@ -25,6 +27,7 @@ const MainPage = () => {
     const fetchCategory = async () => {
       try {
         const categoryData = await getCategory();
+        //대분류 가져오기
         setBigCategory(
           categoryData.data.filter(
             (category: { pId: null }) => category.pId === null
@@ -40,10 +43,15 @@ const MainPage = () => {
     fetchCategory();
   }, []);
 
+  //카테고리 클릭
+  const handleCategoryClick = (categoryId: number) => {
+    router.push(`/category/${categoryId}`);
+  };
+
+  //새로 등록된 공간(8개 출력)
   useEffect(() => {
     const fetchSpace = async () => {
       const spaceData = await getSpace();
-      // console.log(spaceData, '스페이스데이터');
       if (spaceData.data && spaceData.data.length > 0) {
         const top8Space = spaceData.data.slice(0, 8);
         setNewSpace(top8Space);
@@ -97,7 +105,13 @@ const MainPage = () => {
         <p className="categoryTitle">최적의 장소를 찾아보세요!</p>
         <div className="categoryList">
           {bigCategory.map((x, i) => {
-            return <Category x={x} key={i} />;
+            return (
+              <Category
+                x={x}
+                key={i}
+                onClick={() => handleCategoryClick(x.id)}
+              />
+            );
           })}
         </div>
       </div>

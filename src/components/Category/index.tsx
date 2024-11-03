@@ -3,9 +3,9 @@ import { CategoryStyled } from './styled';
 import { CategoryType } from '@/types';
 interface CategoryProps {
   x: CategoryType;
+  onClick: () => void;
 }
-const Category: React.FC<CategoryProps> = ({ x }) => {
-
-  return <CategoryStyled>{x.categoryName}</CategoryStyled>;
+const Category = ({ x, onClick }: CategoryProps) => {
+  return <CategoryStyled onClick={onClick}>{x.categoryName}</CategoryStyled>;
 };
 export default Category;

@@ -1,9 +1,9 @@
 import { MyPageStyled } from './styled';
-import { Tabs, Form} from 'antd';
+import { Tabs, Form } from 'antd';
 import { useEffect, useState } from 'react';
-import { getUser} from '@/pages/api/userApi';
+import { getUser } from '@/pages/api/userApi';
 import { GetReviewData, MyBookingData, Space, UserData } from '@/types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
 import { getAllBooking } from '@/pages/api/bookingApi';
@@ -12,16 +12,25 @@ import { getSpace } from '@/pages/api/spaceApi';
 import ReviewList from '../ReviewList';
 import { getMyReview } from '@/pages/api/reviewApi';
 import EditUser from '../EditUser';
+import Cookies from 'js-cookie';
+import { logout } from '@/redux/slices/userSlice';
 
 const MyPage = () => {
   const router = useRouter();
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(true);
   const [userBooking, setUserBooking] = useState([]);
   const [userReviews, setUserReviews] = useState<GetReviewData[]>([]); // 리뷰 데이터 상태 추가
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    dispatch(logout());
+    router.replace('/');
+  };
 
   useEffect(() => {
     if (!userInfo) {
@@ -84,8 +93,10 @@ const MyPage = () => {
       children: (
         <div className="user-info">
           <div className="user-info-top">
-            <div className="user-img"></div>
-            <div className="user-id">{userData?.email}</div>
+            <div className="user-id">
+              <p>{userData?.email}</p>
+              <p>{userData?.userName}</p>
+            </div>
           </div>
           <div className="user-bottom">
             <EditUser
@@ -117,7 +128,6 @@ const MyPage = () => {
       children: (
         <div>
           {userReviews?.map((x, i) => {
-            console.log(x, 'x');
             return <ReviewList x={x} key={i} />;
           })}
         </div>
@@ -128,6 +138,9 @@ const MyPage = () => {
   return (
     <MyPageStyled>
       <Tabs tabPosition="left" items={tabItems} />
+      <p className="logout" onClick={handleLogout}>
+        로그아웃
+      </p>
     </MyPageStyled>
   );
 };
