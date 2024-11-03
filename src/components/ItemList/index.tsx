@@ -49,6 +49,9 @@ const ItemList = ({ x }: ItemListProps) => {
           <p>{x.spaceName}</p>
           <p>{x.spaceLocation}</p>
           <p>{x.spacePrice.toLocaleString()}원 / 시간</p>
+          {x.discount && (
+            <span className='discount'>시간당 {x.discount}할인</span>
+          )}
           <div className="rate">
             <FaStar style={{ color: '#FEC01F' }} />
             <p className="rate-number">{x.spaceRating}({reviewCount})</p>

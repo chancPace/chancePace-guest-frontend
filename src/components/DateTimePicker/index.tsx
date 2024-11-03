@@ -22,6 +22,7 @@ interface DateTimePickerProps {
     endTime: number,
     selectedDate: string
   ) => void;
+  onDateSelect?: (date: Date | null) => void; // 선택한 날짜를 처리할 선택적 콜백
 }
 const DateTimePicker = ({
   businessEndTime,
@@ -29,6 +30,7 @@ const DateTimePicker = ({
   price,
   spaceId,
   onTimeSelect,
+  onDateSelect, // 부모로부터 받은 onDateSelect 콜백
 }: DateTimePickerProps) => {
   //사용자가 선택한 날짜 저장하는 상태
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -83,6 +85,10 @@ const DateTimePicker = ({
 
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
+    if (!selectedDate) {
+      alert('날짜를 먼저 선택해주세요.'); // 또는 다른 방식으로 사용자에게 알림 표시
+      return; // 날짜가 선택되지 않으면 함수 종료
+    }
     if (startTime === null) {
       setStartTime(index);
       setEndTime(null);
@@ -125,15 +131,29 @@ const DateTimePicker = ({
   };
 
   // console.log(isBooking, '이즈부킹');
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+
+    // 시간 초기화
+    setStartTime(null);
+    setEndTime(null);
+
+    // 부모로부터 받은 onDateSelect 콜백 호출
+    if (onDateSelect) {
+      onDateSelect(date);
+    }
+  };
+
   return (
     <DateTimePickerStyled>
       <DatePicker
         dateFormat="yyyy.MM.dd"
         selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
         placeholderText="날짜를 선택해주세요"
         className="custom-datepicker"
         minDate={new Date()} // 오늘 이전 날짜는 선택 불가
+        onChange={handleDateChange} // 날짜 변경 시 handleDateChange 호출
       />
 
       <div className="time-select-title">

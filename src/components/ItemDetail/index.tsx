@@ -15,8 +15,8 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   // console.log(reviews, '리뷰즈');
   // console.log(space, '스페이스');
-  console.log(typeof(space.businessEndTime),'엔드')
-  console.log(space.businessStartTime,'스타트')
+  console.log(typeof space.businessEndTime, '엔드');
+  console.log(space.businessStartTime, '스타트');
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -56,7 +56,7 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
     },
     {
       key: '3',
-      label: '후기',
+      label: `후기 (${reviews.length})`, // 후기 개수 표시
       children: (
         <div className="review-list">
           {reviews.length > 0 ? (
@@ -94,6 +94,7 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
             businessEndTime={space.businessEndTime}
             spaceId={space.id}
             cleanTime={space.cleanTime}
+            discount={space.discount}
           />
         </div>
       </div>
