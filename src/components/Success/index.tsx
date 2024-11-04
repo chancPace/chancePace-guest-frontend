@@ -28,6 +28,10 @@ const Success = () => {
             amount: Number(amount),
           });
           if (paymentResult.result) {
+            // console.log(paymentResult.data.id,'페이먼트리절트')
+            const paymentId = paymentResult.data.id;
+            // console.log(paymentId, '페이먼트아이디');
+
             const bookingData = {
               startDate: Array.isArray(startDate)
                 ? startDate[0]
@@ -42,6 +46,7 @@ const Success = () => {
               spaceId: Array.isArray(spaceId)
                 ? parseInt(spaceId[0])
                 : parseInt(spaceId || '0'),
+              paymentId,
             };
             await addBooking(bookingData);
           }

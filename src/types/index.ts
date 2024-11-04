@@ -29,6 +29,12 @@ export interface Procedure {
 
 export interface Space {
   id: number;
+  Images: {
+    id: number;
+    imageUrl: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
   spaceName: string;
   spaceLocation: string;
   description: string;

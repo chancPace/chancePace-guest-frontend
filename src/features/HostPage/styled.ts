@@ -34,7 +34,7 @@ export const HostStyled = styled.div`
       left: 10%;
       transform: translate(-10%, -50%);
       color: white;
-      mix-blend-mode: normal; 
+      mix-blend-mode: normal;
       font-weight: bold;
       span {
         display: inline-block;
@@ -59,7 +59,8 @@ export const HostStyled = styled.div`
   .hostInfo {
     width: 100%;
     height: 400px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
@@ -74,9 +75,8 @@ export const HostStyled = styled.div`
   .hostProcedure {
     margin: 0 auto;
     width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     border-radius: 20px;
     box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.5);
   }
@@ -117,12 +117,13 @@ export const HostStyled = styled.div`
       margin: 20px;
     }
     .hostInfo {
-      flex-direction: column;
-      align-items: center;
+      grid-template-columns: repeat(1, 1fr);
+      background-color: green;
     }
     .hostProcedure {
       flex-direction: column;
       text-align: center;
+      grid-template-columns: repeat(2, 1fr);
     }
     .mainImg {
       grid-template-columns: repeat(2, 1fr);

@@ -2,19 +2,19 @@ import styled from 'styled-components';
 
 export const HostInfoStyled = styled.div`
   text-align: center;
-
+  /* background-color: orange; */
   .hostInfoImg {
     width: 300px;
     height: 250px;
     border-radius: 30px;
     margin-bottom: 5px;
+    object-fit: cover;
   }
 
   .hostTitle {
     text-align: center;
     margin: 10px auto;
     width: 250px;
-    /* margin-bottom: 5px; */
     font-size: ${({ theme }) => theme.fontSizes.lg};
     font-weight: bold;
   }
@@ -29,18 +29,12 @@ export const HostInfoStyled = styled.div`
     padding: 20px;
     width: 300px;
     height: 300px;
-    /* background-color: lightgray; */
     border-radius: 20px;
     margin: 0 auto;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
     .procedureTitle {
       display: flex;
       align-items: center;
-      /* text-align: left; */
       margin: 20px 0;
-      /* width: 250px; */
       font-size: ${({ theme }) => theme.fontSizes.lg};
       font-weight: bold;
       .procedureImg {
@@ -60,7 +54,7 @@ export const HostInfoStyled = styled.div`
 
   @media screen and (max-width: 480px) {
     .hostInfoImg {
-      width: 100%;
+      width: 90%;
     }
     .hostText {
       margin-bottom: 5px;
@@ -68,7 +62,7 @@ export const HostInfoStyled = styled.div`
   }
   @media screen and (min-width: 481px) and (max-width: 768px) {
     .hostInfoImg {
-      width: 100%;
+      width: 90%;
     }
     .hostText {
       margin-bottom: 5px;

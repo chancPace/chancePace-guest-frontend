@@ -7,6 +7,7 @@ import ReservationSticky from '../ReservationSticky';
 import { useEffect, useState } from 'react';
 import { getReviewBySpace } from '@/pages/api/reviewApi';
 import ReviewList from '../ReviewList';
+import ImgSection from '../ImgSection';
 
 interface ItemDetailProps {
   space: Space;
@@ -14,7 +15,7 @@ interface ItemDetailProps {
 const ItemDetail = ({ space }: ItemDetailProps) => {
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   // console.log(reviews, '리뷰즈');
-  // console.log(space, '스페이스');
+  console.log(space, '스페이스');
   console.log(typeof space.businessEndTime, '엔드');
   console.log(space.businessStartTime, '스타트');
   useEffect(() => {
@@ -78,6 +79,12 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
         mainImg={space.spaceImg[0].src}
         smallImgs={space.spaceImg.slice(1)}
       /> */}
+      <ImgSection
+        mainImg={`http://localhost:4000/${space.Images[0].imageUrl}`}
+        smallImgs={space.Images.slice(1).map((img) => ({
+          src: `http://localhost:4000/${img.imageUrl}`,
+        }))}
+      />
       <div className="spaceTitle">
         <p>{space.spaceName}</p>
         <p>최대 인원 {space.maxGuests}명</p>

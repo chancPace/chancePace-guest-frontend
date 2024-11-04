@@ -44,8 +44,6 @@ const DateTimePicker = ({
     { startTime: number; endTime: number }[]
   >([]);
 
-  const [openDatePicker, setOpenDatePicker] = useState(false);
-
   // console.log(businessEndTime, businessStartTime, '비즈니스타임');
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
@@ -90,7 +88,6 @@ const DateTimePicker = ({
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
     if (!selectedDate) {
-      setOpenDatePicker(true); // DatePicker 열기
       message.warning('날짜를 먼저 선택해주세요.');
       return;
     }
@@ -137,7 +134,6 @@ const DateTimePicker = ({
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    setOpenDatePicker(false); // 날짜 선택 후 DatePicker 닫기
 
     // 시간 초기화
     setStartTime(null);
@@ -158,7 +154,7 @@ const DateTimePicker = ({
         className="custom-datepicker"
         minDate={new Date()}
         onChange={handleDateChange}
-        open={openDatePicker}
+        // onClick={() => setOpenDatePicker(true)} // 필드를 클릭하면 달력이 열림
       />
 
       <div className="time-select-title">

@@ -13,7 +13,7 @@ import { getCategory } from '@/pages/api/categoryApi';
 import { getSpace } from '@/pages/api/spaceApi';
 import Link from 'next/link';
 import router from 'next/router';
-import { CategoryType } from '@/types';
+import { CategoryType, Space } from '@/types';
 import Banner from '@/components/Banner';
 interface ErrorResponseData {
   message: string;
@@ -54,8 +54,10 @@ const MainPage = () => {
     const fetchSpace = async () => {
       const spaceData = await getSpace();
       if (spaceData.data && spaceData.data.length > 0) {
-        const top8Space = spaceData.data.slice(0, 8);
-        setNewSpace(top8Space);
+        const availableSpaces = spaceData.data
+          .filter((space:Space) => space.spaceStatus === 'AVAILABLE')
+          .slice(0, 8);
+        setNewSpace(availableSpaces);
       }
     };
     fetchSpace();

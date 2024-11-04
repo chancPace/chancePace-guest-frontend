@@ -30,6 +30,7 @@ export const verifyPayment = async (paymentData: Payment) => {
         },
       }
     );
+    console.log(response, '리스폰스페이먼트');
     return response.data;
   } catch (error) {
     console.error('결제확인 요청 실패', error);

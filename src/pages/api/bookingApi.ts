@@ -6,6 +6,7 @@ const API_URL = 'http://localhost:4000/api/booking';
 export const addBooking = async (bookingData: BookingData) => {
   try {
     const response = await axios.post(`${API_URL}/add-booking`, bookingData);
+    console.log(response,'리스폰스부킹')
     return response.data;
   } catch (error) {
     console.error('예약 저장 실패', error);
