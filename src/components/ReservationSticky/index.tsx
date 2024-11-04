@@ -54,7 +54,6 @@ const ReservationSticky = ({
     setTotalTime(totalTime);
     setSelectedStartTime(startTime);
     setSelectedEndTime(endTime);
-    // setStartDate(date);
     if (!startDate) {
       const calculatedTotal = price * totalTime;
       const calculatedDiscount = discount * totalTime;

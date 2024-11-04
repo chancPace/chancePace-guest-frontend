@@ -14,6 +14,7 @@ import { getSpace } from '@/pages/api/spaceApi';
 import Link from 'next/link';
 import router from 'next/router';
 import { CategoryType } from '@/types';
+import Banner from '@/components/Banner';
 interface ErrorResponseData {
   message: string;
 }
@@ -62,6 +63,7 @@ const MainPage = () => {
 
   return (
     <MainStyled>
+      <Banner />
       <div className="trendingSpot">
         <p className="trendingSpotTitle">이달의 공간</p>
         <div className="trendingSpotRight">

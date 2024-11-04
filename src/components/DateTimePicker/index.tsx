@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { format } from 'date-fns';
 import { getBooking } from '@/pages/api/bookingApi';
+import { message } from 'antd';
 
 interface DateTimePickerProps {
   businessStartTime: number;
@@ -42,6 +43,9 @@ const DateTimePicker = ({
   const [bookingTime, setBookingTime] = useState<
     { startTime: number; endTime: number }[]
   >([]);
+
+  const [openDatePicker, setOpenDatePicker] = useState(false);
+
   // console.log(businessEndTime, businessStartTime, '비즈니스타임');
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
@@ -86,8 +90,9 @@ const DateTimePicker = ({
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
     if (!selectedDate) {
-      alert('날짜를 먼저 선택해주세요.'); // 또는 다른 방식으로 사용자에게 알림 표시
-      return; // 날짜가 선택되지 않으면 함수 종료
+      setOpenDatePicker(true); // DatePicker 열기
+      message.warning('날짜를 먼저 선택해주세요.');
+      return;
     }
     if (startTime === null) {
       setStartTime(index);
@@ -130,10 +135,9 @@ const DateTimePicker = ({
     });
   };
 
-  // console.log(isBooking, '이즈부킹');
-
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    setOpenDatePicker(false); // 날짜 선택 후 DatePicker 닫기
 
     // 시간 초기화
     setStartTime(null);
@@ -152,8 +156,9 @@ const DateTimePicker = ({
         selected={selectedDate}
         placeholderText="날짜를 선택해주세요"
         className="custom-datepicker"
-        minDate={new Date()} // 오늘 이전 날짜는 선택 불가
-        onChange={handleDateChange} // 날짜 변경 시 handleDateChange 호출
+        minDate={new Date()}
+        onChange={handleDateChange}
+        open={openDatePicker}
       />
 
       <div className="time-select-title">
