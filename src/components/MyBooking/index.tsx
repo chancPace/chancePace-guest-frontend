@@ -43,6 +43,8 @@ const MyBooking = ({ x }: MyBookingProps) => {
     setIsReviewBtnVisible(false);
   };
 
+  //상세보기 클릭 시 해당 공가
+
   return (
     <MyBookingStyled>
       <div className="booking-date">

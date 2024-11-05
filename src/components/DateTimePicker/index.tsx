@@ -44,12 +44,10 @@ const DateTimePicker = ({
     { startTime: number; endTime: number }[]
   >([]);
 
-  // console.log(businessEndTime, businessStartTime, '비즈니스타임');
+
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
-      console.log(response.data, '리스펀스');
-      console.log(selectedDate, '셀렉데이트');
       setBookingTime(response.data);
     } catch (error) {
       console.error('예약 시간 조회 실패', error);
@@ -127,7 +125,6 @@ const DateTimePicker = ({
     return bookingTime.some((booking) => {
       const startIndex = booking.startTime - businessEndTime;
       const endIndex = booking.endTime - businessStartTime;
-      // console.log(startIndex, endIndex, '슬롯비교');
       return index >= startIndex && index <= endIndex;
     });
   };

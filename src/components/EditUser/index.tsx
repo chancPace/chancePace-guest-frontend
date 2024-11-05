@@ -3,6 +3,8 @@ import { EditUserStyled } from './styled';
 import { Button, Collapse, Form, Input, message, Radio, Select } from 'antd';
 import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
+import { useDispatch } from 'react-redux';
+import { updateUserProfile } from '@/redux/slices/userSlice';
 const { Panel } = Collapse;
 
 interface ErrorResponseData {
@@ -23,8 +25,10 @@ const EditUser = ({
   setIsPasswordConfirm,
   showPasswordInput,
   setShowPasswordInput,
+  setUserData,
 }: UserAccountFormProps) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch(); // 디스패치 훅 추가
 
   const bankOpt = [
     { value: 'KB', label: '국민은행' },
@@ -106,6 +110,8 @@ const EditUser = ({
       };
       const response = await patchProfile(updateData);
       message.success(response.message || '회원 정보가 업데이트되었습니다.');
+      dispatch(updateUserProfile(updateData)); // 리덕스 업데이트
+      setUserData({ ...userData, ...updateData }); // 로컬 상태 업데이트
     } catch (error) {
       console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
     }
@@ -161,7 +167,7 @@ const EditUser = ({
                   { required: true, message: '휴대폰 번호를 입력해주세요' },
                 ]}
               >
-                <Input placeholder="숫자만 입력해주세요" type="number" />
+                <Input placeholder="-포함하여 입력해주세요" />
               </Form.Item>
               <Form.Item
                 label="성별"

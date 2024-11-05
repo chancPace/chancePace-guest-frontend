@@ -33,7 +33,7 @@ const LoginForm = () => {
         dispatch(
           loginSuccess({
             email: response.data.email,
-            name: response.data.userName,
+            userName: response.data.userName,
             role: response.data.role,
             token: response.token,
             id: response.data.id,

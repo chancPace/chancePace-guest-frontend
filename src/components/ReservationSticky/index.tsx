@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { message } from 'antd';
 
 interface PaymentStickyProps {
   price: number;
@@ -32,6 +35,8 @@ const ReservationSticky = ({
     null
   );
   const [selectedEndTime, setSelectedEndTime] = useState<number | null>(null);
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  console.log(userInfo, '유저인포');
 
   useEffect(() => {
     if (selectedStartTime !== null && selectedEndTime !== null) {
@@ -67,7 +72,6 @@ const ReservationSticky = ({
     setSelectedStartTime(null);
     setSelectedEndTime(null);
     setTotalTime(0); // 초기 totalTime 설정
-
     setTotalPrice(0);
     setDiscountPrice(0);
   };
@@ -90,6 +94,15 @@ const ReservationSticky = ({
       return;
     }
 
+    if (
+      userInfo &&
+      (!/^[^\d]+$/.test(userInfo.userName) || !userInfo.phoneNumber)
+    ) {
+      message.warning('이름과 전화번호를 입력해 주세요.');
+      router.push('/mypage'); // 회원정보수정 페이지로 이동
+      return;
+    }
+
     router.push({
       pathname: '/pay',
       query: {
@@ -97,7 +110,7 @@ const ReservationSticky = ({
         price: discountPrice,
         startDate,
         startTime: Number(selectedStartTime),
-        endTime: Number(selectedEndTime)+1,
+        endTime: Number(selectedEndTime) + 1,
         spaceId,
       },
     });

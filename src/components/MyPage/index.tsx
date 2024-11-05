@@ -59,7 +59,6 @@ const MyPage = () => {
         if (userInfo?.id) {
           // 리뷰 가져오기
           const reviews = await getMyReview(userInfo.id);
-          console.log(reviews, '내리뷰즈');
           setUserReviews(reviews.data);
 
           // 예약 내역 가져오기
