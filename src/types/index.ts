@@ -116,3 +116,9 @@ export interface GetReviewData {
   userId: 1;
   User?: { email: string };
 }
+
+export interface CouponData {
+  id?: number;
+  expirationDate?: string;
+  userId?: number;
+}
