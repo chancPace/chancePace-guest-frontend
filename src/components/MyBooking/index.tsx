@@ -3,6 +3,8 @@ import { MyBookingStyled } from './styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ReviewModal from '../ReviewModal';
+import { getOneBooking } from '@/pages/api/bookingApi';
+import { message, Modal } from 'antd';
 interface MyBookingProps {
   x: MyBookingData;
 }
@@ -12,6 +14,10 @@ const MyBooking = ({ x }: MyBookingProps) => {
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);
   //모달 창 보여주시 상태
   const [isModalVisible, setIsModalVisible] = useState(false);
+  //예약정보
+  const [bookingDetails, setBookingDetails] = useState<MyBookingData | null>(
+    null
+  ); // 예약 상세 정보를 저장할 상태
 
   //이용일이 오늘 이후일 경우에 이용완료로 간주하여 리뷰쓰기 버튼 보여주기
   useEffect(() => {
@@ -43,16 +49,28 @@ const MyBooking = ({ x }: MyBookingProps) => {
     setIsReviewBtnVisible(false);
   };
 
-  //상세보기 클릭 시 해당 공가
+  //상세보기 클릭 시 예약 상세내역 확인
+  const handleDetailsClick = async () => {
+    try {
+      const data = await getOneBooking(x.id);
+      setBookingDetails(data.data); // 예약 상세 정보 저장
+      setIsModalVisible(true); // 모달 열기
+    } catch (error) {
+      message.error('예약 상세 정보를 불러오는 데 실패했습니다.');
+      console.error('데이터 불러오기 실패', error);
+    }
+  };
 
   return (
     <MyBookingStyled>
       <div className="booking-date">
         <p>{x.startDate}</p>
-        <p>상세보기</p>
+        <span onClick={handleDetailsClick}>상세보기</span>
       </div>
       <div className="booking-data" onClick={handleClick}>
-        <div className="booking-space-img"></div>
+        <div className="booking-space-img">
+          <img src={`http://localhost:4000/${x.space?.Images[0].imageUrl}`} />
+        </div>
         <div className="booking-info">
           <div className="booking-space-name">{x.space?.spaceName}</div>
           <div className="booking-time">
@@ -75,6 +93,8 @@ const MyBooking = ({ x }: MyBookingProps) => {
         space={x.space}
         onReviewSubmit={handleReviewSubmit} // 리뷰 등록 후 버튼 숨김 처리
       />
+
+      {/* 예약 상세 정보 모달 */}
     </MyBookingStyled>
   );
 };

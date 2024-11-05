@@ -7,7 +7,10 @@ export const EditUserStyled = styled.div`
   align-items: center;
   .confirm {
     display: block;
-    background-color: green;
+  }
+  .button {
+    margin-top: 20px;
+    background-color: #8c73d8;
   }
   .ant-form {
     display: flex;

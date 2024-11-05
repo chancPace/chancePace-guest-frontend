@@ -136,7 +136,7 @@ const EditUser = ({
                   >
                     <Input.Password />
                   </Form.Item>
-                  <Button type="primary" htmlType="submit">
+                  <Button type="primary" htmlType="submit" className="button">
                     비밀번호 확인
                   </Button>
                 </Form>
@@ -203,7 +203,11 @@ const EditUser = ({
                 <Input />
               </Form.Item>
 
-              <Button type="primary" onClick={handleSaveProfile}>
+              <Button
+                type="primary"
+                onClick={handleSaveProfile}
+                className="button"
+              >
                 저장
               </Button>
             </Form>
@@ -247,7 +251,7 @@ const EditUser = ({
             >
               <Input.Password />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" className="button">
               비밀번호 변경
             </Button>
           </Form>

@@ -18,7 +18,6 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
   const [spaces, setSpaces] = useState<Space[]>([]);
   const [filterSpace, setFilterSpace] = useState<Space[]>([]); // 필터링된 공간을 저장
 
-
   //공간 검색하기
   useEffect(() => {
     if (query) {
@@ -26,8 +25,11 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
         try {
           const data = await getSearchSpace(query);
           if (data?.data) {
-            setSpaces(data.data);
-            setFilterSpace(data.data);
+            const availableSpaces = data.data.filter(
+              (space: Space) => space.spaceStatus === 'AVAILABLE'
+            );
+            setSpaces(availableSpaces);
+            setFilterSpace(availableSpaces);
           }
         } catch (error) {
           console.error('검색 데이터 로드 중 오류 발생:', error);
@@ -50,15 +52,16 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
           );
           setSubCategory(subCategory);
           const spaceData = await getSpace();
-          const filterSpace = spaceData.data.filter(
+          const availableSpaces = spaceData.data.filter(
             (space: Space) =>
-              space.categoryId === categoryId ||
-              subCategory.some(
-                (sub: CategoryType) => sub.id === space.categoryId
-              )
+              space.spaceStatus === 'AVAILABLE' &&
+              (space.categoryId === categoryId ||
+                subCategory.some(
+                  (sub: CategoryType) => sub.id === space.categoryId
+                ))
           );
-          setSpaces(filterSpace);
-          setFilterSpace(filterSpace);
+          setSpaces(availableSpaces);
+          setFilterSpace(availableSpaces);
         } catch (error) {
           console.error('소분류 데이터 로드 중 오류 발생:', error);
         }
@@ -84,7 +87,9 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
         try {
           const data = await getSpace();
           if (data?.data) {
-            let filteredSpaces = data.data;
+            let filteredSpaces = data.data.filter(
+              (space: Space) => space.spaceStatus === 'AVAILABLE'
+            );
             if (type === 'new') {
               filteredSpaces = filteredSpaces.slice(0, 30);
             }

@@ -25,6 +25,11 @@ export const MyBookingStyled = styled.div`
       height: 100px;
       background-color: aliceblue;
       margin-right: 10px;
+      object-fit: cover;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .booking-info {
       height: 100%;

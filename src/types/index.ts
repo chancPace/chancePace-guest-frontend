@@ -66,6 +66,7 @@ export interface Payment {
   paymentKey: string;
   orderId: string;
   amount: number;
+  couponPrice?: number;
 }
 
 export interface UserData {

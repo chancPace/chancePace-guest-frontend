@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SuccessStyled } from './styled';
 import { useRouter } from 'next/router';
 import { verifyPayment } from '@/pages/api/paymentApi';
@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { UserCouponIsUsed } from '@/pages/api/couponApi';
 import { message } from 'antd';
+import { Space } from '@/types';
+import { getOneSpace } from '@/pages/api/spaceApi';
 const Success = () => {
   const router = useRouter();
   const {
@@ -18,8 +20,10 @@ const Success = () => {
     endTime,
     spaceId,
     couponId,
+    discountAmount,
   } = router.query;
   const userId = useSelector((state: RootState) => state.user.userInfo?.id);
+  const [spaceData, setSpaceData] = useState<Space | null>(null); // 공간 데이터를 저장할 상태
 
   useEffect(() => {
     const handleBooking = async () => {
@@ -29,6 +33,7 @@ const Success = () => {
             paymentKey: String(paymentKey),
             orderId: String(orderId),
             amount: Number(amount),
+            couponPrice:Number(discountAmount)
           });
           if (paymentResult.result) {
             // console.log(paymentResult.data.id,'페이먼트리절트')
@@ -81,10 +86,38 @@ const Success = () => {
     couponId,
   ]);
 
+  //공간 데이터 가져오기
+  useEffect(() => {
+    const fetchSpaceData = async () => {
+      if (spaceId) {
+        try {
+          const data = await getOneSpace(Number(spaceId)); // spaceId로 공간 데이터 가져오기
+          console.log(data, '데이터터터터');
+          setSpaceData(data.data);
+        } catch (error) {
+          console.error('공간 데이터 로드 중 오류 발생:', error);
+        }
+      }
+    };
+    fetchSpaceData();
+  }, [spaceId]);
+
   return (
     <SuccessStyled>
-      <p>결제 성공</p>
+      <div className="booking-info">
+        <div className="img">
+          <img src={`http://localhost:4000/${spaceData?.Images[0].imageUrl}`} />
+        </div>
+        <div className="text">
+          <p>{spaceData?.spaceName}</p>
+          <p>{spaceData?.spaceLocation}</p>
+        </div>
+      </div>
+      <div>예약이 완료되었습니다!</div>
     </SuccessStyled>
   );
 };
 export default Success;
+function getSpaceById(arg0: number) {
+  throw new Error('Function not implemented.');
+}

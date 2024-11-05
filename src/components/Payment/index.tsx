@@ -29,6 +29,8 @@ const Payment = () => {
   const [price, setPrice] = useState<number>(0); // 초기값 0으로 설정
   //쿠폰할인 반영된 최종 금액
   const [finalPrice, setFinalPrice] = useState<number>(0); // 최종 결제 금액 초기값도 0으로 설정
+  //쿠폰 할인금액
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
 
   //결제하는 공간의 데이터
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
@@ -72,7 +74,7 @@ const Payment = () => {
       await paymentWidget.requestPayment({
         orderId: `ORDER-${nanoid()}`,
         orderName: 'test',
-        successUrl: `${window.location.origin}/success?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&userId=${userInfo?.id}&spaceId=${spaceId}&couponId=${selectedCoupon?.id}`, // 필요한 예약 데이터 추가
+        successUrl: `${window.location.origin}/success?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&userId=${userInfo?.id}&spaceId=${spaceId}&couponId=${selectedCoupon?.id}&discountAmount=${discountAmount}`, // 필요한 예약 데이터 추가
         failUrl: `${window.location.origin}/fail`,
       });
     } catch (error) {
@@ -85,7 +87,7 @@ const Payment = () => {
     const fetchCoupon = async () => {
       try {
         const coupon = await getUserAllCoupon(Number(userInfo?.id));
-        const unusedCoupons = coupon.data.filter((c:UserCoupon) => !c.isUsed);
+        const unusedCoupons = coupon.data.filter((c: UserCoupon) => !c.isUsed);
         setCoupons(unusedCoupons);
       } catch (error) {
         message.error('쿠폰 불러오기 실패');
@@ -99,9 +101,11 @@ const Payment = () => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
     if (selected) {
-      const discountAmount = selected.Coupon.discountPrice;
+      const discount = selected.Coupon.discountPrice;
+      setDiscountAmount(discount); // 선택한 쿠폰의 할인 금액 설정
       setFinalPrice(price - discountAmount); // 할인 반영하여 결제 금액 설정)
     } else {
+      setDiscountAmount(0); // 쿠폰 선택 해제 시 할인 금액을 0으로 설정
       setFinalPrice(price); // 쿠폰 선택 해제 시 원래 금액으로 복원
     }
   };
