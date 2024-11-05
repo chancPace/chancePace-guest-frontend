@@ -52,7 +52,9 @@ const Success = () => {
               paymentId,
             };
             await addBooking(bookingData);
-            if (couponId) {
+            const numericCouponId = Number(couponId);
+            if (!isNaN(numericCouponId)) {
+              // couponId가 유효한 숫자일 때만 실행
               try {
                 await UserCouponIsUsed(Number(couponId));
                 message.success('쿠폰이 성공적으로 사용되었습니다.');

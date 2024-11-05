@@ -168,7 +168,7 @@ const Payment = () => {
       <div className="reservation-user-info">
         <div className="reservation-title">예약자 정보</div>
         <div className="reservation-text">
-          <p>예약자: {userInfo?.name}</p>
+          <p>예약자: {userInfo?.userName}</p>
           <p>이메일: {userInfo?.email}</p>
           <p>연락처: {userInfo?.phoneNumber}</p>
         </div>
