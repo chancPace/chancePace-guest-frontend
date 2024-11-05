@@ -50,15 +50,8 @@ const MyBooking = ({ x }: MyBookingProps) => {
   };
 
   //상세보기 클릭 시 예약 상세내역 확인
-  const handleDetailsClick = async () => {
-    try {
-      const data = await getOneBooking(x.id);
-      setBookingDetails(data.data); // 예약 상세 정보 저장
-      setIsModalVisible(true); // 모달 열기
-    } catch (error) {
-      message.error('예약 상세 정보를 불러오는 데 실패했습니다.');
-      console.error('데이터 불러오기 실패', error);
-    }
+  const handleDetailsClick = () => {
+    router.push(`/booking/${x.id}`); // 예약 상세 페이지로 이동
   };
 
   return (

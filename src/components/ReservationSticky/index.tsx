@@ -36,7 +36,6 @@ const ReservationSticky = ({
   );
   const [selectedEndTime, setSelectedEndTime] = useState<number | null>(null);
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
-  console.log(userInfo, '유저인포');
 
   useEffect(() => {
     if (selectedStartTime !== null && selectedEndTime !== null) {

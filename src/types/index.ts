@@ -100,6 +100,65 @@ export interface MyBookingData {
   startTime: number;
   userId: number;
   space?: Space;
+  Payment?: {
+    cardNumber: string;
+    cardType: string;
+    couponPrice: number;
+    createdAt: string;
+    id: number;
+    orderId: string;
+    paymentKey: string;
+    paymentMethod: string;
+    paymentPrice: number;
+    paymentStatus: string;
+    suppliedPrice: number;
+    updatedAt: string;
+    userId: number;
+    vat: number;
+  };
+  Space?: {
+    addPrice: number;
+    amenities: string;
+    businessEndTime: number;
+    businessStartTime: number;
+    categoryId: number;
+    cleanTime: number;
+    createdAt: string;
+    description: string;
+    discount: number;
+    guidelines: string;
+    id: number;
+    isOpen: boolean;
+    maxGuests: number;
+    minGuests: number;
+    spaceAdminName: string;
+    spaceAdminPhoneNumber: string;
+    spaceLocation: string;
+    spaceName: string;
+    spacePrice: number;
+    spaceRating: null;
+    spaceStatus: string;
+    updatedAt: string;
+    userId: number;
+  };
+  User?: {
+    accountStatus: string;
+    bankAccountName: string;
+    bankAccountNumber: string;
+    bankAccountOwner: string;
+    createdAt: string;
+    email: string;
+    gender: string;
+    id: number;
+    isMarketingAgreed: boolean;
+    kakaoId: string;
+    lastLogin: string;
+    password: string;
+    phoneNumber: string;
+    role: string;
+    updatedAt: string;
+    userName: string;
+  };
 }
 
 export interface ReviewData {

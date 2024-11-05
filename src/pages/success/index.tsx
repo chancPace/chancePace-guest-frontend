@@ -1,8 +1,6 @@
-import Success from "@/components/Success"
+import Success from '@/components/Success';
 
 const success = () => {
-    return(
-        <Success />
-    )
-}   
-export default success
+  return <Success />;
+};
+export default success;

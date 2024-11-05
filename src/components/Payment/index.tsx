@@ -106,9 +106,12 @@ const Payment = () => {
       setFinalPrice(price - discountAmount); // 할인 반영하여 결제 금액 설정)
     } else {
       setDiscountAmount(0); // 쿠폰 선택 해제 시 할인 금액을 0으로 설정
-      setFinalPrice(price); // 쿠폰 선택 해제 시 원래 금액으로 복원
     }
   };
+
+  useEffect(() => {
+    setFinalPrice(price - discountAmount);
+  }, [price, discountAmount]);
 
   useEffect(() => {
     //결제 위젯 초기화
