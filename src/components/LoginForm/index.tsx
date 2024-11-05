@@ -22,7 +22,7 @@ const LoginForm = () => {
     const { email, password } = values;
     try {
       const response = await postLogin({ email, password });
-      // console.log(response, 'response');
+      console.log(response, 'response');
       if (response.token) {
         setEmailError(null);
         setPasswordError(null);
@@ -37,6 +37,7 @@ const LoginForm = () => {
             role: response.data.role,
             token: response.token,
             id: response.data.id,
+            phoneNumber: response.data.phoneNumber,
           })
         );
         router.push('/');

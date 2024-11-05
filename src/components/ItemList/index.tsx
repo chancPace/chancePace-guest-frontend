@@ -11,18 +11,14 @@ interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
-  console.log(x, 'xxx');
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [reviewCount, setReviewCount] = useState<number>(0);
-  // console.log(reviewCount,'리뷰카운트')
   useEffect(() => {
     const fetchReviewCount = async () => {
       try {
         const reviews = await getReviewBySpace(x.id);
-        // console.log(reviews, '리뷰즈');
         setReviewCount(reviews.data.length); // 리뷰 배열의 길이를 개수로 설정
-        // console.log(reviewCount, '리뷰카운트');
       } catch (error) {
         console.error(error);
       }

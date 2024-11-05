@@ -53,6 +53,7 @@ export interface Space {
   businessEndTime: number;
   addPrice: number;
   spaceRating: number;
+  spaceAdminPhoneNumber: string;
 }
 
 export interface CategoryType {
@@ -121,4 +122,24 @@ export interface CouponData {
   id?: number;
   expirationDate?: string;
   userId?: number;
+}
+
+export interface UserCoupon {
+  couponCode: string;
+  couponId: number;
+  createdAt: string;
+  expirationDate: string;
+  id: number;
+  isUsed: boolean;
+  updatedAt: string;
+  userId: number;
+  Coupon: {
+    couponName: string;
+    createdAt: string;
+    discountPrice: number;
+    id: number;
+    isActive: boolean;
+    updatedAt: string;
+    userId: number;
+  };
 }

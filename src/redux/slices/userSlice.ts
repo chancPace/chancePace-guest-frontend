@@ -8,6 +8,7 @@ interface UserState {
     role: string;
     token: string;
     id: number;
+    phoneNumber:string
   } | null;
 }
 
@@ -19,6 +20,7 @@ const initialState: UserState = {
     role: '',
     token: '',
     id: 0,
+    phoneNumber:'',
   },
 };
 
@@ -34,6 +36,7 @@ export const userSlice = createSlice({
         role: string;
         token: string;
         id: number;
+        phoneNumber:string;
       }>
     ) => {
       state.isLoggedIn = true;

@@ -94,10 +94,10 @@ const ReservationSticky = ({
       pathname: '/pay',
       query: {
         orderId,
-        price: totalPrice,
+        price: discountPrice,
         startDate,
-        startTime: selectedStartTime,
-        endTime: selectedEndTime,
+        startTime: Number(selectedStartTime),
+        endTime: Number(selectedEndTime)+1,
         spaceId,
       },
     });

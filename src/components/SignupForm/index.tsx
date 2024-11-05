@@ -120,6 +120,7 @@ const SignupForm = () => {
       const userId = response.data.id;
       const expirationDate = calculateCouponExpiration(response.data.createdAt);
       const couponData = { userId, expirationDate, couponId: 1 };
+      console.log(couponData, '쿠폰데이터');
       const result = await SignupCoupon(couponData);
       router.push('/login');
 
@@ -187,13 +188,19 @@ const SignupForm = () => {
           dependencies={['password']}
           rules={[
             { required: true, message: '비밀번호를 입력해주세요' }, // 비밀번호 확인이 비어 있을 때의 메시지
-            ({ getFieldValue }: { getFieldValue: FormInstance['getFieldValue'] }) => ({
+            ({
+              getFieldValue,
+            }: {
+              getFieldValue: FormInstance['getFieldValue'];
+            }) => ({
               // validator: 사용자 정의 검증 함수
               validator(_: RuleObject, value: string) {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error('비밀번호가 일치하지 않습니다.'));
+                return Promise.reject(
+                  new Error('비밀번호가 일치하지 않습니다.')
+                );
               },
             }),
           ]}

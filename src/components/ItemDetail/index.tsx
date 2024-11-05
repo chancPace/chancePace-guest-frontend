@@ -14,10 +14,6 @@ interface ItemDetailProps {
 }
 const ItemDetail = ({ space }: ItemDetailProps) => {
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
-  // console.log(reviews, '리뷰즈');
-  console.log(space, '스페이스');
-  console.log(typeof space.businessEndTime, '엔드');
-  console.log(space.businessStartTime, '스타트');
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -61,10 +57,7 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
       children: (
         <div className="review-list">
           {reviews.length > 0 ? (
-            reviews.map((x, i) => (
-              // console.log(review,'리뷰')
-              <ReviewList x={x} key={i} />
-            ))
+            reviews.map((x, i) => <ReviewList x={x} key={i} />)
           ) : (
             <p>등록된 후기가 없습니다.</p>
           )}
