@@ -12,7 +12,10 @@ const ReviewList = ({ x }: ReviewListProps) => {
 
   return (
     <ReviewListStyled>
-      <div className="top">
+      <div className='space-name'>
+        {x.Space?.spaceName}
+      </div>
+      <div className="rating">
         <Rate disabled defaultValue={x.reviewRating} />
         <p className="date">{formattedDate}</p>
       </div>

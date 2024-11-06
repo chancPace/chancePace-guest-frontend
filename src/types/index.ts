@@ -176,6 +176,7 @@ export interface GetReviewData {
   updatedAt: string;
   userId: 1;
   User?: { email: string };
+  Space?: {spaceName:string}
 }
 
 export interface CouponData {
