@@ -9,16 +9,16 @@ interface ReviewModalProps {
   isVisible: boolean;
   onClose: () => void;
   space?: Space;
+  bookingId: number;
   onReviewSubmit: () => void; // 새로운 prop 추가
 }
 const ReviewModal = ({
   isVisible,
   onClose,
   space,
+  bookingId,
   onReviewSubmit,
 }: ReviewModalProps) => {
-  // console.log(space, '스페이스');
-  // console.log(space);
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const userToken = useSelector(
@@ -35,6 +35,7 @@ const ReviewModal = ({
         spaceId: space.id,
         reviewComment,
         reviewRating,
+        bookingId,
       };
       try {
         await addReview(reviewData, userToken);
@@ -48,7 +49,7 @@ const ReviewModal = ({
           `별점 평균이 업데이트되었습니다: ${updatedRating.data}점`
         );
       } catch (error) {
-        console.error('리뷰 등록에 실패했습니다.',error);
+        console.error('리뷰 등록에 실패했습니다.', error);
       }
     }
   };
@@ -91,4 +92,3 @@ const ReviewModal = ({
 };
 
 export default ReviewModal;
-

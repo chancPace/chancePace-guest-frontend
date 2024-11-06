@@ -159,6 +159,11 @@ export interface MyBookingData {
     updatedAt: string;
     userName: string;
   };
+  review?: {
+    spaceId: number;
+    reviewComment: string;
+    reviewRating: number | null;
+  };
 }
 
 export interface ReviewData {
