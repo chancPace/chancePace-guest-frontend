@@ -53,35 +53,35 @@ const MyPage = () => {
     fetchUserData();
   }, [form]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (userInfo?.id) {
-          // 리뷰 가져오기
-          const reviews = await getMyReview(userInfo.id);
-          setUserReviews(reviews.data);
+  const fetchUserData = async () => {
+    try {
+      if (userInfo?.id) {
+        // 리뷰 가져오기
+        const reviews = await getMyReview(userInfo.id);
+        setUserReviews(reviews.data);
 
-          // 예약 내역 가져오기
-          const allBooking = await getAllBooking();
-          const myBooking = allBooking.data.filter(
-            (booking: MyBookingData) => booking.userId === userInfo.id
+        // 예약 내역 가져오기
+        const allBooking = await getAllBooking();
+        const myBooking = allBooking.data.filter(
+          (booking: MyBookingData) => booking.userId === userInfo.id
+        );
+
+        const allSpace = await getSpace();
+        const bookingWithSpace = myBooking.map((booking: MyBookingData) => {
+          const matchSpace = allSpace.data.find(
+            (space: Space) => space.id === booking.spaceId
           );
+          return { ...booking, space: matchSpace };
+        });
 
-          const allSpace = await getSpace();
-          const bookingWithSpace = myBooking.map((booking: MyBookingData) => {
-            const matchSpace = allSpace.data.find(
-              (space: Space) => space.id === booking.spaceId
-            );
-            return { ...booking, space: matchSpace };
-          });
-
-          setUserBooking(bookingWithSpace); // 예약 데이터 상태 업데이트
-        }
-      } catch (error) {
-        console.error('데이터 조회 실패:', error);
+        setUserBooking(bookingWithSpace); // 예약 데이터 상태 업데이트
       }
-    };
+    } catch (error) {
+      console.error('데이터 조회 실패:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchUserData();
   }, [userInfo]);
 
@@ -127,7 +127,14 @@ const MyPage = () => {
       children: (
         <div>
           {userReviews?.map((x, i) => {
-            return <ReviewList x={x} key={i} />;
+            return (
+              <ReviewList
+                x={x}
+                key={i}
+                fetchUserData={fetchUserData}
+                isDeletable={true}
+              />
+            ); // 삭제 버튼 활성화
           })}
         </div>
       ),

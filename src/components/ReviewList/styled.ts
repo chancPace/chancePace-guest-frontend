@@ -5,8 +5,13 @@ export const ReviewListStyled = styled.div`
   border-bottom: 1px solid #f1f3f5;
   padding: 20px 0;
   width: 70%;
-  .space-name {
+  .top {
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    .delete {
+      cursor: pointer;
+    }
   }
   .rating {
     display: flex;

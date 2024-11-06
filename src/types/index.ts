@@ -164,7 +164,7 @@ export interface MyBookingData {
 export interface ReviewData {
   spaceId: number;
   reviewComment: string;
-  reviewRating: number;
+  reviewRating: number | null;
 }
 export interface GetReviewData {
   createdAt: string;
@@ -176,7 +176,7 @@ export interface GetReviewData {
   updatedAt: string;
   userId: 1;
   User?: { email: string };
-  Space?: {spaceName:string}
+  Space?: { spaceName: string };
 }
 
 export interface CouponData {

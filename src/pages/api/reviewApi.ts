@@ -29,10 +29,16 @@ export const updateRatingBySpace = async (spaceId: number) => {
   }
 };
 
-export const updateReview = async (reviewData:ReviewData) => {
+export const updateReview = async (
+  reviewId: number,
+  reviewData: Partial<ReviewData>
+) => {
   try {
-    const response = await axios.patch(`${API_URL}/update-review`,reviewData)
-    return response.data
+    const response = await axios.patch(`${API_URL}/update-review`, {
+      reviewId,
+      ...reviewData, // 필요한 데이터만 전송
+    });
+    return response.data;
   } catch (error) {
     console.error('리뷰 수정 실패', error);
     throw error;
