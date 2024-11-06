@@ -11,6 +11,7 @@ interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
+  console.log(x,'xxxx')
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [reviewCount, setReviewCount] = useState<number>(0);
@@ -39,8 +40,8 @@ const ItemList = ({ x }: ItemListProps) => {
     <ItemListStyled onClick={handleClick}>
       <div className="itemImg">
         <img
-          src={`http://localhost:4000/${x.Images[0].imageUrl}`}
-          alt={`http://localhost:4000/${x.Images[0].imageUrl}`}
+          src={`http://localhost:4000/${x.images[0].imageUrl}`}
+          alt={`http://localhost:4000/${x.images[0].imageUrl}`}
           className="img"
         ></img>
       </div>

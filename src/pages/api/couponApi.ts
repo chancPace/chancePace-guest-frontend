@@ -15,7 +15,7 @@ export const SignupCoupon = async (couponData: CouponData) => {
 
 export const getUserAllCoupon = async (userId: number) => {
   try {
-    const response = await axios.get(`${API_URL}/get-user-all-coupon`, {
+    const response = await axios.get(`${API_URL}get-user-all-coupon`, {
       params: { userId },
     });
     return response.data;
@@ -27,7 +27,7 @@ export const getUserAllCoupon = async (userId: number) => {
 
 export const UserCouponIsUsed = async (userCouponId: number) => {
   try {
-    const response = await axios.patch(`${API_URL}/user-coupon-is-used`, {
+    const response = await axios.patch(`${API_URL}user-coupon-is-used`, {
       userCouponId,
     });
     return response.data;

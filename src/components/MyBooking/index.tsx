@@ -9,6 +9,7 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
+  console.log(x,'ㅌㅌㅌㅌㅌㅌ')
   const router = useRouter();
   //리뷰쓰기 버튼 보여주기 상태
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);
@@ -62,7 +63,7 @@ const MyBooking = ({ x }: MyBookingProps) => {
       </div>
       <div className="booking-data" onClick={handleClick}>
         <div className="booking-space-img">
-          <img src={`http://localhost:4000/${x.space?.Images[0].imageUrl}`} />
+          <img src={`http://localhost:4000/${x.space?.images[0].imageUrl}`} />
         </div>
         <div className="booking-info">
           <div className="booking-space-name">{x.space?.spaceName}</div>

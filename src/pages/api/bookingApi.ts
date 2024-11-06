@@ -29,6 +29,7 @@ export const getBooking = async (spaceId: number, formattedDate: string) => {
 export const getAllBooking = async () => {
   try {
     const response = await axios.get(`${API_URL}/get-booking`);
+    console.log(response, '리스폰스');
     return response.data; // 데이터 반환
   } catch (error) {
     console.error('예약데이터 조회 실패', error);

@@ -106,7 +106,7 @@ const Success = () => {
     <SuccessStyled>
       <div className="booking-info">
         <div className="img">
-          <img src={`http://localhost:4000/${spaceData?.Images[0].imageUrl}`} />
+          <img src={`http://localhost:4000/${spaceData?.images[0].imageUrl}`} />
         </div>
         <div className="text">
           <p>{spaceData?.spaceName}</p>

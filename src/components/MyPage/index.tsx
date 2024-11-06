@@ -62,6 +62,7 @@ const MyPage = () => {
 
         // 예약 내역 가져오기
         const allBooking = await getAllBooking();
+        console.log(allBooking,'올부킹')
         const myBooking = allBooking.data.filter(
           (booking: MyBookingData) => booking.userId === userInfo.id
         );

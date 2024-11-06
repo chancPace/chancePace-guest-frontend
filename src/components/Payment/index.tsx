@@ -34,7 +34,7 @@ const Payment = () => {
 
   //결제하는 공간의 데이터
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
-  console.log(selectedCoupon, '셀렉트쿠폰');
+  // console.log(selectedCoupon, '셀렉트쿠폰');
   //결제 위젯의 인스턴스를 참조하기 위한 변수
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   //결제 방식 위젯(신용카드, 계좌이체) 등의 인스턴스를 참조하기 위한 변수
@@ -101,7 +101,7 @@ const Payment = () => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
     if (selected) {
-      const discount = selected.Coupon.discountPrice;
+      const discount = selected.coupon.discountPrice;
       setDiscountAmount(discount); // 선택한 쿠폰의 할인 금액 설정
       setFinalPrice(price - discountAmount); // 할인 반영하여 결제 금액 설정)
     } else {
@@ -152,7 +152,7 @@ const Payment = () => {
           <div className="reservation-space-info">
             <div className="img">
               <img
-                src={`http://localhost:4000/${spaceDetails.Images[0].imageUrl}`}
+                src={`http://localhost:4000/${spaceDetails.images[0].imageUrl}`}
               ></img>
             </div>
             <div className="reservation-text">
@@ -194,10 +194,11 @@ const Payment = () => {
         <p>쿠폰선택</p>
         <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
           {coupons?.map((x) => {
+            console.log(x,'xxx')
             return (
               <Select.Option key={x.id} value={x.id}>
-                {x.Coupon.couponName}
-                {x.Coupon.discountPrice.toLocaleString()}원
+                {x.coupon.couponName} | 
+                {x.coupon.discountPrice.toLocaleString()}원
               </Select.Option>
             );
           })}

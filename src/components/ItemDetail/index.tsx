@@ -73,8 +73,8 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
         smallImgs={space.spaceImg.slice(1)}
       /> */}
       <ImgSection
-        mainImg={`http://localhost:4000/${space.Images[0].imageUrl}`}
-        smallImgs={space.Images.slice(1).map((img) => ({
+        mainImg={`http://localhost:4000/${space.images[0].imageUrl}`}
+        smallImgs={space.images.slice(1).map((img) => ({
           src: `http://localhost:4000/${img.imageUrl}`,
         }))}
       />

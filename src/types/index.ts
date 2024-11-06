@@ -29,7 +29,7 @@ export interface Procedure {
 
 export interface Space {
   id: number;
-  Images: {
+  images: {
     id: number;
     imageUrl: string;
     createdAt: string;
@@ -194,7 +194,7 @@ export interface UserCoupon {
   isUsed: boolean;
   updatedAt: string;
   userId: number;
-  Coupon: {
+  coupon: {
     couponName: string;
     createdAt: string;
     discountPrice: number;
