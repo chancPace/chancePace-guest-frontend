@@ -11,6 +11,7 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
+  console.log(x, 'xxxx');
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
 
   const handleDeleteClick = async (reviewId: number) => {
@@ -51,19 +52,34 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
   return (
     <ReviewListStyled>
       <div className="top">
-        <p>{x.Space?.spaceName}</p>
-        {isDeletable && (
-          <p className="delete" onClick={() => showDeleteConfirm(x.id)}>
-            삭제하기
-          </p>
-        )}
+        <div className="top-left">
+          {x.space?.images && x.space.images.length > 0 ? (
+            <img
+              src={`http://localhost:4000/${x.space.images[0].imageUrl}`}
+              className="wish-img"
+              alt="Space Image"
+            />
+          ) : (
+            <p>이미지가 없습니다</p> // 이미지가 없을 경우 표시할 내용
+          )}
+          <div className="rating">
+            <p>{x.space?.spaceName}</p>
+            <Rate disabled defaultValue={x.reviewRating} />
+            <p className="date">{formattedDate}</p>
+          </div>
+        </div>
+
+        <div className="top-right">
+          {isDeletable && (
+            <p className="delete" onClick={() => showDeleteConfirm(x.id)}>
+              삭제하기
+            </p>
+          )}
+        </div>
       </div>
-      <div className="rating">
-        <Rate disabled defaultValue={x.reviewRating} />
-        <p className="date">{formattedDate}</p>
-      </div>
+
       <div className="bottom">
-        {x.User?.email && <p>작성자: {x.User.email}</p>}
+        {x.user?.email && <p>작성자: {x.user.email}</p>}
       </div>
       {x.reviewComment}
     </ReviewListStyled>

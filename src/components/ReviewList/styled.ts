@@ -6,19 +6,23 @@ export const ReviewListStyled = styled.div`
   padding: 20px 0;
   width: 70%;
   .top {
-    margin-bottom: 10px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    .delete {
-      cursor: pointer;
+    .top-left {
+      border-radius: 100%;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      > img {
+        width: 70px;
+        height: 70px;
+        border-radius: 100%;
+        margin-right: 10px;
+      }
     }
   }
-  .rating {
-    display: flex;
-    .date {
-      margin-left: 10px;
-    }
-  }
+
   .bottom {
     margin-bottom: 10px;
   }

@@ -18,6 +18,18 @@ export const MyPageStyled = styled.div`
     text-align: center;
     cursor: pointer;
   }
+  .wish {
+    .wish-list {
+      .img-box {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
   @media screen and (max-width: 480px) {
   }
   @media screen and (min-width: 481px) and (max-width: 768px) {

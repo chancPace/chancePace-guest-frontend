@@ -187,8 +187,13 @@ export interface GetReviewData {
   reviewStatus: string;
   updatedAt: string;
   userId: 1;
-  User?: { email: string };
-  Space?: { spaceName: string };
+  user?: { email: string };
+  space?: {
+    spaceName: string;
+    images?: {
+      imageUrl: string;
+    }[];
+  };
 }
 
 export interface CouponData {
@@ -221,4 +226,11 @@ export interface Wishlist {
   id: number;
   spaceId: number;
   userId: number;
+  space?: {
+    spaceName: string;
+    spacePrice: number;
+    images?: {
+      imageUrl: string;
+    }[];
+  };
 }
