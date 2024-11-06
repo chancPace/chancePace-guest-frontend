@@ -6,6 +6,7 @@ import { SpaceListStyled } from './styled';
 import { CategoryType, Space } from '@/types';
 import { getCategory } from '@/pages/api/categoryApi';
 import Category from '../Category';
+import { Pagination } from 'antd';
 
 interface SpaceListProps {
   type?: 'new' | 'popular' | 'recommended';
@@ -127,6 +128,14 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // 프론트엔드 페이지당 데이터 개수
+
+  const displayedSpaces = filterSpace.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <SpaceListStyled>
       <h1 className="title">{getTitle()}</h1>
@@ -142,10 +151,16 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
         </div>
       )}
       <div className="list">
-        {filterSpace.map((space, i) => (
+        {displayedSpaces.map((space, i) => (
           <ItemList x={space} key={i} />
         ))}
       </div>
+      <Pagination
+        current={currentPage}
+        pageSize={itemsPerPage}
+        total={filterSpace.length}
+        onChange={(page) => setCurrentPage(page)}
+      />
     </SpaceListStyled>
   );
 };
