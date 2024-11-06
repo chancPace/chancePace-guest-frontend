@@ -68,10 +68,6 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
 
   return (
     <ItemDetailStyled>
-      {/* <ImgSection
-        mainImg={space.spaceImg[0].src}
-        smallImgs={space.spaceImg.slice(1)}
-      /> */}
       <ImgSection
         mainImg={`http://localhost:4000/${space.images[0].imageUrl}`}
         smallImgs={space.images.slice(1).map((img) => ({

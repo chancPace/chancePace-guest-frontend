@@ -38,24 +38,24 @@ const BookingDetail = ({ bookingId }: BookingDetailProps) => {
 
           </div>
           <div className="text">
-            <p>예약 공간: {bookingDetails.Space?.spaceName}</p>
-            <p>예약 위치: {bookingDetails.Space?.spaceLocation}</p>
+            <p>예약 공간: {bookingDetails.space?.spaceName}</p>
+            <p>예약 위치: {bookingDetails.space?.spaceLocation}</p>
             <p>예약 날짜: {bookingDetails.startDate}</p>
             <p>
               이용 시간: {bookingDetails.startTime}:00 -{' '}
               {bookingDetails.endTime}
               :00
             </p>
-            <p>결제 방식: {bookingDetails.Payment?.paymentMethod}</p>
-            <p>결제 방식: {bookingDetails.Payment?.cardNumber}</p>
+            <p>결제 방식: {bookingDetails.payment?.paymentMethod}</p>
+            <p>결제 방식: {bookingDetails.payment?.cardNumber}</p>
             <p>
               결제 금액:{' '}
-              {bookingDetails.Payment?.paymentPrice?.toLocaleString()}원
+              {bookingDetails.payment?.paymentPrice?.toLocaleString()}원
             </p>
             <p>
               쿠폰 할인:{' '}
-              {bookingDetails.Payment?.couponPrice
-                ? `${bookingDetails.Payment.couponPrice}원`
+              {bookingDetails.payment?.couponPrice
+                ? `${bookingDetails.payment.couponPrice}원`
                 : '-'}
             </p>
           </div>

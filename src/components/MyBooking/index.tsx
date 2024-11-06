@@ -9,6 +9,7 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
+  console.log(x,'xxxxxx')
   const router = useRouter();
   //리뷰쓰기 버튼 보여주기 상태
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);
@@ -21,15 +22,12 @@ const MyBooking = ({ x }: MyBookingProps) => {
 
   //이용일이 오늘 이후일 경우에 이용완료로 간주하여 리뷰쓰기 버튼 보여주기
   useEffect(() => {
-    const today = new Date().toDateString(); // 시간 제외한 오늘 날짜 문자열
-    const bookingDate = new Date(x.startDate).toDateString(); // 시간 제외한 예약 날짜 문자열
-    setIsReviewBtnVisible(today <= bookingDate);
-  }, [x.startDate]);
+    const today = new Date();
+    const bookingDate = new Date(x.startDate);
 
-  useEffect(() => {
-    // x.review가 없으면 리뷰 버튼을 표시
-    setIsReviewBtnVisible(!x.review);
-  }, [x.review]);
+    // 예약일이 오늘보다 같거나 이전이고, x.review가 없을 때만 리뷰 버튼 표시
+    setIsReviewBtnVisible(today >= bookingDate && !x.review);
+  }, [x.startDate, x.review]);
 
   //예약내역 정보 클릭하면 해당 공간의 상세페이지로 이동
   const handleClick = () => {
@@ -90,10 +88,8 @@ const MyBooking = ({ x }: MyBookingProps) => {
         onClose={closeReviewModal}
         space={x.space}
         bookingId={x.id}
-        onReviewSubmit={handleReviewSubmit} // 리뷰 등록 후 버튼 숨김 처리
+        onReviewSubmit={handleReviewSubmit}
       />
-
-      {/* 예약 상세 정보 모달 */}
     </MyBookingStyled>
   );
 };

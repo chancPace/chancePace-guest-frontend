@@ -140,6 +140,24 @@ const MyPage = () => {
         </div>
       ),
     },
+    {
+      label: '찜',
+      key: '4',
+      children: (
+        <div>
+          {userReviews?.map((x, i) => {
+            return (
+              <ReviewList
+                x={x}
+                key={i}
+                fetchUserData={fetchUserData}
+                isDeletable={true}
+              />
+            ); // 삭제 버튼 활성화
+          })}
+        </div>
+      ),
+    },
   ];
 
   return (

@@ -34,26 +34,28 @@ export interface Space {
     imageUrl: string;
     createdAt: string;
     updatedAt: string;
+    spaceId?: number; // 선택적 속성으로 변경
   }[];
-  spaceName: string;
-  spaceLocation: string;
-  description: string;
-  spacePrice: number;
-  discount: number;
-  amenities: string[]; // 편의시설 목록 (문자열 배열)
-  cleanTime: number;
-  spaceStatus: string; // 공간의 상태 ('AVAILABLE' 또는 'UNAVAILABLE')
-  isOpen: boolean; // 공간이 열려 있는지 여부
-  guidelines: string; // 주의사항 (문자열 배열)
   categoryId: number;
-  Minimum: number; // 최소 인원
-  maxGuests: number; // 최대 인원
-  spaceImg: { src: string }[]; // 공간 이미지 배열
+  userId: number;
+  spaceRating: number | null;
+  guidelines: string; // 주의사항 (문자열 배열)
   businessStartTime: number;
   businessEndTime: number;
+  isOpen: boolean; // 공간이 열려 있는지 여부
+  minGuests: number; // 최소 인원
+  maxGuests: number; // 최대 인원
+  cleanTime: number;
+  spaceStatus: string; // 공간의 상태 ('AVAILABLE' 또는 'UNAVAILABLE')
+  amenities: string; // 편의시설 목록 (문자열 배열)
+  discount: number;
   addPrice: number;
-  spaceRating: number;
+  spacePrice: number;
+  description: string;
+  spaceLocation: string;
+  spaceName: string;
   spaceAdminPhoneNumber: string;
+  spaceAdminName: string;
 }
 
 export interface CategoryType {
@@ -99,8 +101,7 @@ export interface MyBookingData {
   startDate: string;
   startTime: number;
   userId: number;
-  space?: Space;
-  Payment?: {
+  payment?: {
     cardNumber: string;
     cardType: string;
     couponPrice: number;
@@ -116,7 +117,7 @@ export interface MyBookingData {
     userId: number;
     vat: number;
   };
-  Space?: {
+  space?: {
     addPrice: number;
     amenities: string;
     businessEndTime: number;
@@ -140,8 +141,14 @@ export interface MyBookingData {
     spaceStatus: string;
     updatedAt: string;
     userId: number;
+    images: {
+      id: number;
+      imageUrl: string;
+      createdAt: string;
+      updatedAt: string;
+    }[];
   };
-  User?: {
+  user?: {
     accountStatus: string;
     bankAccountName: string;
     bankAccountNumber: string;
@@ -208,4 +215,10 @@ export interface UserCoupon {
     updatedAt: string;
     userId: number;
   };
+}
+
+export interface Wishlist {
+  id: number;
+  spaceId: number;
+  userId: number;
 }

@@ -19,6 +19,9 @@ const ReviewModal = ({
   bookingId,
   onReviewSubmit,
 }: ReviewModalProps) => {
+  if (!space) {
+    return null; // space가 없을 경우 아무것도 렌더링하지 않음
+  }
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const userToken = useSelector(

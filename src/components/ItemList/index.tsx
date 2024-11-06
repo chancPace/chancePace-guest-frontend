@@ -1,39 +1,90 @@
 import { useRouter } from 'next/router';
 import { ItemListStyled } from './styled';
-import { Space } from '@/types';
+import { Space, Wishlist } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons'; // 아이콘 임포트
 import { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { getReviewBySpace } from '@/pages/api/reviewApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import {
+  addWishlist,
+  getWishlist,
+  removeWishlist,
+} from '@/pages/api/wishlistApi';
 
 interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
-  console.log(x,'xxxx')
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [wishlist, setWishlist] = useState<Wishlist[]>([]);
   const [reviewCount, setReviewCount] = useState<number>(0);
+  const userId = useSelector((state: RootState) => state.user.userInfo?.id);
+
+  //해당 공간의 리뷰 갯수 가져오기
   useEffect(() => {
     const fetchReviewCount = async () => {
       try {
         const reviews = await getReviewBySpace(x.id);
-        setReviewCount(reviews.data.length); // 리뷰 배열의 길이를 개수로 설정
+        setReviewCount(reviews.data.length);
       } catch (error) {
         console.error(error);
       }
     };
     fetchReviewCount();
-  }, []);
+  }, [x.id]);
 
-  const handleClick = () => {
-    router.push(`/spacedetail/${x.id}`);
+  //찜 목록 불러오기
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (userId) {
+        try {
+          const response = await getWishlist(userId);
+          setWishlist(response.data);
+          const isWishlisted = response.data.some(
+            (item: Wishlist) => item.spaceId === x.id
+          );
+          setIsBookmarked(isWishlisted);
+        } catch (error) {
+          console.error('찜 목록 불러오기 실패', error);
+        }
+      }
+    };
+    fetchWishlist();
+  }, [userId, x.id]);
+
+  //찜 아이콘 클릭함수
+  //클릭한 아이템이 찜에 포함되어있으면 삭제 없으면 추가
+  const toggleWishlist = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // 찜 아이콘 클릭 시 상세 페이지로 넘어가지 않도록 이벤트 전파 방지
+
+    if (!userId) {
+      alert('로그인이 필요합니다');
+      router.push('/login');
+      return;
+    }
+    try {
+      const wishItem = wishlist.find((item) => item.spaceId === x.id);
+      if (wishItem) {
+        await removeWishlist(wishItem.id);
+        setWishlist(wishlist.filter((item) => item.spaceId !== x.id));
+        setIsBookmarked(false);
+      } else {
+        const addedWishlist = await addWishlist(userId, x.id);
+        setWishlist([...wishlist, addedWishlist]);
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error('위시리스트 토글 실패', error);
+    }
   };
 
-  const toggleBookmark = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsBookmarked(!isBookmarked);
+  //상품 목록 클릭시 디테일 페이지 이동
+  const handleClick = () => {
+    router.push(`/spacedetail/${x.id}`);
   };
 
   return (
@@ -63,7 +114,7 @@ const ItemList = ({ x }: ItemListProps) => {
         <FontAwesomeIcon
           icon={faBookmark}
           className={`bookmark-icon ${isBookmarked ? 'active' : ''}`}
-          onClick={toggleBookmark}
+          onClick={toggleWishlist}
         />
       </div>
     </ItemListStyled>

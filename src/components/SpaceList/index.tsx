@@ -18,7 +18,7 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
   const [subCategory, setSubCategory] = useState<CategoryType[]>([]);
   const [spaces, setSpaces] = useState<Space[]>([]);
   const [filterSpace, setFilterSpace] = useState<Space[]>([]); // 필터링된 공간을 저장
-
+  console.log(subCategory, '서브카테고리');
   //공간 검색하기
   useEffect(() => {
     if (query) {
@@ -48,16 +48,16 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
       const fetchSubCategorySpace = async () => {
         try {
           const categoryData = await getCategory();
-          const subCategory = categoryData.data.filter(
+          const subCategoryList = categoryData.data.filter(
             (category: CategoryType) => Number(category.pId) === categoryId
           );
-          setSubCategory(subCategory);
+          setSubCategory([{ id: null, name: '전체' }, ...subCategoryList]);
           const spaceData = await getSpace();
           const availableSpaces = spaceData.data.filter(
             (space: Space) =>
               space.spaceStatus === 'AVAILABLE' &&
               (space.categoryId === categoryId ||
-                subCategory.some(
+                subCategoryList.some(
                   (sub: CategoryType) => sub.id === space.categoryId
                 ))
           );
@@ -67,11 +67,13 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
           console.error('소분류 데이터 로드 중 오류 발생:', error);
         }
       };
-      fetchSubCategorySpace();
+      if (categoryId) {
+        fetchSubCategorySpace();
+      }
     }
   }, [categoryId]);
 
-  const handleSubCategoryClick = (subCategoryId: number) => {
+  const handleSubCategoryClick = (subCategoryId: number | null) => {
     // 선택한 소분류 ID에 맞는 공간만 필터링
     if (subCategoryId === null) {
       setFilterSpace(spaces); // 모든 공간을 표시
