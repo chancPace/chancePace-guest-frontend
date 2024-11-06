@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
 import { useDispatch } from 'react-redux';
 import { updateUserProfile } from '@/redux/slices/userSlice';
+import { useRouter } from 'next/router';
 const { Panel } = Collapse;
 
 interface ErrorResponseData {
@@ -29,7 +30,7 @@ const EditUser = ({
 }: UserAccountFormProps) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch(); // 디스패치 훅 추가
-
+  const router = useRouter();
   const bankOpt = [
     { value: 'KB', label: '국민은행' },
     { value: 'IBK', label: '기업은행' },
@@ -112,6 +113,7 @@ const EditUser = ({
       message.success(response.message || '회원 정보가 업데이트되었습니다.');
       dispatch(updateUserProfile(updateData)); // 리덕스 업데이트
       setUserData({ ...userData, ...updateData }); // 로컬 상태 업데이트
+      router.push('/');
     } catch (error) {
       console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
     }
@@ -154,6 +156,7 @@ const EditUser = ({
               <Form.Item
                 label="사용자 이름"
                 name="userName"
+                initialValue={userData?.userName}
                 rules={[
                   { required: true, message: '사용자 이름을 입력하세요!' },
                 ]}
@@ -163,6 +166,7 @@ const EditUser = ({
               <Form.Item
                 label="휴대폰 번호"
                 name="phoneNumber"
+                initialValue={userData?.phoneNumber}
                 rules={[
                   { required: true, message: '휴대폰 번호를 입력해주세요' },
                 ]}
