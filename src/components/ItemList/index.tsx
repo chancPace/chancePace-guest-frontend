@@ -38,21 +38,22 @@ const ItemList = ({ x }: ItemListProps) => {
   }, [x.id]);
 
   //찜 목록 불러오기
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      if (userId) {
-        try {
-          const response = await getWishlist(userId);
-          setWishlist(response.data);
-          const isWishlisted = response.data.some(
-            (item: Wishlist) => item.spaceId === x.id
-          );
-          setIsBookmarked(isWishlisted);
-        } catch (error) {
-          console.error('찜 목록 불러오기 실패', error);
-        }
+  const fetchWishlist = async () => {
+    if (userId) {
+      try {
+        const response = await getWishlist(userId);
+        setWishlist(response.data);
+        const isWishlisted = response.data.some(
+          (item: Wishlist) => item.spaceId === x.id
+        );
+        setIsBookmarked(isWishlisted);
+      } catch (error) {
+        console.error('찜 목록 불러오기 실패', error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchWishlist();
   }, [userId, x.id]);
 
@@ -70,13 +71,12 @@ const ItemList = ({ x }: ItemListProps) => {
       const wishItem = wishlist.find((item) => item.spaceId === x.id);
       if (wishItem) {
         await removeWishlist(wishItem.id);
-        setWishlist(wishlist.filter((item) => item.spaceId !== x.id));
-        setIsBookmarked(false);
       } else {
-        const addedWishlist = await addWishlist(userId, x.id);
-        setWishlist([...wishlist, addedWishlist]);
-        setIsBookmarked(true);
+        await addWishlist(userId, x.id);
       }
+
+      // API 호출 후 최신 wishlist 가져오기
+      await fetchWishlist();
     } catch (error) {
       console.error('위시리스트 토글 실패', error);
     }
