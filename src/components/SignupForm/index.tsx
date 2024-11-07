@@ -1,17 +1,15 @@
 import { SignupFormStyled } from './styled';
-import { Form, message, FormInstance } from 'antd';
+import {  message, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import InputField from '../InputField';
 import CheckboxGroup from '../CheckboxGroup';
 import { postSignup } from '@/pages/api/userApi';
 import Buttons from '../Buttons';
-import { RuleObject } from 'antd/es/form';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { AxiosError } from 'axios'; // AxiosError 타입을 import
-import { SignupData } from '@/types';
 import dayjs from 'dayjs';
 import { SignupCoupon } from '@/pages/api/couponApi';
+import { useFormik } from 'formik';
 
 interface CheckBoxItem {
   value: string;
@@ -21,7 +19,8 @@ interface CheckBoxItem {
 }
 
 const SignupForm = () => {
-  const router = useRouter(); // useRouter 훅 가져오기
+  const router = useRouter();
+
   //체크박스의 정보를 담고 있는 상태 배열
   const [smallCheckBoxs, setSmallCheckBoxs] = useState<CheckBoxItem[]>([
     {
@@ -48,6 +47,7 @@ const SignupForm = () => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   //필수 체크박스가 선택되지 않았을 경우의 에러 메세지
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
+  const [duplicateError, setDuplicateError] = useState('');
 
   //전체 체크박스 선택
   const onAllCheck = (e: CheckboxChangeEvent) => {
@@ -79,146 +79,143 @@ const SignupForm = () => {
     setIsAllChecked(smallCheckBoxs.every((x) => x.checked));
   }, [smallCheckBoxs]);
 
-  const [duplicateError, setDuplicateError] = useState('');
-  //회원가입 처리 함수
-  //values-> 폼 필드의 값들
-  const handleSignup = async (values: SignupData) => {
-    const { email, password } = values;
-    const allChecked = smallCheckBoxs.every((checkbox) => {
-      if (checkbox.required) {
-        return checkbox.checked; // 필수 체크박스가 선택되어야 함
-      }
-      return true; // 선택이 필요 없는 체크박스는 무시
-    });
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confirm: '',
+    },
+    validate: (values) => {
+      const errors: { email?: string; password?: string; confirm?: string } =
+        {};
 
-    //필수 체크박스가 선택되지 않았을경우 에러 메세지
-    if (!allChecked) {
-      setErrorMessage('필수 항목을 동의해주세요');
-      return;
-    }
-    //선택인 체크박스 중 하나라도 선택된게 있는지 확인
-    const isOptionalChecked = smallCheckBoxs
-      .filter((checkbox) => !checkbox.required)
-      .some((checkbox) => checkbox.checked);
-    const agreed = allChecked || isOptionalChecked;
-    const role = 'user';
-    try {
-      const response = await postSignup({
-        email,
-        password,
-        role,
-        agreed,
+      if (!values.email) {
+        errors.email = '이메일을 입력해주세요';
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      ) {
+        errors.email = '유효하지 않은 이메일 주소입니다';
+      }
+
+      if (!values.password) {
+        errors.password = '비밀번호를 입력해주세요';
+      } else if (
+        !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{10,15}/.test(values.password)
+      ) {
+        errors.password =
+          '영문자, 숫자, 특수문자를 포함하여 10-15자로 입력해주세요';
+      }
+
+      if (values.confirm !== values.password) {
+        errors.confirm = '비밀번호가 일치하지 않습니다';
+      }
+
+      return errors;
+    },
+    onSubmit: async (values) => {
+      const { email, password } = values;
+      const allChecked = smallCheckBoxs.every((checkbox) => {
+        if (checkbox.required) return checkbox.checked;
+        return true;
       });
-      // 쿠폰 유효기간 30일 설정
-      const calculateCouponExpiration = (createdAt: Date) => {
-        const createdDate = new Date(createdAt);
-        const expirationDate = new Date(createdDate);
-        expirationDate.setDate(createdDate.getDate() + 30);
-        return dayjs(expirationDate).format('YYYY-MM-DD');
-      };
-      // 회원 가입시 신규회원 전용 쿠폰 발급
-      const userId = response.data.id;
-      const expirationDate = calculateCouponExpiration(response.data.createdAt);
-      const couponData = { userId, expirationDate, couponId: 1 };
-      console.log(couponData, '쿠폰데이터');
-      const result = await SignupCoupon(couponData);
-      router.push('/login');
 
-      message.success(response.message);
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.status === 400) {
-        setDuplicateError('이미 존재하는 아이디입니다.');
-      } else {
-        message.error('회원가입 실패');
+      if (!allChecked) {
+        setErrorMessage('필수 항목을 동의해주세요');
+        return;
       }
-    }
-  };
+
+      const agreed =
+        allChecked || smallCheckBoxs.some((checkbox) => checkbox.checked);
+
+      try {
+        const response = await postSignup({
+          email,
+          password,
+          role: 'user',
+          agreed,
+        });
+
+        const calculateCouponExpiration = (createdAt: Date) => {
+          const createdDate = new Date(createdAt);
+          const expirationDate = new Date(createdDate);
+          expirationDate.setDate(createdDate.getDate() + 30);
+          return dayjs(expirationDate).format('YYYY-MM-DD');
+        };
+
+        const userId = response.data.id;
+        const expirationDate = calculateCouponExpiration(
+          response.data.createdAt
+        );
+        const couponData = { userId, expirationDate, couponId: 1 };
+        await SignupCoupon(couponData);
+
+        router.push('/login');
+        message.success(response.message);
+      } catch (error) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 400) {
+          setDuplicateError('이미 존재하는 아이디입니다.');
+        } else {
+          message.error('회원가입 실패');
+        }
+      }
+    },
+  });
 
   return (
     <SignupFormStyled>
       <p className="formLogo">ChancePace</p>
-      {/* onFinish: 폼이 성공적으로 전송될때 */}
-      <Form
-        name="signup"
-        className="form"
-        onFinish={handleSignup}
-        initialValues={{
-          email: 'test1@daum.net', // 기본값으로 설정할 이메일
-          password: 'password1234!', // 기본값으로 설정할 비밀번호
-          confirm: 'password1234!',
-        }}
-      >
-        <InputField
+      <form className="form" onSubmit={formik.handleSubmit}>
+        <Input
           name="email"
-          label="이메일"
-          // 입력 검증 규칙 설정
-          rules={[
-            { required: true, message: '이메일을 입력해주세요' },
-            {
-              type: 'email',
-              message: '메일주소가 유효하지 않습니다',
-            },
-            {
-              validator: async () => {
-                if (duplicateError) {
-                  return Promise.reject(new Error(duplicateError));
-                }
-                return Promise.resolve();
-              },
-            },
-          ]}
+          placeholder="이메일"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          onBlur={formik.handleBlur}
         />
-        <InputField
+        {formik.touched.email && formik.errors.email ? (
+          <p className="error">{formik.errors.email}</p>
+        ) : (
+          <p className="error"></p>
+        )}
+        <Input.Password
           name="password"
-          label="비밀번호"
-          rules={[
-            { required: true, message: '비밀번호를 입력해주세요' },
-            {
-              pattern: /(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{10,15}/,
-              message: '영문자, 숫자, 특수문자를 포함시켜주세요',
-            },
-          ]}
-          isPassword
+          placeholder="영문자,숫자,특수문자를 포함하여 10 - 15자로 입력해주세요"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+          onBlur={formik.handleBlur}
         />
-        <InputField
+        {formik.touched.password && formik.errors.password ? (
+          <p className="error">{formik.errors.password}</p>
+        ) : (
+          <p className="error"></p>
+        )}
+        <Input.Password
           name="confirm"
-          label="비밀번호 확인"
-          // password필드의 값에 의존한다는 뜻
-          dependencies={['password']}
-          rules={[
-            { required: true, message: '비밀번호를 입력해주세요' }, // 비밀번호 확인이 비어 있을 때의 메시지
-            ({
-              getFieldValue,
-            }: {
-              getFieldValue: FormInstance['getFieldValue'];
-            }) => ({
-              // validator: 사용자 정의 검증 함수
-              validator(_: RuleObject, value: string) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error('비밀번호가 일치하지 않습니다.')
-                );
-              },
-            }),
-          ]}
-          isPassword
+          placeholder="비밀번호 확인"
+          onChange={formik.handleChange}
+          value={formik.values.confirm}
+          onBlur={formik.handleBlur}
         />
-        <Form.Item>
-          <CheckboxGroup
-            checkboxes={smallCheckBoxs}
-            onAllCheck={onAllCheck}
-            onSingleCheck={onSingleCheck}
-            isAllChecked={isAllChecked}
-          />
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </Form.Item>
-        <Form.Item>
-          <Buttons loading={false} text="회원가입" />
-        </Form.Item>
-      </Form>
+        {formik.touched.confirm && formik.errors.confirm ? (
+          <p className="error">{formik.errors.confirm}</p>
+        ) : (
+          <p className="error"></p>
+        )}
+
+        <CheckboxGroup
+          checkboxes={smallCheckBoxs}
+          onAllCheck={onAllCheck}
+          onSingleCheck={onSingleCheck}
+          isAllChecked={isAllChecked}
+        />
+        {errorMessage ? (
+          <p className="error">{errorMessage}</p>
+        ) : (
+          <p className="error"></p>
+        )}
+        <Buttons loading={false} text="회원가입" />
+      </form>
     </SignupFormStyled>
   );
 };
