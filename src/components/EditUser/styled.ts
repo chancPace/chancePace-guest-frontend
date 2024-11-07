@@ -5,6 +5,12 @@ export const EditUserStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  .form {
+    .error {
+      height: 40px;
+      background-color: green;
+    }
+  }
   .confirm {
     display: block;
   }
@@ -18,7 +24,7 @@ export const EditUserStyled = styled.div`
     align-items: center;
   }
   .ant-collapse {
-    width: 500px;
+    width: 350px;
     text-align: left;
     font-weight: bold;
     border: 0;
@@ -26,7 +32,7 @@ export const EditUserStyled = styled.div`
       background-color: white;
       border-radius: 0;
       .ant-form-item-control-input {
-        width: 450px;
+        width: 350px;
       }
     }
   }

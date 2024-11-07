@@ -4,7 +4,7 @@ export const ButtonsStyled = styled.div`
     margin-top: 50px;
     .customButton {
         width: 350px;
-        background-color: gray;
+        background-color: ${({ theme }) => theme.color.main};
         &:hover {
             background-color: gray;
         }

@@ -1,11 +1,14 @@
 import { UserData } from '@/types';
 import { EditUserStyled } from './styled';
-import { Button, Collapse, Form, Input, message, Select } from 'antd';
+import { Collapse, Input, message, Select } from 'antd';
 import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
 import { useDispatch } from 'react-redux';
 import { updateUserProfile } from '@/redux/slices/userSlice';
 import { useRouter } from 'next/router';
+import { useFormik } from 'formik';
+import Buttons from '../Buttons';
+import { useEffect } from 'react';
 const { Panel } = Collapse;
 
 interface ErrorResponseData {
@@ -28,8 +31,6 @@ const EditUser = ({
   setShowPasswordInput,
   setUserData,
 }: UserAccountFormProps) => {
-  const [profileForm] = Form.useForm();
-  const [passwordForm] = Form.useForm();
   const dispatch = useDispatch(); // 디스패치 훅 추가
   const router = useRouter();
   const bankOpt = [
@@ -49,6 +50,47 @@ const EditUser = ({
     { value: 'Jeju', label: '제주은행' },
   ];
 
+  //프로필 수정
+  const profileFormik = useFormik({
+    initialValues: {
+      userName: userData?.userName || '',
+      phoneNumber: userData?.phoneNumber || '',
+      bankAccountName: userData?.bankAccountName || '',
+      bankAccountOwner: userData?.bankAccountOwner || '',
+      bankAccountNumber: userData?.bankAccountNumber || '',
+    },
+    onSubmit: async (values) => {
+      try {
+        const updateData = {
+          id: userData?.id as number,
+          email: userData?.email,
+          ...values,
+        };
+        const response = await patchProfile(updateData);
+        message.success(response.message || '회원 정보가 업데이트되었습니다.');
+        dispatch(updateUserProfile(updateData));
+        setUserData({ ...userData, ...updateData });
+        router.push('/');
+      } catch (error) {
+        console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
+      }
+    },
+  });
+
+  //userData가 변경될때마다 input에 값 띄우기
+  useEffect(() => {
+    if (userData) {
+      profileFormik.setValues({
+        userName: userData.userName || '',
+        phoneNumber: userData.phoneNumber || '',
+        bankAccountName: userData.bankAccountName || '',
+        bankAccountOwner: userData.bankAccountOwner || '',
+        bankAccountNumber: userData.bankAccountNumber || '',
+      });
+    }
+  }, [userData]);
+
+  //비밀번호 인증하기
   const handlePasswordCheck = async (password: string) => {
     try {
       const isConfirmed = await checkPassword(password);
@@ -71,50 +113,43 @@ const EditUser = ({
     }
   };
 
-  const handlePasswordChange = async (values: {
-    currentPassword: string;
-    newPassword: string;
-    confirmNewPassword: string;
-  }) => {
-    try {
-      const isConfirmed = await checkPassword(values.currentPassword);
-      if (!isConfirmed) {
-        message.error('기존 비밀번호가 일치하지 않습니다.');
-        return;
+  //비밀번호 변경
+  const passwordFormik = useFormik({
+    initialValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+    onSubmit: async (values) => {
+      try {
+        const isConfirmed = await checkPassword(values.currentPassword);
+        if (!isConfirmed) {
+          message.error('기존 비밀번호가 일치하지 않습니다.');
+          return;
+        }
+        const updateData = {
+          id: userData?.id as number,
+          password: values.newPassword,
+        };
+        const response = await patchProfile(updateData);
+        message.success(response.message || '비밀번호가 변경되었습니다.');
+        passwordFormik.resetForm();
+      } catch (error) {
+        const axiosError = error as AxiosError<ErrorResponseData>;
+        message.error(
+          axiosError.response?.data?.message ||
+            '비밀번호 변경 중 오류가 발생했습니다.'
+        );
       }
-      const updateData = {
-        id: userData?.id as number,
-        password: values.newPassword,
-      };
-      const response = await patchProfile(updateData);
-      message.success(response.message || '비밀번호가 변경되었습니다.');
-      passwordForm.resetFields();
-    } catch (error) {
-      const axiosError = error as AxiosError<ErrorResponseData>;
-      message.error(
-        axiosError.response?.data?.message ||
-          '비밀번호 변경 중 오류가 발생했습니다.'
-      );
-    }
-  };
-
-  const handleSaveProfile = async () => {
-    try {
-      const values = await profileForm.validateFields();
-      const updateData = {
-        id: userData?.id as number,
-        email: userData?.email,
-        ...values,
-      };
-      const response = await patchProfile(updateData);
-      message.success(response.message || '회원 정보가 업데이트되었습니다.');
-      dispatch(updateUserProfile(updateData));
-      setUserData({ ...userData, ...updateData });
-      router.push('/');
-    } catch (error) {
-      console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
-    }
-  };
+    },
+    validate: (values) => {
+      const errors: { newPassword?: string; confirmNewPassword?: string } = {};
+      if (values.newPassword !== values.confirmNewPassword) {
+        errors.confirmNewPassword = '새 비밀번호가 일치하지 않습니다.';
+      }
+      return errors;
+    },
+  });
 
   return (
     <EditUserStyled>
@@ -123,135 +158,98 @@ const EditUser = ({
           {!isPasswordConfirm ? (
             <div className="confirm">
               {showPasswordInput && (
-                <Form
-                  layout="inline"
-                  onFinish={(values) => handlePasswordCheck(values.password)}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const password = e.currentTarget.password.value;
+                    handlePasswordCheck(password);
+                  }}
                 >
-                  <Form.Item
+                  <Input.Password
                     name="password"
-                    rules={[
-                      { required: true, message: '비밀번호를 입력하세요' },
-                    ]}
-                  >
-                    <Input.Password />
-                  </Form.Item>
-                  <Button type="primary" htmlType="submit" className="button">
-                    비밀번호 확인
-                  </Button>
-                </Form>
+                    placeholder="비밀번호 확인"
+                    required
+                  />
+                  <Buttons text="비밀번호 확인" />
+                </form>
               )}
             </div>
           ) : (
-            <Form
-              form={profileForm}
-              layout="vertical"
-              onFinish={handleSaveProfile}
-            >
-              <Form.Item
-                label="이메일"
+            <form onSubmit={profileFormik.handleSubmit}>
+              <Input
                 name="email"
-                initialValue={userData?.email}
-              >
-                <Input readOnly />
-              </Form.Item>
-              <Form.Item
-                label="사용자 이름"
+                placeholder="이메일"
+                value={userData?.email}
+                readOnly
+              />
+              <Input
                 name="userName"
-                initialValue={userData?.userName}
-                rules={[
-                  { required: true, message: '사용자 이름을 입력하세요!' },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="휴대폰 번호"
+                placeholder="사용자 이름"
+                onChange={profileFormik.handleChange}
+                value={profileFormik.values.userName}
+              />
+              <Input
                 name="phoneNumber"
-                initialValue={userData?.phoneNumber}
-                rules={[
-                  { required: true, message: '휴대폰 번호를 입력해주세요' },
-                ]}
-              >
-                <Input placeholder="-포함하여 입력해주세요" />
-              </Form.Item>
+                placeholder="휴대폰 번호"
+                onChange={profileFormik.handleChange}
+                value={profileFormik.values.phoneNumber}
+              />
               {userData?.role === 'HOST' && (
                 <>
-                  <Form.Item
-                    label="은행명"
-                    name="bankAccountName"
-                    initialValue={userData?.bankAccountName}
-                  >
-                    <Select options={bankOpt} />
-                  </Form.Item>
-                  <Form.Item
-                    label="계좌 소유주"
+                  <Select
+                    placeholder="은행명"
+                    options={bankOpt}
+                    onChange={(value) =>
+                      profileFormik.setFieldValue('bankAccountName', value)
+                    }
+                    value={profileFormik.values.bankAccountName}
+                  />
+                  <Input
                     name="bankAccountOwner"
-                    initialValue={userData?.bankAccountOwner}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item
-                    label="계좌 번호"
+                    placeholder="계좌 소유주"
+                    onChange={profileFormik.handleChange}
+                    value={profileFormik.values.bankAccountOwner}
+                  />
+                  <Input
                     name="bankAccountNumber"
-                    initialValue={userData?.bankAccountNumber}
-                  >
-                    <Input />
-                  </Form.Item>
+                    placeholder="계좌 번호"
+                    onChange={profileFormik.handleChange}
+                    value={profileFormik.values.bankAccountNumber}
+                  />
                 </>
               )}
-
-              <Button type="primary" className="button" htmlType="submit">
-                저장
-              </Button>
-            </Form>
+              <Buttons text="저장" />
+            </form>
           )}
         </Panel>
 
         <Panel header="비밀번호 변경" key="2">
-          <Form
-            form={passwordForm}
-            layout="vertical"
-            onFinish={handlePasswordChange}
-          >
-            <Form.Item
-              label="기존 비밀번호"
+          <form onSubmit={passwordFormik.handleSubmit} className="form">
+            <Input.Password
               name="currentPassword"
-              rules={[
-                { required: true, message: '기존 비밀번호를 입력하세요' },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item
-              label="새 비밀번호"
+              placeholder="기존 비밀번호"
+              onChange={passwordFormik.handleChange}
+              value={passwordFormik.values.currentPassword}
+            />
+            <Input.Password
               name="newPassword"
-              rules={[{ required: true, message: '새 비밀번호를 입력하세요' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item
-              label="새 비밀번호 확인"
+              placeholder="새 비밀번호"
+              onChange={passwordFormik.handleChange}
+              value={passwordFormik.values.newPassword}
+            />
+            <Input.Password
               name="confirmNewPassword"
-              dependencies={['newPassword']}
-              rules={[
-                { required: true, message: '새 비밀번호 확인을 입력하세요' },
-                ({ getFieldValue }) => ({
-                  async validator(_, value) {
-                    const newPassword = getFieldValue('newPassword');
-                    if (!value || newPassword === value) {
-                      return;
-                    }
-                    throw new Error('새 비밀번호가 일치하지 않습니다.');
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Button type="primary" htmlType="submit" className="button">
-              비밀번호 변경
-            </Button>
-          </Form>
+              placeholder="새 비밀번호 확인"
+              onChange={passwordFormik.handleChange}
+              value={passwordFormik.values.confirmNewPassword}
+            />
+            {passwordFormik.errors.confirmNewPassword && (
+              <p className="error">
+                {passwordFormik.errors.confirmNewPassword || ''}
+              </p>
+            )}
+            <Buttons text="비밀번호 변경">{/* 비밀번호 변경 */}</Buttons>
+          </form>
         </Panel>
       </Collapse>
     </EditUserStyled>
