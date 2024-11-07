@@ -15,6 +15,7 @@ import Link from 'next/link';
 import router from 'next/router';
 import { CategoryType, Space } from '@/types';
 import Banner from '@/components/Banner';
+import { GetServerSideProps } from 'next';
 interface ErrorResponseData {
   message: string;
 }
@@ -55,7 +56,7 @@ const MainPage = () => {
       const spaceData = await getSpace();
       if (spaceData.data && spaceData.data.length > 0) {
         const availableSpaces = spaceData.data
-          .filter((space:Space) => space.spaceStatus === 'AVAILABLE')
+          .filter((space: Space) => space.spaceStatus === 'AVAILABLE')
           .slice(0, 8);
         setNewSpace(availableSpaces);
       }

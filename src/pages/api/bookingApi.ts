@@ -1,7 +1,14 @@
 import { BookingData } from '@/types';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/api/booking';
+const isLocal = process.env.NODE_ENV === 'development';
+
+const API_URL = `${
+  isLocal
+    ? `http://${process.env.NEXT_PUBLIC_LOCAL_HOST}:${process.env.NEXT_PUBLIC_LOCAL_PORT}`
+    : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
+}/api/booking`;
+
 
 export const addBooking = async (bookingData: BookingData) => {
   try {

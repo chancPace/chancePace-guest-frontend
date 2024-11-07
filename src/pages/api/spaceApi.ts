@@ -3,7 +3,14 @@ import axios, { AxiosError } from 'axios';
 interface ErrorResponseData {
   message: string;
 }
-const API_URL = 'http://localhost:4000/api/space';
+
+const isLocal = process.env.NODE_ENV === 'development';
+
+const API_URL = `${
+  isLocal
+    ? `http://${process.env.NEXT_PUBLIC_LOCAL_HOST}:${process.env.NEXT_PUBLIC_LOCAL_PORT}`
+    : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
+}/api/space`;
 
 export const getSpace = async () => {
   try {

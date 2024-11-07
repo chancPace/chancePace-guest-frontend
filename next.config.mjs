@@ -9,9 +9,9 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true, // ESLint 오류를 무시하는 설정
         // 특정 규칙 비활성화
-        rules: {
-            'react/no-unescaped-entities': 'off', // 이 규칙을 비활성화합니다.
-        },
+        // rules: {
+        //     'react/no-unescaped-entities': 'off', // 이 규칙을 비활성화합니다.
+        // },
     },
 };
 

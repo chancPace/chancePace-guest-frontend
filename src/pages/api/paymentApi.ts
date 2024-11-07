@@ -1,7 +1,14 @@
 import { Payment } from '@/types';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/api/payment';
+const isLocal = process.env.NODE_ENV === 'development';
+
+const API_URL = `${
+  isLocal
+    ? `http://${process.env.NEXT_PUBLIC_LOCAL_HOST}:${process.env.NEXT_PUBLIC_LOCAL_PORT}`
+    : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
+}/api/payment`;
+
 
 //브라우저 환경인지 확인하고 userInfo 가져오기 (서버측에서 렌더링하려하면 오류가 발생함)
 const getUserInfoFromLocalStorage = () => {
