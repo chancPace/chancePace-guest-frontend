@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import { format } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { message } from 'antd';
+import { Button, Input, message } from 'antd';
 
 interface PaymentStickyProps {
   price: number;
@@ -17,6 +17,8 @@ interface PaymentStickyProps {
   spaceId: number;
   cleanTime: number;
   discount: number;
+  maxGuests: number;
+  minGuests: number;
 }
 const ReservationSticky = ({
   price,
@@ -25,6 +27,8 @@ const ReservationSticky = ({
   spaceId,
   cleanTime,
   discount,
+  maxGuests,
+  minGuests,
 }: PaymentStickyProps) => {
   const router = useRouter();
   const [totalTime, setTotalTime] = useState<number>(0); // 초기값 0으로 설정
@@ -36,6 +40,19 @@ const ReservationSticky = ({
   );
   const [selectedEndTime, setSelectedEndTime] = useState<number | null>(null);
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  const [peopleCount, setPeopleCount] = useState<number>(1); // 기본 인원은 1로 설정
+
+  const handleIncrement = () => {
+    if (peopleCount < maxGuests) {
+      setPeopleCount(peopleCount + 1);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (peopleCount > 1) {
+      setPeopleCount(peopleCount - 1);
+    }
+  };
 
   useEffect(() => {
     if (selectedStartTime !== null && selectedEndTime !== null) {
@@ -129,14 +146,26 @@ const ReservationSticky = ({
         cleanTime={cleanTime}
         onDateSelect={handleDateChange} // 날짜 변경 핸들러 추가
       />
-      <div className="additional-people">
-        <p>인원추가</p>
-        <div className="form">
-          <PlusCircleOutlined />
-          <div className="additional"></div>
-          <MinusCircleOutlined />
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Button onClick={handleDecrement} disabled={peopleCount <= 1}>
+          -
+        </Button>
+        <Input
+          value={peopleCount}
+          style={{ width: '50px', textAlign: 'center' }}
+          readOnly
+        />
+        <Button onClick={handleIncrement} disabled={peopleCount >= maxGuests}>
+          +
+        </Button>
       </div>
+      <div className="Instructions">기준인원: {minGuests} 초과시 </div>
       <div className="price-summary">
         <p>이용 금액: {totalPrice.toLocaleString()}원</p>
         <p className="discount">

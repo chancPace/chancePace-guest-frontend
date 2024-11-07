@@ -8,11 +8,15 @@ import { useEffect, useState } from 'react';
 import { getReviewBySpace } from '@/pages/api/reviewApi';
 import ReviewList from '../ReviewList';
 import ImgSection from '../ImgSection';
+import { FaStar } from 'react-icons/fa';
 
 interface ItemDetailProps {
   space: Space;
 }
 const ItemDetail = ({ space }: ItemDetailProps) => {
+  const [reviewCount, setReviewCount] = useState<number>(0);
+
+  // console.log(space, 'ㅎ스페이스스스스');
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   useEffect(() => {
     const fetchReviews = async () => {
@@ -79,6 +83,10 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
         <p>최대 인원 {space.maxGuests}명</p>
         <p>{space.spaceLocation}</p>
       </div>
+      <div className="rate">
+        <FaStar style={{ color: '#FEC01F' }} />
+        <p className="rate-number">{space.spaceRating}</p>
+      </div>
       <div className="detailBottom">
         <div className="tabWrap">
           <Tabs defaultActiveKey="1" items={items} />
@@ -91,6 +99,8 @@ const ItemDetail = ({ space }: ItemDetailProps) => {
             spaceId={space.id}
             cleanTime={space.cleanTime}
             discount={space.discount}
+            maxGuests = {space.maxGuests}
+            minGuests = {space.minGuests}
           />
         </div>
       </div>

@@ -111,8 +111,8 @@ const MyPage = () => {
   //찜 삭제
   const deleteWishlistItem = async (wishlistId: number) => {
     try {
-      await removeWishlist(wishlistId); 
-      setWishList((prev) => prev.filter((item) => item.id !== wishlistId)); 
+      await removeWishlist(wishlistId);
+      setWishList((prev) => prev.filter((item) => item.id !== wishlistId));
     } catch (error) {
       console.error('찜 목록 삭제 실패', error);
     }

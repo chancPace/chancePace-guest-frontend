@@ -8,6 +8,7 @@ import { FaStar } from 'react-icons/fa';
 import { getReviewBySpace } from '@/pages/api/reviewApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { message } from 'antd';
 import {
   addWishlist,
   getWishlist,
@@ -71,8 +72,10 @@ const ItemList = ({ x }: ItemListProps) => {
       const wishItem = wishlist.find((item) => item.spaceId === x.id);
       if (wishItem) {
         await removeWishlist(wishItem.id);
+        message.success(`찜 목록에서 삭제되었습니다.`);
       } else {
         await addWishlist(userId, x.id);
+        message.success(`찜 목록에 추가되었습니다.`);
       }
 
       // API 호출 후 최신 wishlist 가져오기

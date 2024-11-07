@@ -60,9 +60,9 @@ const HostPage = () => {
             <div className="section">
               <div className="go">
                 <p>Let&apos;s work together!</p>
-                <Button className="hostButton">
+                <div className="host-button">
                   <a href="http://localhost:3001/">호스트 등록하기</a>
-                </Button>
+                </div>
               </div>
             </div>
           </ReactFullpage.Wrapper>

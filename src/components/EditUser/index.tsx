@@ -28,7 +28,8 @@ const EditUser = ({
   setShowPasswordInput,
   setUserData,
 }: UserAccountFormProps) => {
-  const [form] = Form.useForm();
+  const [profileForm] = Form.useForm();
+  const [passwordForm] = Form.useForm();
   const dispatch = useDispatch(); // 디스패치 훅 추가
   const router = useRouter();
   const bankOpt = [
@@ -76,8 +77,9 @@ const EditUser = ({
     confirmNewPassword: string;
   }) => {
     try {
-      const isConfirme = await checkPassword(values.currentPassword);
-      if (!isConfirme) {
+      const isConfirmed = await checkPassword(values.currentPassword);
+      if (!isConfirmed) {
+        message.error('기존 비밀번호가 일치하지 않습니다.');
         return;
       }
       const updateData = {
@@ -86,24 +88,19 @@ const EditUser = ({
       };
       const response = await patchProfile(updateData);
       message.success(response.message || '비밀번호가 변경되었습니다.');
-      form.resetFields([
-        'currentPassword',
-        'newPassword',
-        'confirmNewPassword',
-      ]);
+      passwordForm.resetFields();
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponseData>;
-      if (axiosError.response?.status === 401) {
-        message.error(axiosError.response.data.message);
-      } else {
-        message.error('비밀번호 확인 중 오류가 발생했습니다.');
-      }
+      message.error(
+        axiosError.response?.data?.message ||
+          '비밀번호 변경 중 오류가 발생했습니다.'
+      );
     }
   };
 
   const handleSaveProfile = async () => {
     try {
-      const values = await form.validateFields();
+      const values = await profileForm.validateFields();
       const updateData = {
         id: userData?.id as number,
         email: userData?.email,
@@ -111,8 +108,8 @@ const EditUser = ({
       };
       const response = await patchProfile(updateData);
       message.success(response.message || '회원 정보가 업데이트되었습니다.');
-      dispatch(updateUserProfile(updateData)); // 리덕스 업데이트
-      setUserData({ ...userData, ...updateData }); // 로컬 상태 업데이트
+      dispatch(updateUserProfile(updateData));
+      setUserData({ ...userData, ...updateData });
       router.push('/');
     } catch (error) {
       console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
@@ -145,7 +142,11 @@ const EditUser = ({
               )}
             </div>
           ) : (
-            <Form form={form} layout="vertical">
+            <Form
+              form={profileForm}
+              layout="vertical"
+              onFinish={handleSaveProfile}
+            >
               <Form.Item
                 label="이메일"
                 name="email"
@@ -173,7 +174,7 @@ const EditUser = ({
               >
                 <Input placeholder="-포함하여 입력해주세요" />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 label="성별"
                 name="gender"
                 initialValue={userData?.gender}
@@ -182,36 +183,34 @@ const EditUser = ({
                   <Radio value="MALE">남성</Radio>
                   <Radio value="FEMALE">여성</Radio>
                 </Radio.Group>
-              </Form.Item>
-              <Form.Item
-                label="은행명"
-                name="bankAccountName"
-                initialValue={userData?.bankAccountName}
-              >
-                <Select options={bankOpt} />
-              </Form.Item>
+              </Form.Item> */}
+              {userData?.role === 'HOST' && (
+                <>
+                  <Form.Item
+                    label="은행명"
+                    name="bankAccountName"
+                    initialValue={userData?.bankAccountName}
+                  >
+                    <Select options={bankOpt} />
+                  </Form.Item>
+                  <Form.Item
+                    label="계좌 소유주"
+                    name="bankAccountOwner"
+                    initialValue={userData?.bankAccountOwner}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    label="계좌 번호"
+                    name="bankAccountNumber"
+                    initialValue={userData?.bankAccountNumber}
+                  >
+                    <Input />
+                  </Form.Item>
+                </>
+              )}
 
-              <Form.Item
-                label="계좌 소유주"
-                name="bankAccountOwner"
-                initialValue={userData?.bankAccountOwner}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="계좌 번호"
-                name="bankAccountNumber"
-                initialValue={userData?.bankAccountNumber}
-              >
-                <Input />
-              </Form.Item>
-
-              <Button
-                type="primary"
-                onClick={handleSaveProfile}
-                className="button"
-              >
+              <Button type="primary" className="button" htmlType="submit">
                 저장
               </Button>
             </Form>
@@ -219,7 +218,11 @@ const EditUser = ({
         </Panel>
 
         <Panel header="비밀번호 변경" key="2">
-          <Form form={form} layout="vertical" onFinish={handlePasswordChange}>
+          <Form
+            form={passwordForm}
+            layout="vertical"
+            onFinish={handlePasswordChange}
+          >
             <Form.Item
               label="기존 비밀번호"
               name="currentPassword"

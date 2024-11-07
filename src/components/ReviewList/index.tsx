@@ -60,7 +60,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
               alt="Space Image"
             />
           ) : (
-            <p>이미지가 없습니다</p> // 이미지가 없을 경우 표시할 내용
+            <p>이미지가 없습니다</p> 
           )}
           <div className="rating">
             <p>{x.space?.spaceName}</p>

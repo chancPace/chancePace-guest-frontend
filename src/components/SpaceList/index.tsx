@@ -51,7 +51,10 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
           const subCategoryList = categoryData.data.filter(
             (category: CategoryType) => Number(category.pId) === categoryId
           );
-          setSubCategory([{ id: null, name: '전체' }, ...subCategoryList]);
+          setSubCategory([
+            { id: null, categoryName: '전체' },
+            ...subCategoryList,
+          ]);
           const spaceData = await getSpace();
           const availableSpaces = spaceData.data.filter(
             (space: Space) =>
@@ -144,6 +147,8 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
       {subCategory.length > 0 && (
         <div className="subcategory-list">
           {subCategory.map((x, i) => (
+            // console.log(x,'xxxx')
+
             <Category
               key={i}
               x={x}

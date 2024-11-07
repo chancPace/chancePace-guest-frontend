@@ -88,9 +88,11 @@ export const HostStyled = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xxxl};
     flex-direction: column;
 
-    .hostButton {
+    .host-button {
+      font-size: 15px;
       padding: 20px 50px;
       margin-left: 20px;
+      border: 1px solid gray;
     }
   }
 
