@@ -174,16 +174,6 @@ const EditUser = ({
               >
                 <Input placeholder="-포함하여 입력해주세요" />
               </Form.Item>
-              {/* <Form.Item
-                label="성별"
-                name="gender"
-                initialValue={userData?.gender}
-              >
-                <Radio.Group>
-                  <Radio value="MALE">남성</Radio>
-                  <Radio value="FEMALE">여성</Radio>
-                </Radio.Group>
-              </Form.Item> */}
               {userData?.role === 'HOST' && (
                 <>
                   <Form.Item

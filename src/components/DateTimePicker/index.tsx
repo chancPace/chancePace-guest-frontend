@@ -30,6 +30,7 @@ const DateTimePicker = ({
   businessStartTime,
   price,
   spaceId,
+  cleanTime,
   onTimeSelect,
   onDateSelect, // 부모로부터 받은 onDateSelect 콜백
 }: DateTimePickerProps) => {
@@ -43,7 +44,6 @@ const DateTimePicker = ({
   const [bookingTime, setBookingTime] = useState<
     { startTime: number; endTime: number }[]
   >([]);
-
 
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
@@ -124,7 +124,7 @@ const DateTimePicker = ({
   const isBooking = (index: number) => {
     return bookingTime.some((booking) => {
       const startIndex = booking.startTime - businessEndTime;
-      const endIndex = booking.endTime - businessStartTime;
+      const endIndex = booking.endTime - businessStartTime - 1 + cleanTime;
       return index >= startIndex && index <= endIndex;
     });
   };
@@ -151,7 +151,6 @@ const DateTimePicker = ({
         className="custom-datepicker"
         minDate={new Date()}
         onChange={handleDateChange}
-        // onClick={() => setOpenDatePicker(true)} // 필드를 클릭하면 달력이 열림
       />
 
       <div className="time-select-title">
