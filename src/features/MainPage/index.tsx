@@ -54,7 +54,7 @@ const MainPage = () => {
   useEffect(() => {
     const fetchSpace = async () => {
       const spaceData = await getSpace();
-      if (spaceData.data && spaceData.data.length > 0) {
+      if (spaceData && spaceData.data && spaceData.data.length > 0) {
         const availableSpaces = spaceData.data
           .filter((space: Space) => space.spaceStatus === 'AVAILABLE')
           .slice(0, 8);
