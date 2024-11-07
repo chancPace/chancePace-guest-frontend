@@ -22,7 +22,7 @@ interface AddressSearchResult {
   };
 }
 
-const KakaoMap: React.FC<KakaoMapProps> = ({ address }) => {
+const KakaoMap = ({ address }:KakaoMapProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [coordinates, setCoordinates] = useState({
     latitude: 37.5665,

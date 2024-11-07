@@ -39,9 +39,12 @@ export const getSearchSpace = async (value: string) => {
 
 export const getOneSpace = async (spaceId: number) => {
   try {
-    const response = await axios.get(`${API_URL}/get-one-space`, {
-      params: { spaceId },
-    });
+    const response = await axios.get(
+      `${API_URL}/get-one-space?spaceId=${spaceId}`,
+      {
+        params: { spaceId },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error('공간조회 실패', error);

@@ -1,6 +1,6 @@
 import { UserData } from '@/types';
 import { EditUserStyled } from './styled';
-import { Button, Collapse, Form, Input, message, Radio, Select } from 'antd';
+import { Button, Collapse, Form, Input, message, Select } from 'antd';
 import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
 import { useDispatch } from 'react-redux';

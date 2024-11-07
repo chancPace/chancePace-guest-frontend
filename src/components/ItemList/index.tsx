@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { ItemListStyled } from './styled';
 import { Space, Wishlist } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'; // 아이콘 임포트
+import { faBookmark } from '@fortawesome/free-solid-svg-icons'; 
 import { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { getReviewBySpace } from '@/pages/api/reviewApi';

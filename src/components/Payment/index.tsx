@@ -34,7 +34,7 @@ const Payment = () => {
 
   //결제하는 공간의 데이터
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
-  // console.log(selectedCoupon, '셀렉트쿠폰');
+
   //결제 위젯의 인스턴스를 참조하기 위한 변수
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   //결제 방식 위젯(신용카드, 계좌이체) 등의 인스턴스를 참조하기 위한 변수
@@ -46,7 +46,7 @@ const Payment = () => {
     if (router.query.price) {
       const parsedPrice = Number(router.query.price);
       setPrice(parsedPrice || 0);
-      setFinalPrice(parsedPrice || 0); // 가격이 업데이트될 때 finalPrice를 설정
+      setFinalPrice(parsedPrice || 0); 
     }
   }, [router.query.price]);
 
@@ -194,11 +194,11 @@ const Payment = () => {
         <p>쿠폰선택</p>
         <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
           {coupons?.map((x) => {
-            console.log(x,'xxx')
+            const isDisabled = price < x.coupon.discountPrice;
             return (
-              <Select.Option key={x.id} value={x.id}>
-                {x.coupon.couponName} | 
-                {x.coupon.discountPrice.toLocaleString()}원
+              <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
+                {x.coupon.couponName} |{x.coupon.discountPrice.toLocaleString()}
+                원
               </Select.Option>
             );
           })}
