@@ -30,11 +30,7 @@ const MainPage = () => {
       try {
         const categoryData = await getCategory();
         //대분류 가져오기
-        setBigCategory(
-          categoryData.data.filter(
-            (category: { pId: null }) => category.pId === null
-          )
-        );
+        setBigCategory(categoryData.data.filter((category: { pId: null }) => category.pId === null));
       } catch (error) {
         const axiosError = error as AxiosError<ErrorResponseData>;
         if (axiosError.response?.status === 500) {
@@ -56,7 +52,7 @@ const MainPage = () => {
       const spaceData = await getSpace();
       if (spaceData && spaceData.data && spaceData.data.length > 0) {
         const availableSpaces = spaceData.data
-          .filter((space: Space) => space.spaceStatus === 'AVAILABLE')
+          .filter((space: Space) => space.spaceStatus === 'AVAILABLE' && space.isOpen === true)
           .slice(0, 8);
         setNewSpace(availableSpaces);
       }
@@ -110,13 +106,7 @@ const MainPage = () => {
         <p className="categoryTitle">최적의 장소를 찾아보세요!</p>
         <div className="categoryList">
           {bigCategory.map((x, i) => {
-            return (
-              <Category
-                x={x}
-                key={i}
-                onClick={() => handleCategoryClick(x.id)}
-              />
-            );
+            return <Category x={x} key={i} onClick={() => handleCategoryClick(x.id)} />;
           })}
         </div>
       </div>
