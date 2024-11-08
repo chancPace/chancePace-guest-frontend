@@ -20,7 +20,6 @@ const ItemDetail = () => {
   const { id } = router.query;
   const [space, setSpace] = useState<Space | null>(null);
   const [reviewCount, setReviewCount] = useState<number>(0);
-  console.log(space, '스페이스스스스');
   useEffect(() => {
     if (id) {
       const fetchSpace = async () => {
@@ -34,7 +33,7 @@ const ItemDetail = () => {
       fetchSpace();
     }
   }, [id]);
-  // console.log(space, 'ㅎ스페이스스스스');
+
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   // 공간에 대한 리뷰 가져오기
   useEffect(() => {

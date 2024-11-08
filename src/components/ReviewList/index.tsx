@@ -11,7 +11,6 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
-  console.log(x, 'xxxx');
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
 
   const handleDeleteClick = async (reviewId: number) => {
@@ -25,7 +24,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
       if (result) {
         message.success('리뷰가 성공적으로 삭제되었습니다.');
         if (fetchUserData) {
-          fetchUserData(); // fetchUserData가 정의된 경우에만 호출
+          fetchUserData(); 
         }
       }
     } catch (error) {

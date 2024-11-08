@@ -1,5 +1,5 @@
 import { SignupFormStyled } from './styled';
-import {  message, Input } from 'antd';
+import { message, Input, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CheckboxGroup from '../CheckboxGroup';
@@ -10,6 +10,7 @@ import { AxiosError } from 'axios'; // AxiosError 타입을 import
 import dayjs from 'dayjs';
 import { SignupCoupon } from '@/pages/api/couponApi';
 import { useFormik } from 'formik';
+import { sendAuthNumber } from '@/pages/api/nodemailerApi';
 
 interface CheckBoxItem {
   value: string;
@@ -48,6 +49,12 @@ const SignupForm = () => {
   //필수 체크박스가 선택되지 않았을 경우의 에러 메세지
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
   const [duplicateError, setDuplicateError] = useState('');
+  //코드 발송 여부
+  const [isCodeSent, setIsCodeSent] = useState(false);
+  //서버에서 받은 인증코드 저장
+  const [serverAuthCode, setServerAuthCode] = useState<string>('');
+  //이메일 인증 완료 여부
+  const [isVerified, setIsVerified] = useState(false);
 
   //전체 체크박스 선택
   const onAllCheck = (e: CheckboxChangeEvent) => {
@@ -81,9 +88,10 @@ const SignupForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      confirm: '',
+      email: 'test@daum.net',
+      password: 'password1234!',
+      confirm: 'password1234!',
+      authCode: '', // 인증 코드 입력 필드 추가
     },
     validate: (values) => {
       const errors: { email?: string; password?: string; confirm?: string } =
@@ -162,6 +170,40 @@ const SignupForm = () => {
     },
   });
 
+  const handleSendAuthCode = async () => {
+    try {
+      const response = await sendAuthNumber(formik.values.email);
+
+      if (response && response.result) {
+        message.success(response.message);
+        setServerAuthCode(String(response.authNumber)); // 문자열로 변환하여 저장
+        setIsCodeSent(true);
+      } else if (response && !response.result) {
+        // 중복된 이메일의 경우 메시지 처리
+        message.error(response.message);
+      } else {
+        message.error('알 수 없는 오류가 발생했습니다.');
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 404) {
+        message.error('이미 존재하는 회원입니다.');
+      } else {
+        message.error('인증 코드 전송에 실패했습니다.');
+      }
+    }
+  };
+
+  const handleVerifyCode = () => {
+    if (formik.values.authCode === serverAuthCode) {
+      message.success('이메일 인증이 완료되었습니다.');
+      setIsVerified(true);
+    } else {
+      message.error('인증 코드가 일치하지 않습니다.');
+      setIsVerified(false);
+    }
+  };
+
   return (
     <SignupFormStyled>
       <p className="formLogo">ChancePace</p>
@@ -172,11 +214,36 @@ const SignupForm = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
           onBlur={formik.handleBlur}
-        />
+          disabled={isVerified}
+        />{' '}
+        <Button
+          htmlType="button"
+          onClick={handleSendAuthCode}
+          disabled={!formik.values.email || isCodeSent}
+        >
+          인증받기
+        </Button>
         {formik.touched.email && formik.errors.email ? (
           <p className="error">{formik.errors.email}</p>
         ) : (
           <p className="error"></p>
+        )}
+        {isCodeSent && (
+          <>
+            <Input
+              name="authCode"
+              placeholder="인증번호 입력"
+              onChange={formik.handleChange}
+              value={formik.values.authCode}
+              onBlur={formik.handleBlur}
+            />
+            <Button onClick={handleVerifyCode} htmlType="button">
+              인증하기
+            </Button>
+            {formik.errors.authCode && (
+              <p className="error">{formik.errors.authCode}</p>
+            )}
+          </>
         )}
         <Input.Password
           name="password"
@@ -202,7 +269,6 @@ const SignupForm = () => {
         ) : (
           <p className="error"></p>
         )}
-
         <CheckboxGroup
           checkboxes={smallCheckBoxs}
           onAllCheck={onAllCheck}
@@ -214,7 +280,9 @@ const SignupForm = () => {
         ) : (
           <p className="error"></p>
         )}
-        <Buttons loading={false} text="회원가입" />
+        <Button loading={false} htmlType="submit" disabled={!isVerified}>
+          회원가입
+        </Button>
       </form>
     </SignupFormStyled>
   );

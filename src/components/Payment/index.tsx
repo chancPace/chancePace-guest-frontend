@@ -4,7 +4,10 @@ const clientKey: string = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
 const customerKey = 'YbX2HuSlsC9uVJW6NMRMjsdgaawegwasergfwrfasdfsq';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useRef, useState } from 'react';
-import { loadPaymentWidget, PaymentWidgetInstance } from '@tosspayments/payment-widget-sdk';
+import {
+  loadPaymentWidget,
+  PaymentWidgetInstance,
+} from '@tosspayments/payment-widget-sdk';
 import { useRouter } from 'next/router';
 import { message, Select } from 'antd';
 import { getUserAllCoupon, UserCouponIsUsed } from '@/pages/api/couponApi';
@@ -35,10 +38,14 @@ const Payment = () => {
   //결제 위젯의 인스턴스를 참조하기 위한 변수
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   //결제 방식 위젯(신용카드, 계좌이체) 등의 인스턴스를 참조하기 위한 변수
-  const paymentMethodsWidgetRef = useRef<ReturnType<PaymentWidgetInstance['renderPaymentMethods']> | null>(null);
+  const paymentMethodsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance['renderPaymentMethods']
+  > | null>(null);
 
   // URL 인코딩된 키라면, 디코딩 후 삭제
-  localStorage.removeItem(decodeURIComponent('@payment-widget/previous-payment-method-id'));
+  localStorage.removeItem(
+    decodeURIComponent('@payment-widget/previous-payment-method-id')
+  );
 
   useEffect(() => {
     if (router.query.price) {
@@ -151,7 +158,9 @@ const Payment = () => {
         {spaceDetails && (
           <div className="reservation-space-info">
             <div className="img">
-              <img src={`http://localhost:4000/${spaceDetails.images[0].imageUrl}`}></img>
+              <img
+                src={`http://localhost:4000/${spaceDetails.images[0].imageUrl}`}
+              ></img>
             </div>
             <div className="reservation-text">
               <p>{spaceDetails.spaceName}</p>
@@ -181,8 +190,9 @@ const Payment = () => {
       <div className="refund-information">
         <div className="reservation-title">환불 규정 안내</div>
         <p>
-          체크인 날짜인 11월 8일 전에 취소하면 부분 환불을 받으실 수 있습니다. 그 이후에는 취소 시점에 따라 환불액이
-          결정됩니다. <span>자세히 알아보기</span>
+          체크인 날짜인 11월 8일 전에 취소하면 부분 환불을 받으실 수 있습니다.
+          그 이후에는 취소 시점에 따라 환불액이 결정됩니다.{' '}
+          <span>자세히 알아보기</span>
         </p>
       </div>
       <div></div>
@@ -190,11 +200,14 @@ const Payment = () => {
         <p>결제금액:{price.toLocaleString()}</p>
         <p>쿠폰선택</p>
         <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
+          <Select.Option value={-1}>선택안함</Select.Option>
+
           {coupons?.map((x) => {
             const isDisabled = price < x.coupon.discountPrice;
             return (
               <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
-                {x.coupon.couponName} |{x.coupon.discountPrice.toLocaleString()}원
+                {x.coupon.couponName} |{x.coupon.discountPrice.toLocaleString()}
+                원
               </Select.Option>
             );
           })}

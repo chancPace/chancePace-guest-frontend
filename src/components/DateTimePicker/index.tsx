@@ -45,6 +45,11 @@ const DateTimePicker = ({
     { startTime: number; endTime: number }[]
   >([]);
 
+  // console.log(selectedDate, '셀렉데이트');
+  const today = new Date();
+  const currentHour = new Date().getHours(); // 현재 시간의 시간 부분
+  // console.log(currentHour, '커런트아워');
+  // console.log(todayFormat, '투데이포맷');
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
@@ -89,6 +94,7 @@ const DateTimePicker = ({
       message.warning('날짜를 먼저 선택해주세요.');
       return;
     }
+
     if (startTime === null) {
       setStartTime(index);
       setEndTime(null);
@@ -127,6 +133,13 @@ const DateTimePicker = ({
       const endIndex = booking.endTime - businessStartTime - 1 + cleanTime;
       return index >= startIndex && index <= endIndex;
     });
+  };
+
+  const isPastTime = (time: number) => {
+    if (!selectedDate) return false;
+    const isToday =
+      format(selectedDate, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd');
+    return isToday && time <= currentHour;
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -170,7 +183,7 @@ const DateTimePicker = ({
       <div className="swiper-container">
         <Swiper
           spaceBetween={0}
-          slidesPerView={2}
+          slidesPerView={5}
           pagination={{ clickable: true }}
         >
           {timeSlots.map((time, index) => (
@@ -180,8 +193,8 @@ const DateTimePicker = ({
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'
-                  } ${isBooking(index) ? 'booked' : ''}`}
-                  onClick={() => handleTimeClick(index)}
+                  } ${isBooking(index) || isPastTime(time) ? 'booked' : ''}`}
+                  onClick={() => !isPastTime(time) && handleTimeClick(index)}
                 >
                   <div className="price">{price.toLocaleString()}원</div>
                 </div>

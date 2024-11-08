@@ -7,8 +7,12 @@ export const EditUserStyled = styled.div`
   align-items: center;
   .form {
     .error {
-      height: 40px;
-      background-color: green;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      /* background-color: green; */
+      font-size: 12px;
+      color: ${({ theme }) => theme.color.warning};
     }
   }
   .confirm {

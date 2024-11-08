@@ -8,7 +8,7 @@ import { updateUserProfile } from '@/redux/slices/userSlice';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import Buttons from '../Buttons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const { Panel } = Collapse;
 
 interface ErrorResponseData {
@@ -33,6 +33,8 @@ const EditUser = ({
 }: UserAccountFormProps) => {
   const dispatch = useDispatch(); // 디스패치 훅 추가
   const router = useRouter();
+  const [currentPasswordError, setCurrentPasswordError] = useState('');
+
   const bankOpt = [
     { value: 'KB', label: '국민은행' },
     { value: 'IBK', label: '기업은행' },
@@ -90,28 +92,33 @@ const EditUser = ({
     }
   }, [userData]);
 
-  //비밀번호 인증하기
-  const handlePasswordCheck = async (password: string) => {
-    try {
-      const isConfirmed = await checkPassword(password);
-      if (isConfirmed) {
-        setIsPasswordConfirm(true);
-        setShowPasswordInput(false);
-        message.success('비밀번호 인증에 성공했습니다. 수정이 가능합니다.');
-      } else {
-        message.error('비밀번호가 일치하지 않습니다.');
+  const passwordCheckFormik = useFormik({
+    initialValues: {
+      password: '',
+    },
+    onSubmit: async (values) => {
+      try {
+        const response = await checkPassword(values.password);
+        // console.log(response, '리스펀스');
+        if (response.result) {
+          setIsPasswordConfirm(true);
+          setShowPasswordInput(false);
+          message.success('비밀번호 인증에 성공했습니다. 수정이 가능합니다.');
+        } else {
+          message.error('비밀번호가 일치하지 않습니다.');
+        }
+      } catch (error) {
+        const axiosError = error as AxiosError<ErrorResponseData>;
+        if (axiosError.response?.data?.message) {
+          message.error(
+            axiosError.response.data.message || '비밀번호가 틀렸습니다.'
+          );
+        } else {
+          message.error('비밀번호 변경 중 오류가 발생했습니다.');
+        }
       }
-    } catch (error) {
-      const axiosError = error as AxiosError<ErrorResponseData>;
-      if (axiosError.response?.data?.message) {
-        message.error(
-          axiosError.response.data.message || '비밀번호가 틀렸습니다.'
-        );
-      } else {
-        message.error('비밀번호 변경 중 오류가 발생했습니다.');
-      }
-    }
-  };
+    },
+  });
 
   //비밀번호 변경
   const passwordFormik = useFormik({
@@ -124,7 +131,7 @@ const EditUser = ({
       try {
         const isConfirmed = await checkPassword(values.currentPassword);
         if (!isConfirmed) {
-          message.error('기존 비밀번호가 일치하지 않습니다.');
+          // message.error('기존 비밀번호가 일치하지 않습니다.');
           return;
         }
         const updateData = {
@@ -144,9 +151,20 @@ const EditUser = ({
     },
     validate: (values) => {
       const errors: { newPassword?: string; confirmNewPassword?: string } = {};
+      if (
+        !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,15}/.test(
+          values.newPassword
+        )
+      ) {
+        errors.newPassword =
+          '영문, 숫자, 특수문자를 포함하여 10-15자로 입력해주세요.';
+      }
+
+      // 새 비밀번호와 확인 비밀번호가 일치하는지 검증
       if (values.newPassword !== values.confirmNewPassword) {
         errors.confirmNewPassword = '새 비밀번호가 일치하지 않습니다.';
       }
+
       return errors;
     },
   });
@@ -158,16 +176,12 @@ const EditUser = ({
           {!isPasswordConfirm ? (
             <div className="confirm">
               {showPasswordInput && (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const password = e.currentTarget.password.value;
-                    handlePasswordCheck(password);
-                  }}
-                >
+                <form onSubmit={passwordCheckFormik.handleSubmit}>
                   <Input.Password
                     name="password"
+                    value={passwordCheckFormik.values.password}
                     placeholder="비밀번호 확인"
+                    onChange={passwordCheckFormik.handleChange}
                     required
                   />
                   <Buttons text="비밀번호 확인" />
@@ -231,12 +245,19 @@ const EditUser = ({
               onChange={passwordFormik.handleChange}
               value={passwordFormik.values.currentPassword}
             />
+
             <Input.Password
               name="newPassword"
               placeholder="새 비밀번호"
               onChange={passwordFormik.handleChange}
               value={passwordFormik.values.newPassword}
             />
+            <p className="error">
+              {passwordFormik.touched.newPassword &&
+              passwordFormik.errors.newPassword
+                ? passwordFormik.errors.newPassword
+                : ''}
+            </p>
             <Input.Password
               name="confirmNewPassword"
               placeholder="새 비밀번호 확인"
@@ -248,7 +269,7 @@ const EditUser = ({
                 {passwordFormik.errors.confirmNewPassword || ''}
               </p>
             )}
-            <Buttons text="비밀번호 변경">{/* 비밀번호 변경 */}</Buttons>
+            <Buttons text="비밀번호 변경"></Buttons>
           </form>
         </Panel>
       </Collapse>

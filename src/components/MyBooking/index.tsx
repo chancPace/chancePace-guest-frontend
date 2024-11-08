@@ -9,7 +9,6 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
-  console.log(x,'xxxxxx')
   const router = useRouter();
   //리뷰쓰기 버튼 보여주기 상태
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);

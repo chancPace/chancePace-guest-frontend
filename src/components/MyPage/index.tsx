@@ -35,7 +35,7 @@ const MyPage = () => {
   const [userBooking, setUserBooking] = useState([]);
   const [userReviews, setUserReviews] = useState<GetReviewData[]>([]); // 리뷰 데이터 상태 추가
   const [wishList, setWishList] = useState<Wishlist[]>([]);
-  console.log(wishList, '위시리스트');
+
   const handleLogout = () => {
     Cookies.remove('token');
     dispatch(logout());
