@@ -3,6 +3,7 @@ import { DateTimePickerStyled } from './styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -45,11 +46,19 @@ const DateTimePicker = ({
     { startTime: number; endTime: number }[]
   >([]);
 
-  // console.log(selectedDate, '셀렉데이트');
   const today = new Date();
   const currentHour = new Date().getHours(); // 현재 시간의 시간 부분
-  // console.log(currentHour, '커런트아워');
-  // console.log(todayFormat, '투데이포맷');
+
+  //이용시간
+  const useTime =
+    startTime !== null && endTime !== null ? endTime - startTime + 1 : 1;
+
+  //시작시간
+  const useStartTime = businessStartTime + (startTime ?? 0);
+
+  //종료시간
+  const useEndTime = businessStartTime + (endTime ?? startTime ?? 0);
+
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
@@ -79,14 +88,17 @@ const DateTimePicker = ({
       const finalEndTime = endTime ?? startTime;
       const formattedDate = format(selectedDate, 'yyyy-MM-dd'); // 날짜 포맷
 
-      onTimeSelect(
-        finalEndTime - startTime + 1, //총 시간
-        businessStartTime + startTime, //시작시간
-        businessStartTime + finalEndTime, //종료시간
-        formattedDate // 예약 날짜
-      );
+      onTimeSelect(useTime, useStartTime, useEndTime, formattedDate);
     }
-  }, [startTime, endTime, selectedDate, onTimeSelect]);
+  }, [
+    startTime,
+    endTime,
+    selectedDate,
+    useTime,
+    useStartTime,
+    useEndTime,
+    onTimeSelect,
+  ]);
 
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
@@ -171,11 +183,7 @@ const DateTimePicker = ({
         {startTime !== null && (
           <div className="selected-time-info">
             <p>
-              {`${businessStartTime + startTime}:00`} ~{' '}
-              {endTime !== null
-                ? `${businessStartTime + endTime + 1}:00`
-                : `${businessStartTime + startTime + 1}:00`}
-              , {endTime !== null ? endTime - startTime + 1 : 1} 시간
+              {`${useStartTime}:00`} ~ {`${useEndTime + 1}:00`}, {useTime} 시간
             </p>
           </div>
         )}
@@ -185,11 +193,15 @@ const DateTimePicker = ({
           spaceBetween={0}
           slidesPerView={5}
           pagination={{ clickable: true }}
+          modules={[Scrollbar]}
+          scrollbar={{ draggable: true }} // 스크롤바 활성화 및 드래그 가능 설정
         >
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
-              <div key={index}>
-                <div className="time-boundary">{`${time}:00`} </div>
+              <div key={index} className="time-select-section">
+                <div className="time-boundary">
+                  <p className="time">{`${time}`}</p>
+                </div>
                 <div
                   className={`time-slot ${
                     isSelected(index) ? 'selected' : 'unselected'
@@ -202,6 +214,14 @@ const DateTimePicker = ({
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+      <div className="price-summary">
+        {startTime !== null && (
+          <>
+            <p>시간당 금액: {price.toLocaleString()}원</p>
+            <p>이용 시간: {useTime}</p>
+          </>
+        )}
       </div>
     </DateTimePickerStyled>
   );

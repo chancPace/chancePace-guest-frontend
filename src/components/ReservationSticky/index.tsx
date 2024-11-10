@@ -3,12 +3,12 @@ import DateTimePicker from '../DateTimePicker';
 import { useRouter } from 'next/router';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 import { format } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Button, Input, message } from 'antd';
+import { FaDiceSix } from 'react-icons/fa';
 
 interface PaymentStickyProps {
   price: number;
@@ -19,6 +19,7 @@ interface PaymentStickyProps {
   discount: number;
   maxGuests: number;
   minGuests: number;
+  addPrice: number;
 }
 const ReservationSticky = ({
   price,
@@ -29,43 +30,43 @@ const ReservationSticky = ({
   discount,
   maxGuests,
   minGuests,
+  addPrice,
 }: PaymentStickyProps) => {
   const router = useRouter();
+  //총 이용시간
   const [totalTime, setTotalTime] = useState<number>(0); // 초기값 0으로 설정
+  //총 이용금액
   const [totalPrice, setTotalPrice] = useState<number>(0); // 초기값 0으로 설정
-  const [discountPrice, setDiscountPrice] = useState<number>(0);
+  //할인금액
+  // const [discountPrice, setDiscountPrice] = useState<number>(0);
+  //예약일
   const [startDate, setStartDate] = useState<string | null>(null);
+  //시작 시간
   const [selectedStartTime, setSelectedStartTime] = useState<number | null>(
     null
   );
+  //종료 시간
   const [selectedEndTime, setSelectedEndTime] = useState<number | null>(null);
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  //기준인원
   const [peopleCount, setPeopleCount] = useState<number>(1); // 기본 인원은 1로 설정
+  //할인 적용 금액
+  const discountPrice = price - discount;
+  // console.log(useTime, '유즈타임');
 
+  //기준인원 +시키기 (최대인원 한도까지)
   const handleIncrement = () => {
     if (peopleCount < maxGuests) {
       setPeopleCount(peopleCount + 1);
     }
   };
 
+  //기준인원 -시키기 (최소 1명)
   const handleDecrement = () => {
     if (peopleCount > 1) {
       setPeopleCount(peopleCount - 1);
     }
   };
-
-  useEffect(() => {
-    if (selectedStartTime !== null && selectedEndTime !== null) {
-      const calculatedTotal = price * totalTime;
-      const calculatedDiscount = discount * totalTime;
-      setTotalPrice(calculatedTotal);
-      setDiscountPrice(calculatedTotal - calculatedDiscount);
-    } else {
-      // 초기화 상태
-      setTotalPrice(0);
-      setDiscountPrice(0);
-    }
-  }, [totalTime, price, discount, selectedStartTime, selectedEndTime]);
 
   const handleTimeSelect = (
     totalTime: number,
@@ -76,20 +77,30 @@ const ReservationSticky = ({
     setSelectedStartTime(startTime);
     setSelectedEndTime(endTime);
     if (!startDate) {
-      const calculatedTotal = price * totalTime;
-      const calculatedDiscount = discount * totalTime;
+      const calculatedTotal = discountPrice * totalTime;
+      // const calculatedDiscount = discount * totalTime;
       setTotalPrice(calculatedTotal);
-      setDiscountPrice(calculatedTotal - calculatedDiscount);
+      // setDiscountPrice(calculatedTotal - calculatedDiscount);
     }
   };
+
+  //시작시간과 종료시간이 설정된경우
+  useEffect(() => {
+    if (selectedStartTime !== null && selectedEndTime !== null) {
+      const calculatedTotal = discountPrice * totalTime;
+      const calculatedDiscount = discount * totalTime;
+      setTotalPrice(calculatedTotal);
+    } else {
+      setTotalPrice(0);
+    }
+  }, [totalTime, price, discount, selectedStartTime, selectedEndTime]);
 
   const handleDateChange = (newDate: Date | null) => {
     setStartDate(newDate ? format(newDate, 'yyyy-MM-dd') : null);
     setSelectedStartTime(null);
     setSelectedEndTime(null);
-    setTotalTime(0); // 초기 totalTime 설정
+    setTotalTime(0);
     setTotalPrice(0);
-    setDiscountPrice(0);
   };
 
   const generateOrderId = () => {
@@ -101,11 +112,10 @@ const ReservationSticky = ({
   };
 
   const handlePayment = () => {
-    const token = Cookies.get('token'); // 쿠키에 저장된 토큰 확인
+    const token = Cookies.get('token');
     const orderId = generateOrderId();
 
     if (!token) {
-      // 토큰이 없으면 로그인 페이지로 이동
       router.push('/login');
       return;
     }
@@ -134,26 +144,24 @@ const ReservationSticky = ({
 
   return (
     <ReservationStickyStyled>
-      <p>
-        <span>{price.toLocaleString()}원</span> / 시간
+      <p className="space-price">
+        <span>{discountPrice.toLocaleString()}원</span> / 시간
       </p>
       <DateTimePicker
         businessStartTime={businessStartTime}
         businessEndTime={businessEndTime}
-        price={price}
+        price={discountPrice}
         onTimeSelect={handleTimeSelect}
         spaceId={spaceId}
         cleanTime={cleanTime}
-        onDateSelect={handleDateChange} // 날짜 변경 핸들러 추가
+        onDateSelect={handleDateChange}
       />
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Button onClick={handleDecrement} disabled={peopleCount <= 1}>
+      <div className="people-number">
+        <Button
+          onClick={handleDecrement}
+          disabled={peopleCount <= 1}
+          className="minus"
+        >
           -
         </Button>
         <Input
@@ -161,20 +169,22 @@ const ReservationSticky = ({
           style={{ width: '50px', textAlign: 'center' }}
           readOnly
         />
-        <Button onClick={handleIncrement} disabled={peopleCount >= maxGuests}>
+        <Button
+          onClick={handleIncrement}
+          disabled={peopleCount >= maxGuests}
+          className="plus"
+        >
           +
         </Button>
       </div>
-      <div className="Instructions">기준인원: {minGuests} 초과시 </div>
-      <div className="price-summary">
-        <p>이용 금액: {totalPrice.toLocaleString()}원</p>
-        <p className="discount">
-          할인 금액: -
-          {totalPrice > 0 ? (discount * totalTime).toLocaleString() : '0'}원
-        </p>
-        <p className="final-price">
-          총 결제 금액: {discountPrice.toLocaleString()}원
-        </p>
+      <div className="people-number-info">
+        {peopleCount > minGuests && (
+          <p>
+            추가 인원은 ({peopleCount - minGuests}명) 시간당{' '}
+            {addPrice.toLocaleString()}원 추가요금이 발생합니다. <br /> 추가 비용은 현장
+            결제 및 이용시 계좌이체로 진행됩니다
+          </p>
+        )}
       </div>
       <button
         className="pay-button"
@@ -183,8 +193,8 @@ const ReservationSticky = ({
           !startDate || selectedStartTime === null || selectedEndTime === null
         }
       >
-        {discountPrice > 0
-          ? `${discountPrice.toLocaleString()}원 결제하기`
+        {totalPrice > 0
+          ? `${totalPrice.toLocaleString()}원 결제하기`
           : '0원 결제하기'}
       </button>
     </ReservationStickyStyled>

@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 export const ItemListStyled = styled.div`
   width: 100%;
-  height: 350px;
+  height: 370px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922);
   border-radius: ${({ theme }) => theme.borderRadius};
-  background-color: pink;
   cursor: pointer;
   .itemImg {
     margin: auto;
@@ -60,6 +59,22 @@ export const ItemListStyled = styled.div`
     .bookmark-icon.active {
       font-size: 1.2rem;
       color: #8c73d8;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      .discount {
+        display: flex;
+        align-items: center;
+        .discount-tag {
+          font-size: 10px;
+          margin-left: 10px;
+          background-color: orange;
+          padding: 3px;
+          border-radius: 8px;
+          color: white;
+        }
+      }
     }
   }
 `;

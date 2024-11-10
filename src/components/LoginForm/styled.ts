@@ -8,17 +8,15 @@ export const LoginStyled = styled.div`
   position: relative;
   .form {
     background-color: rgba(255, 255, 255, 0.8);
-    width: 450px;
+    width: 500px;
     margin: auto;
     padding: 50px;
     border-radius: ${({ theme }) => theme.borderRadius};
     border: 1px solid lightgray;
-    .error {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      height: 20px;
-      color: ${({ theme }) => theme.color.warning};
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+
+    span {
+      font-size: 13px;
     }
     .span1 {
       display: block;
@@ -27,10 +25,9 @@ export const LoginStyled = styled.div`
     z-index: 10;
   }
   .formLogo {
-    position: absolute;
-    left: 50%;
-    top: 90%;
-    transform: translate(-50%, -90%);
-    font-size: ${({ theme }) => theme.fontSizes.big};
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+    text-align: center;
+    color: lightgray;
+    margin-bottom: 25px;
   }
 `;

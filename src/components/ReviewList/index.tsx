@@ -1,20 +1,25 @@
 import { GetReviewData } from '@/types';
 import { ReviewListStyled } from './styled';
 import { message, Modal, Rate } from 'antd';
-import { updateReview } from '@/pages/api/reviewApi';
+import { updateRatingBySpace, updateReview } from '@/pages/api/reviewApi';
 const { confirm } = Modal;
 
 interface ReviewListProps {
   x: GetReviewData;
-  fetchUserData?: () => void; // 함수 props로 받아오기
-  isDeletable?: boolean; // 삭제 버튼을 렌더링할지 여부
+  fetchUserData?: () => void;
+  // 삭제 버튼을 렌더링할지 여부
+  isDeletable?: boolean;
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
+  //작성일자 형식 바꾸기
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
+  const spaceId = Number(x.space?.id);
 
+  //리뷰 삭제
   const handleDeleteClick = async (reviewId: number) => {
     const reviewData = {
+      spaceId,
       reviewComment: x.reviewComment,
       reviewRating: null,
       reviewStatus: 'UNAVAILABLE',
@@ -23,8 +28,10 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
       const result = await updateReview(reviewId, reviewData);
       if (result) {
         message.success('리뷰가 성공적으로 삭제되었습니다.');
-        if (fetchUserData) {
-          fetchUserData(); 
+        //삭제완료되면 평점 계산 실행
+        const updateResult = await updateRatingBySpace(spaceId);
+        if (updateResult && fetchUserData) {
+          fetchUserData();
         }
       }
     } catch (error) {
@@ -32,10 +39,11 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
     }
   };
 
+  //삭제하기 버튼 눌렀을때 삭제 확인 모달 띄우기
   const showDeleteConfirm = (reviewId: number) => {
     confirm({
       title: '리뷰를 삭제하시겠습니까?',
-      content: '한 번 삭제된 리뷰는 되돌릴 수 없습니다.',
+      content: '한 번 삭제된 리뷰는 복구할 수 없으며, 재작성이 불가능합니다.',
       okText: '삭제',
       okType: 'danger',
       cancelText: '취소',
@@ -43,7 +51,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
         handleDeleteClick(reviewId); // 확인 버튼 클릭 시 삭제 로직 실행
       },
       onCancel() {
-        console.log('삭제 취소');
+        // console.log('삭제 취소');
       },
     });
   };
@@ -54,24 +62,24 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
         <div className="top-left">
           {x.space?.images && x.space.images.length > 0 ? (
             <img
-              src={`http://localhost:4000/${x.space.images[0].imageUrl}`}
+              src={x.space.images[0].imageUrl}
               className="wish-img"
               alt="Space Image"
             />
           ) : (
-            <p>이미지가 없습니다</p> 
+            <p>이미지가 없습니다</p>
           )}
           <div className="rating">
             <p>{x.space?.spaceName}</p>
             <Rate disabled defaultValue={x.reviewRating} />
-            <p className="date">{formattedDate}</p>
+            <p className="date">작성일자: {formattedDate}</p>
           </div>
         </div>
 
         <div className="top-right">
           {isDeletable && (
             <p className="delete" onClick={() => showDeleteConfirm(x.id)}>
-              삭제하기
+              삭제
             </p>
           )}
         </div>

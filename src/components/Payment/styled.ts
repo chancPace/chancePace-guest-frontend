@@ -20,6 +20,12 @@ export const PaymentStyled = styled.div`
       }
     }
   }
+  .refund-information {
+    .modal-button {
+      cursor: pointer;
+      border-bottom: 1px solid gray;
+    }
+  }
   .reservation-title {
     font-size: 25px;
     border-bottom: 1px solid lightgray;

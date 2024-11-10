@@ -79,8 +79,9 @@ const LoginForm = () => {
 
   return (
     <LoginStyled>
-      <p className="formLogo">ChancePace</p>
       <form onSubmit={formik.handleSubmit} className="form">
+        <p className="formLogo">ChancePace</p>
+
         <Input
           name="email"
           placeholder="이메일"
@@ -104,15 +105,12 @@ const LoginForm = () => {
             passwordError ||
             ''}
         </p>
-
         <Buttons text="로그인"></Buttons>
-
         <div>
           <Link href="/signup" passHref>
             <span className="span1">아직 회원이 아니신가요?</span>
           </Link>
           <Link href="/signup" passHref>
-            <span>아이디/비밀번호 찾기</span>
           </Link>
         </div>
       </form>

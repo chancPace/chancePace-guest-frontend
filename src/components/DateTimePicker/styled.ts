@@ -58,19 +58,23 @@ export const DateTimePickerStyled = styled.div`
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
   }
   .selected-time-info {
     font-size: 14px;
     color: #6b5b95;
   }
   .swiper-container {
+    width: 100%;
     position: relative;
     margin-top: 20px;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightgray;
+    background-color: #f8f9fa;
+    overflow: visible;
+    margin-bottom: 20px;
     .time-slot {
       width: 100%;
       padding: 15px 10px;
@@ -94,7 +98,6 @@ export const DateTimePickerStyled = styled.div`
       font-size: 12px;
       color: #333;
       position: relative;
-      /* margin-bottom: 5px; */
       border-bottom: 0.5px solid white;
       padding: 5px 0;
       z-index: -10;

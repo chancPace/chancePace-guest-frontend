@@ -1,40 +1,57 @@
 import { MyPageStyled } from './styled';
-import { Tabs, Form } from 'antd';
+import { Pagination, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { getUser } from '@/pages/api/userApi';
 import {
+  BookingData,
   GetReviewData,
   MyBookingData,
-  Space,
   UserData,
   Wishlist,
 } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
-import { getAllBooking } from '@/pages/api/bookingApi';
+import { getMyBooking } from '@/pages/api/bookingApi';
 import MyBooking from '../MyBooking';
-import { getSpace } from '@/pages/api/spaceApi';
 import ReviewList from '../ReviewList';
 import { getMyReview } from '@/pages/api/reviewApi';
 import EditUser from '../EditUser';
 import Cookies from 'js-cookie';
 import { logout } from '@/redux/slices/userSlice';
 import { getWishlist, removeWishlist } from '@/pages/api/wishlistApi';
-import { off } from 'process';
-import ItemList from '../ItemList';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRotateLeft,
+  faCalendarCheck,
+  faCalendarXmark,
+  faStore,
+} from '@fortawesome/free-solid-svg-icons';
 
 const MyPage = () => {
   const router = useRouter();
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+
   const dispatch = useDispatch();
-  const [form] = Form.useForm();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(true);
-  const [userBooking, setUserBooking] = useState([]);
+  const [userBooking, setUserBooking] = useState<MyBookingData[]>([]);
   const [userReviews, setUserReviews] = useState<GetReviewData[]>([]); // 리뷰 데이터 상태 추가
   const [wishList, setWishList] = useState<Wishlist[]>([]);
+  const [isBookingFetched, setIsBookingFetched] = useState(false);
+  const [isReviewFetched, setIsReviewFetched] = useState(false);
+  const [isWishFetched, setIsWishFetched] = useState(false);
+  const [totalOrder, setTotalOrder] = useState(0);
+  const [cancleOrder, setCancleOrder] = useState(0);
+  const [completedOrder, setCompletedOrder] = useState(0);
+  const [upcomingOrder, setUpcomingOrder] = useState(0);
+
+  //페이지네이션 상태관리
+  const [currentBookingPage, setCurrentBookingPage] = useState(1);
+  const [currentReviewPage, setCurrentReviewPage] = useState(1);
+  const [currentWishPage, setCurrentWishPage] = useState(1);
+  const pageSize = 5; // 한 페이지에 표시할 항목 수
 
   const handleLogout = () => {
     Cookies.remove('token');
@@ -55,58 +72,104 @@ const MyPage = () => {
         setShowPasswordInput(true);
         const response = await getUser();
         setUserData(response.data);
-        form.setFieldsValue(response.data);
       } catch (error) {
         console.error('사용자 데이터를 가져오는 중 오류 발생', error);
       }
     };
     fetchUserData();
-  }, [form]);
+  }, []);
 
-  const fetchUserData = async () => {
+  // 예약 데이터 불러오기
+  const fetchUserBooking = async () => {
     try {
       if (userInfo?.id) {
-        // 리뷰 가져오기
-        const reviews = await getMyReview(userInfo.id);
-        setUserReviews(reviews.data);
+        const myBooking = await getMyBooking(userInfo.id);
+        setUserBooking(myBooking.data);
+        setIsBookingFetched(true);
 
-        // 예약 내역 가져오기
-        const allBooking = await getAllBooking();
-        const myBooking = allBooking.data.filter(
-          (booking: MyBookingData) => booking.userId === userInfo.id
+        //취소건 제외한 모든 예약 갯수
+        const noCancellBooking = myBooking.data.filter(
+          (booking: MyBookingData) => booking.bookingStatus !== 'CANCELLED'
         );
+        setTotalOrder(noCancellBooking.length);
 
-        const allSpace = await getSpace();
-        const bookingWithSpace = myBooking.map((booking: MyBookingData) => {
-          const matchSpace = allSpace.data.find(
-            (space: Space) => space.id === booking.spaceId
-          );
-          return { ...booking, space: matchSpace };
-        });
+        const today = new Date();
 
-        setUserBooking(bookingWithSpace); // 예약 데이터 상태 업데이트
+        const completedBookings = noCancellBooking.filter(
+          (booking: MyBookingData) => {
+            const bookingDate = new Date(booking.startDate);
+
+            // 오늘 날짜인 경우, `endTime` 기준으로 상태 결정
+            if (bookingDate.toDateString() === today.toDateString()) {
+              return booking.endTime <= today.getHours();
+            }
+
+            // 오늘 이전 날짜인 경우 `이용 완료`
+            return bookingDate < today;
+          }
+        ).length;
+        setCompletedOrder(completedBookings);
+
+        const upcomingBookings = noCancellBooking.filter(
+          (booking: MyBookingData) => {
+            const bookingDate = new Date(booking.startDate);
+
+            // 오늘 날짜인 경우, `endTime` 기준으로 상태 결정
+            if (bookingDate.toDateString() === today.toDateString()) {
+              return booking.endTime > today.getHours();
+            }
+
+            // 오늘 이후 날짜인 경우 `이용 전`
+            return bookingDate > today;
+          }
+        ).length;
+        setUpcomingOrder(upcomingBookings);
+        // 취소건 갯수 필터링
+        const cancleOrders = myBooking.data.filter(
+          (booking: MyBookingData) => booking.bookingStatus === 'CANCELLED'
+        ).length;
+        setCancleOrder(cancleOrders);
       }
     } catch (error) {
-      console.error('데이터 조회 실패:', error);
+      console.error('예약 데이터를 가져오는 중 오류 발생', error);
     }
   };
 
-  //찜 목록 불러오기
+  // 리뷰 데이터 불러오기
+  const fetchUserReviews = async () => {
+    try {
+      if (userInfo?.id) {
+        const reviews = await getMyReview(userInfo.id);
+        setUserReviews(reviews.data);
+        setIsReviewFetched(true);
+      }
+    } catch (error) {
+      console.error('리뷰 데이터를 가져오는 중 오류 발생', error);
+    }
+  };
+
+  // 찜 목록 데이터 불러오기
   const fetchWishlist = async () => {
-    if (userInfo?.id) {
-      try {
+    try {
+      if (userInfo?.id) {
         const response = await getWishlist(userInfo.id);
         setWishList(response.data);
-      } catch (error) {
-        console.error('찜 목록 불러오기 실패', error);
+        setIsWishFetched(true);
       }
+    } catch (error) {
+      console.error('찜 목록 데이터를 가져오는 중 오류 발생', error);
     }
   };
 
-  useEffect(() => {
-    fetchUserData();
-    fetchWishlist();
-  }, [userInfo]);
+  const handleTabClick = (key: string) => {
+    if (key === '2' && !isBookingFetched) {
+      fetchUserBooking();
+    } else if (key === '3' && !isReviewFetched) {
+      fetchUserReviews();
+    } else if (key === '4' && !isWishFetched) {
+      fetchWishlist();
+    }
+  };
 
   //찜 삭제
   const deleteWishlistItem = async (wishlistId: number) => {
@@ -117,6 +180,24 @@ const MyPage = () => {
       console.error('찜 목록 삭제 실패', error);
     }
   };
+
+  //페이지네이션 핸들러
+  const handleBookingPageChange = (page: number) => setCurrentBookingPage(page);
+  const handleReviewPageChange = (page: number) => setCurrentReviewPage(page);
+  const handleWishPageChange = (page: number) => setCurrentWishPage(page);
+
+  const paginatedBookings = userBooking.slice(
+    (currentBookingPage - 1) * pageSize,
+    currentBookingPage * pageSize
+  );
+  const paginatedReviews = userReviews.slice(
+    (currentReviewPage - 1) * pageSize,
+    currentReviewPage * pageSize
+  );
+  const paginatedWishlist = wishList.slice(
+    (currentWishPage - 1) * pageSize,
+    currentWishPage * pageSize
+  );
 
   const tabItems = [
     {
@@ -148,9 +229,60 @@ const MyPage = () => {
       key: '2',
       children: (
         <div className="my-booking">
-          {userBooking?.map((x, i) => {
-            return <MyBooking key={i} x={x} />;
-          })}
+          <p>나의 주문현황</p>
+          <div className="my-booking-board">
+            <div>
+              <p>총 주문 수</p>
+              <div className="board-list">
+                <div className="icon-box">
+                  <FontAwesomeIcon icon={faStore} />
+                </div>
+                <p>{totalOrder}</p>
+              </div>
+            </div>
+            <div>
+              <p>이용 완료</p>
+              <div className="board-list">
+                <div className="icon-box">
+                  <FontAwesomeIcon icon={faCalendarCheck} />
+                </div>
+                <p>
+                  {' '}
+                  <p>{completedOrder}</p>
+                </p>
+              </div>
+            </div>
+            <div>
+              <p>이용 전</p>
+              <div className="board-list">
+                <div className="icon-box">
+                  <FontAwesomeIcon icon={faCalendarXmark} />
+                </div>
+                <p>
+                  {' '}
+                  <p>{upcomingOrder}</p>
+                </p>
+              </div>
+            </div>
+            <div>
+              <p>이용 취소</p>
+              <div className="board-list">
+                <div className="icon-box">
+                  <FontAwesomeIcon icon={faArrowRotateLeft} />
+                </div>
+                <p>{cancleOrder}</p>
+              </div>
+            </div>
+          </div>
+          {paginatedBookings.map((x, i) => (
+            <MyBooking key={i} x={x} />
+          ))}
+          <Pagination
+            current={currentBookingPage}
+            pageSize={pageSize}
+            total={userBooking.length}
+            onChange={handleBookingPageChange}
+          />
         </div>
       ),
     },
@@ -158,17 +290,19 @@ const MyPage = () => {
       label: '리뷰내역',
       key: '3',
       children: (
-        <div>
-          {userReviews?.map((x, i) => {
-            return (
-              <ReviewList
-                x={x}
-                key={i}
-                fetchUserData={fetchUserData}
-                isDeletable={true}
-              />
-            );
-          })}
+        <div className="my-review">
+          <p className="review-total">내가 쓴 리뷰{userReviews.length}개</p>
+          <div className="review-list">
+            {paginatedReviews.map((x, i) => (
+              <ReviewList key={i} x={x} />
+            ))}
+            <Pagination
+              current={currentBookingPage}
+              pageSize={pageSize}
+              total={userBooking.length}
+              onChange={handleBookingPageChange}
+            />
+          </div>
         </div>
       ),
     },
@@ -213,7 +347,7 @@ const MyPage = () => {
 
   return (
     <MyPageStyled>
-      <Tabs tabPosition="left" items={tabItems} />
+      <Tabs tabPosition="left" items={tabItems} onChange={handleTabClick} />
       <p className="logout" onClick={handleLogout}>
         로그아웃
       </p>

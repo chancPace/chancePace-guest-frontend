@@ -46,13 +46,13 @@ export const MainStyled = styled.div`
     width: 100%;
     margin-top: 100px;
     .categoryTitle {
-      text-align: center;
+      /* text-align: center; */
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       color: #8c73d8;
     }
     .categoryList {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       flex-wrap: wrap;
     }
   }
@@ -81,12 +81,13 @@ export const MainStyled = styled.div`
       color: #363636;
     }
     .more-link {
-      border: 1px solid lightgray;
+      background-color: #f1f3f5;
       width: 200px;
       padding: 10px;
       display: block;
       text-align: center;
       margin: 50px auto;
+      color: black;
     }
   }
 

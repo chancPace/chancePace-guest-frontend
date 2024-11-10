@@ -11,7 +11,7 @@ const TrendingSpot = ({ x }: TrendingSpotProps) => {
   };
   return (
     <TrendingSpotStyled onClick={handleClick}>
-      {/* <img src={x.spaceImg[0].src} alt={x.spaceImg[0].src}></img> */}
+      <img src={x.images[0].imageUrl} alt={x.images[0].imageUrl}></img>
       <div className="trandingSpotText">
         <p>{x.spaceName}</p>
         <p>{x.spaceLocation}</p>

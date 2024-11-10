@@ -190,6 +190,7 @@ export interface GetReviewData {
   user?: { email: string };
   space?: {
     spaceName: string;
+    id: number;
     images?: {
       imageUrl: string;
     }[];

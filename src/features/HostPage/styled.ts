@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import together from '../../assets/image/together.jpg';
 export const HostStyled = styled.div`
   background-color: white;
   width: 100%;
@@ -80,19 +80,27 @@ export const HostStyled = styled.div`
     border-radius: 20px;
     box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.5);
   }
-  .go {
-    margin: 100px 0 50px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: ${({ theme }) => theme.fontSizes.xxxl};
-    flex-direction: column;
-
-    .host-button {
-      font-size: 15px;
-      padding: 20px 50px;
-      margin-left: 20px;
-      border: 1px solid gray;
+  .together {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url(${together.src});
+    background-size: cover;
+    background-position: center;
+    .go {
+      margin: 100px 0 50px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: ${({ theme }) => theme.fontSizes.xxxl};
+      flex-direction: column;
+      .host-button {
+        font-size: 15px;
+        padding: 20px 50px;
+        margin-left: 20px;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
     }
   }
 

@@ -57,7 +57,7 @@ const HostPage = () => {
                 })}
               </div>
             </div>
-            <div className="section">
+            <div className="section together">
               <div className="go">
                 <p>Let&apos;s work together!</p>
                 <div className="host-button">

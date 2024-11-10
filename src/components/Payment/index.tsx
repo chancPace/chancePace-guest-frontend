@@ -9,13 +9,14 @@ import {
   PaymentWidgetInstance,
 } from '@tosspayments/payment-widget-sdk';
 import { useRouter } from 'next/router';
-import { message, Select } from 'antd';
+import { message, Modal, Select } from 'antd';
 import { getUserAllCoupon, UserCouponIsUsed } from '@/pages/api/couponApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Space, UserCoupon } from '@/types';
 import { PaymentStyled } from './styled';
 import { getOneSpace } from '@/pages/api/spaceApi';
+import CheckboxGroup from '../CheckboxGroup';
 
 const Payment = () => {
   const router = useRouter();
@@ -34,6 +35,8 @@ const Payment = () => {
 
   //결제하는 공간의 데이터
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
+  //모달창
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   //결제 위젯의 인스턴스를 참조하기 위한 변수
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
@@ -151,6 +154,16 @@ const Payment = () => {
     initializePaymentWidget();
   }, [clientKey, finalPrice]);
 
+  //환불 규정 모달
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  // Function to close the modal
+  const handleClose = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <PaymentStyled>
       <div className="reservation-space">
@@ -158,9 +171,7 @@ const Payment = () => {
         {spaceDetails && (
           <div className="reservation-space-info">
             <div className="img">
-              <img
-                src={`http://localhost:4000/${spaceDetails.images[0].imageUrl}`}
-              ></img>
+              <img src={spaceDetails.images[0].imageUrl}></img>
             </div>
             <div className="reservation-text">
               <p>{spaceDetails.spaceName}</p>
@@ -177,11 +188,6 @@ const Payment = () => {
           <p>
             예약시간: {startTime}:00 - {endTime}:00
           </p>
-        </div>
-      </div>
-      <div className="reservation-user-info">
-        <div className="reservation-title">예약자 정보</div>
-        <div className="reservation-text">
           <p>예약자: {userInfo?.userName}</p>
           <p>이메일: {userInfo?.email}</p>
           <p>연락처: {userInfo?.phoneNumber}</p>
@@ -190,37 +196,54 @@ const Payment = () => {
       <div className="refund-information">
         <div className="reservation-title">환불 규정 안내</div>
         <p>
-          체크인 날짜인 11월 8일 전에 취소하면 부분 환불을 받으실 수 있습니다.
-          그 이후에는 취소 시점에 따라 환불액이 결정됩니다.{' '}
-          <span>자세히 알아보기</span>
+          예약 날짜인 {startDate} 전에 취소 시 부분 환불을 받으실 수 있습니다.
+          그 이후에는 취소 시점에 따라 환불액이 결정됩니다. <br />
+          <span onClick={showModal} className="modal-button">
+            자세히 알아보기
+          </span>
         </p>
       </div>
       <div></div>
-      <div className="reservation-pay">
-        <p>결제금액:{price.toLocaleString()}</p>
-        <p>쿠폰선택</p>
-        <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
-          <Select.Option value={-1}>선택안함</Select.Option>
 
-          {coupons?.map((x) => {
-            const isDisabled = price < x.coupon.discountPrice;
-            return (
-              <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
-                {x.coupon.couponName} |{x.coupon.discountPrice.toLocaleString()}
-                원
-              </Select.Option>
-            );
-          })}
-        </Select>
-        <p>최종 결제 금액: {finalPrice.toLocaleString()}</p>
-      </div>
       <div className="reservation-agreement">
         <div className="reservation-title">주문 내용 확인 및 결제 동의</div>
+        <div className="reservation-pay">
+          <p>결제금액:{price.toLocaleString()}</p>
+          <p>쿠폰선택</p>
+          <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
+            <Select.Option value={-1}>선택안함</Select.Option>
+
+            {coupons?.map((x) => {
+              const isDisabled = price < x.coupon.discountPrice;
+              return (
+                <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
+                  {x.coupon.couponName} |
+                  {x.coupon.discountPrice.toLocaleString()}원
+                </Select.Option>
+              );
+            })}
+          </Select>
+          <p>최종 결제 금액: {finalPrice.toLocaleString()}</p>
+        </div>
+       
       </div>
       <div className="App">
         <div id="payment-widget"></div>
         <button onClick={handlePayment}>결제하기</button>
       </div>
+      <Modal
+        title="환불 정책"
+        visible={isModalVisible}
+        onCancel={handleClose}
+        footer={null}
+      >
+        <div>
+          <p>예약일 기준 3일전: 100% 환불</p>
+          <p>예약일 기준 2일전: 90% 환불</p>
+          <p>예약일 기준 1일전: 80% 환불</p>
+          <p>예약일 기준 당일 및 NO-SHOW: 환불불가</p>
+        </div>
+      </Modal>
     </PaymentStyled>
   );
 };

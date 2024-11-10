@@ -22,6 +22,7 @@ const ReviewModal = ({
   if (!space) {
     return null; // space가 없을 경우 아무것도 렌더링하지 않음
   }
+
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const userToken = useSelector(
@@ -33,27 +34,22 @@ const ReviewModal = ({
       message.error('로그인이 필요합니다');
       return;
     }
-    if (space?.id !== undefined) {
-      const reviewData = {
-        spaceId: space.id,
-        reviewComment,
-        reviewRating,
-        bookingId,
-      };
-      try {
-        await addReview(reviewData, userToken);
-        message.success('리뷰가 성공적으로 등록되었습니다.');
-        onReviewSubmit(); // 리뷰 작성 후 부모 컴포넌트로 알림
-        setReviewComment('');
-        setReviewRating(5);
-        onClose();
-        const updatedRating = await updateRatingBySpace(space?.id);
-        message.success(
-          `별점 평균이 업데이트되었습니다: ${updatedRating.data}점`
-        );
-      } catch (error) {
-        console.error('리뷰 등록에 실패했습니다.', error);
-      }
+    const reviewData = {
+      spaceId: space.id,
+      reviewComment,
+      reviewRating,
+      bookingId,
+    };
+    try {
+      await addReview(reviewData, userToken);
+      message.success('리뷰가 성공적으로 등록되었습니다.');
+      onReviewSubmit(); // 리뷰 작성 후 부모 컴포넌트로 알림
+      setReviewComment('');
+      setReviewRating(5);
+      onClose();
+      await updateRatingBySpace(space?.id);
+    } catch (error) {
+      console.error('리뷰 등록에 실패했습니다.', error);
     }
   };
   return (

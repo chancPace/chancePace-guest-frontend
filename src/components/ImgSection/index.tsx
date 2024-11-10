@@ -8,94 +8,100 @@ import { Grid, Pagination } from 'swiper/modules';
 import { useState } from 'react';
 
 interface ImageSectionProps {
-    mainImg: string;
-    smallImgs: {
-        src: string;
-    }[];
+  mainImg?: string;
+  smallImgs: {
+    src: string;
+  }[];
 }
-const ImgSection: React.FC<ImageSectionProps> = ({ mainImg, smallImgs }) => {
-    const [previewImg, setPreviewImg] = useState<string | null>(null);
+const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
+  const [previewImg, setPreviewImg] = useState<string | null>(null);
 
-    const handlePreview = (src: string) => {
-        setPreviewImg(src);
-    };
+  const handlePreview = (src: string) => {
+    setPreviewImg(src);
+  };
 
-    const handleClosePreview = () => {
-        setPreviewImg(null);
-    };
+  const handleClosePreview = () => {
+    setPreviewImg(null);
+  };
 
-    return (
-        <ImgSectionStyled>
-            <div className="mainImg">
+  //스몰 이미지 배열이 6개 미만일 경우 기본색상 채우기
+  const fullSmallImg = [
+    ...smallImgs,
+    ...Array(6 - smallImgs.length).fill({ src: '' }), // 빈 문자열로 채운 객체 추가
+  ];
+  return (
+    <ImgSectionStyled>
+      <div className="mainImg">
+        <img
+          src={mainImg}
+          alt={mainImg}
+          onClick={() => handlePreview(mainImg || '')}
+        ></img>
+      </div>
+      <div className="smallImgs">
+        <Swiper
+          slidesPerView={3}
+          grid={{
+            rows: 2,
+          }}
+          spaceBetween={5}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Grid, Pagination]}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3,
+              grid: {
+                rows: 2,
+              },
+            },
+            768: {
+              slidesPerView: 2,
+              grid: {
+                rows: 2,
+              },
+            },
+            640: {
+              slidesPerView: 1,
+              grid: {
+                rows: 2,
+              },
+            },
+            480: {
+              slidesPerView: 1,
+              grid: {
+                rows: 2,
+              },
+            },
+          }}
+          className="mySwiper"
+        >
+          {fullSmallImg?.map((x, i) => (
+            <SwiperSlide key={i}>
+              {x.src ? (
                 <img
-                    src={mainImg}
-                    alt={mainImg}
-                    onClick={() => handlePreview(mainImg)}
-                ></img>
-            </div>
-            <div className="smallImgs">
-                <Swiper
-                    slidesPerView={3}
-                    grid={{
-                        rows: 2,
-                    }}
-                    spaceBetween={5}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Grid, Pagination]}
-                    breakpoints={{
-                        // 화면 너비가 1024px 이상일 때
-                        1024: {
-                            slidesPerView: 3, // 슬라이드 3개
-                            grid: {
-                                rows: 2, // 2줄 설정
-                            },
-                        },
-                        // 화면 너비가 768px 이상일 때
-                        768: {
-                            slidesPerView: 2, // 슬라이드 2개
-                            grid: {
-                                rows: 2, // 2줄 설정
-                            },
-                        },
-                        // 화면 너비가 640px 이상일 때
-                        640: {
-                            slidesPerView: 1, // 슬라이드 1개
-                            grid: {
-                                rows: 2, // 2줄 설정
-                            },
-                        },
-                        // 화면 너비가 480px 이하일 때
-                        480: {
-                            slidesPerView: 1, // 슬라이드 1개
-                            grid: {
-                                rows: 2, // 2줄 설정
-                            },
-                        },
-                    }}
-                    className="mySwiper"
-                >
-                    {smallImgs.map((x, i) => (
-                        <SwiperSlide key={i}>
-                            <img
-                                src={x.src}
-                                alt={`small image ${i}`}
-                                onClick={() => handlePreview(x.src)}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
-            {previewImg && (
-                <PreviewOverlay onClick={handleClosePreview}>
-                    <div className="previewImageContainer">
-                        <img src={previewImg} alt="Preview" />
-                    </div>
-                </PreviewOverlay>
-            )}
-        </ImgSectionStyled>
-    );
+                  src={x.src}
+                  alt={`small image ${i}`}
+                  onClick={() => handlePreview(x.src)}
+                />
+              ) : (
+                <div
+                  className="placeholder"
+                ></div>
+              )}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      {previewImg && (
+        <PreviewOverlay onClick={handleClosePreview}>
+          <div className="previewImageContainer">
+            <img src={previewImg} alt="Preview" />
+          </div>
+        </PreviewOverlay>
+      )}
+    </ImgSectionStyled>
+  );
 };
 export default ImgSection;
-   

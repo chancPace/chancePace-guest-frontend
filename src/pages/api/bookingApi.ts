@@ -1,5 +1,6 @@
 import { BookingData } from '@/types';
 import axios from 'axios';
+import exp from 'constants';
 
 const isLocal = process.env.NODE_ENV === 'development';
 
@@ -8,7 +9,6 @@ const API_URL = `${
     ? `http://${process.env.NEXT_PUBLIC_LOCAL_HOST}:${process.env.NEXT_PUBLIC_LOCAL_PORT}`
     : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
 }/api/booking`;
-
 
 export const addBooking = async (bookingData: BookingData) => {
   try {
@@ -52,6 +52,18 @@ export const getOneBooking = async (bookingId: number) => {
     return response.data;
   } catch (error) {
     console.error('데이터 불러오기 실패', error);
+    throw error;
+  }
+};
+
+export const getMyBooking = async (userId: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/get-my-booking`, {
+      params: { userId },
+    });
+    return response.data
+  } catch (error) {
+    console.error('예약 불러오기 실패', error);
     throw error;
   }
 };

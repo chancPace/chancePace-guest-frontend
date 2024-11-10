@@ -5,33 +5,28 @@ export const EditUserStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  .form {
-    .error {
-      height: 25px;
-      display: flex;
-      align-items: center;
-      /* background-color: green; */
-      font-size: 12px;
-      color: ${({ theme }) => theme.color.warning};
-    }
-  }
   .confirm {
     display: block;
   }
-  .button {
-    margin-top: 20px;
-    background-color: #8c73d8;
+  label {
+    font-size: 12px;
+    display: block;
+    margin: 5px 0 5px 0;
   }
-  .ant-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .ant-input-password,
+  .ant-input,
+  .ant-collapse {
+    width: 400px;
   }
   .ant-collapse {
-    width: 350px;
+    width: 450px;
     text-align: left;
     font-weight: bold;
     border: 0;
+    .ant-collapse-content-box {
+      display: flex;
+      justify-content: center;
+    }
     .ant-collapse-item {
       background-color: white;
       border-radius: 0;

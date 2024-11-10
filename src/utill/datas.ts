@@ -10,6 +10,7 @@ import icon3 from '../assets/image/icon3.jpg';
 import login from '@/assets/image/feed.svg';
 import house from '@/assets/image/house.svg';
 import allow from '@/assets/image/party-popper.svg';
+
 import { HostMainImg, Explanation, Procedure} from '@/types';
 
 const hostMainImg: HostMainImg[] = [s1, s2, s3, s4, s5, s6];

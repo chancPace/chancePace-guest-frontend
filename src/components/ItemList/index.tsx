@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { ItemListStyled } from './styled';
 import { Space, Wishlist } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'; 
+import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { getReviewBySpace } from '@/pages/api/reviewApi';
@@ -19,7 +19,7 @@ interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
-  console.log(x,'xxxx')
+  console.log(x, 'xxxx');
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [wishlist, setWishlist] = useState<Wishlist[]>([]);
@@ -104,16 +104,32 @@ const ItemList = ({ x }: ItemListProps) => {
         <div className="itemText">
           <p>{x.spaceName}</p>
           <p>{x.spaceLocation}</p>
-          <p>{x.spacePrice.toLocaleString()}원 / 시간</p>
-          {x.discount && (
-            <span className="discount">시간당 {x.discount}할인</span>
-          )}
           <div className="rate">
             <FaStar style={{ color: '#FEC01F' }} />
             <p className="rate-number">
               {x.spaceRating}({reviewCount})
             </p>
           </div>
+          {/* <p>{x.spacePrice.toLocaleString()}원 / 시간</p>
+          {x.discount && (
+            <span className="discount">시간당 {x.discount}할인</span>
+          )} */}
+          <p className='price'>
+            <span
+              style={{ textDecoration: x.discount ? 'line-through' : 'none' }}
+            >
+              {x.spacePrice.toLocaleString()}원
+            </span>
+            {x.discount > 0 && (
+              <>
+                &nbsp;→&nbsp;
+                <span className="discount">
+                  {(x.spacePrice - x.discount).toLocaleString()}원
+                  <span className='discount-tag'>반짝특가</span>
+                </span>
+              </>
+            )}
+          </p>
         </div>
         <FontAwesomeIcon
           icon={faBookmark}

@@ -173,7 +173,7 @@ const SignupForm = () => {
   const handleSendAuthCode = async () => {
     try {
       const response = await sendAuthNumber(formik.values.email);
-
+      console.log(response);
       if (response && response.result) {
         message.success(response.message);
         setServerAuthCode(String(response.authNumber)); // 문자열로 변환하여 저장
@@ -206,8 +206,8 @@ const SignupForm = () => {
 
   return (
     <SignupFormStyled>
-      <p className="formLogo">ChancePace</p>
       <form className="form" onSubmit={formik.handleSubmit}>
+        <p className="formLogo">ChancePace</p>
         <Input
           name="email"
           placeholder="이메일"
@@ -215,6 +215,7 @@ const SignupForm = () => {
           value={formik.values.email}
           onBlur={formik.handleBlur}
           disabled={isVerified}
+          className="email-confirm"
         />{' '}
         <Button
           htmlType="button"
@@ -236,7 +237,8 @@ const SignupForm = () => {
               onChange={formik.handleChange}
               value={formik.values.authCode}
               onBlur={formik.handleBlur}
-            />
+              className="email-confirm number-confirm"
+            />{' '}
             <Button onClick={handleVerifyCode} htmlType="button">
               인증하기
             </Button>
@@ -280,7 +282,12 @@ const SignupForm = () => {
         ) : (
           <p className="error"></p>
         )}
-        <Button loading={false} htmlType="submit" disabled={!isVerified}>
+        <Button
+          loading={false}
+          htmlType="submit"
+          disabled={!isVerified}
+          className="signup-button"
+        >
           회원가입
         </Button>
       </form>

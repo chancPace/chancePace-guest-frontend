@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
 export const MyBookingStyled = styled.div`
-  width: 70%;
+  width: 90%;
   padding: 10px;
-  margin-bottom: 10px;
-  background-color: lightgray;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922);
   .booking-date {
-    background-color: lightgrey;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid lightgray;
+    .view-button {
+      cursor: pointer;
+    }
     > p:last-child {
       cursor: pointer;
     }
@@ -26,14 +29,15 @@ export const MyBookingStyled = styled.div`
       background-color: aliceblue;
       margin-right: 10px;
       object-fit: cover;
+      border-radius: 8px;
       img {
         width: 100%;
         height: 100%;
+        border-radius: 8px;
       }
     }
     .booking-info {
       height: 100%;
-      /* width: calc(100% - 200px); */
       display: flex;
       flex-direction: column;
       justify-content: flex-start;

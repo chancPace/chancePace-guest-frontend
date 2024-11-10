@@ -14,8 +14,16 @@ body {
     padding-top: 70px;
     .ant-message {
     z-index: 9000000 !important; 
+    
   }
 }
+.error {
+      height: 20px;
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      color: ${({ theme }) => theme.color.warning};
+    }
 `;
 
 export default GlobalStyle;
