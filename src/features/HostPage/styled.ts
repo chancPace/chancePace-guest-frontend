@@ -3,10 +3,10 @@ import together from '../../assets/image/together.jpg';
 export const HostStyled = styled.div`
   padding: 0 10px;
   .section {
+    padding-top: 60px;
     .hostMain {
       overflow: hidden;
       height: 100%;
-      padding-top: 60px;
       position: relative;
       .mainImg {
         width: 100%;
@@ -33,7 +33,6 @@ export const HostStyled = styled.div`
   }
   .section {
     .explanation {
-      /* height: calc(100vh - 60px); */
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -57,7 +56,6 @@ export const HostStyled = styled.div`
   .section {
     .procedure-list {
       height: 100%;
-      padding-top: 60px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -65,7 +63,6 @@ export const HostStyled = styled.div`
         font-size: 30px;
       }
       .hostProcedure {
-        padding-top: 60px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
       }
@@ -88,6 +85,7 @@ export const HostStyled = styled.div`
       color: white;
       > p {
         font-size: 80px;
+        text-align: center;
       }
       .host-button {
         margin-top: 10px;
@@ -102,9 +100,28 @@ export const HostStyled = styled.div`
   }
   @media screen and (max-width: 689px) {
     .section {
+      .hostMain {
+        .mainImg {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+    }
+    .section {
       .procedure-list {
         .hostProcedure {
           display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+    }
+    .section {
+      .explanation {
+        .infoTitle.ko {
+          font-size: 25px;
+        }
+        .hostInfo {
+          width: 100%;
+          gap: 1px;
           grid-template-columns: repeat(1, 1fr);
         }
       }

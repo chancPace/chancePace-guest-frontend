@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { FiUser } from 'react-icons/fi';
 
-
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
+  const userRole = useSelector((state: RootState) => state.user.userInfo?.role);
+  console.log(userRole, '롤확인');
 
   return (
     <HeaderStyled>
@@ -18,13 +19,13 @@ const Header = () => {
         <div className="userBar">
           {isLoggedIn ? (
             <>
-              <Link href="/host">
+              <Link
+                href={userRole === 'HOST' ? 'http://localhost:3001/' : '/host'}
+              >
                 <p className="hostMenuBar">호스트 센터</p>
               </Link>
-              <Link
-                href="/mypage"
-              >
-                <p className='header-icon'>
+              <Link href="/mypage">
+                <p className="header-icon">
                   <span>
                     <FiUser className="icon" />
                   </span>

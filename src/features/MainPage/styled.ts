@@ -7,7 +7,10 @@ export const MainStyled = styled.div`
   margin-bottom: 100px;
   margin-top: 50px;
   max-width: 1280px;
-  
+  .banner-swiper {
+    height: 200px;
+    margin-bottom: 50px;
+  }
   .swiper-button-next,
   .swiper-button-prev {
     visibility: hidden;

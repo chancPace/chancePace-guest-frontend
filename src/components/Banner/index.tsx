@@ -6,7 +6,6 @@ interface BannerProps {
   };
 }
 const Banner = ({ x }: BannerProps) => {
-  console.log(x, 'xxx');
   return (
     <BannerStyled>
       <img src={x.img}></img>

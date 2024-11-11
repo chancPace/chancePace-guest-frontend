@@ -18,7 +18,6 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
   const [subCategory, setSubCategory] = useState<CategoryType[]>([]);
   const [spaces, setSpaces] = useState<Space[]>([]);
   const [filterSpace, setFilterSpace] = useState<Space[]>([]); // 필터링된 공간을 저장
-  console.log(subCategory, '서브카테고리');
   //공간 검색하기
   useEffect(() => {
     if (query) {

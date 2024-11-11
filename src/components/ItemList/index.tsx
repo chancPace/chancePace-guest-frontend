@@ -19,7 +19,6 @@ interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
-  console.log(x, 'xxxx');
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [wishlist, setWishlist] = useState<Wishlist[]>([]);

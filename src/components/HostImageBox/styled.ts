@@ -16,6 +16,7 @@ export const HostInfoStyled = styled.div`
     width: 250px;
     font-size: ${({ theme }) => theme.fontSizes.lg};
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), 0px 0px 5px rgba(0, 0, 0, 0.1);
   }
   .hostText {
     width: 250px;
@@ -23,6 +24,7 @@ export const HostInfoStyled = styled.div`
     text-align: center;
     line-height: 1.5rem;
     font-size: ${({ theme }) => theme.fontSizes.md};
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), 0px 0px 5px rgba(0, 0, 0, 0.1);
   }
   .procedure {
     padding: 20px;
@@ -66,6 +68,12 @@ export const HostInfoStyled = styled.div`
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
+      font-size: 18px;
+    }
+    .hostText {
+      margin-bottom: 5px;
+      color: white;
+      font-size: 11px;
     }
     .hostSection {
       position: relative;
@@ -73,7 +81,10 @@ export const HostInfoStyled = styled.div`
     .procedure {
       padding: 5px;
       .procedureTitle {
-        margin: 5px 0;
+        font-size: 14px;
+      }
+      .procedureText {
+        font-size: 13px;
       }
     }
   }
@@ -89,9 +100,19 @@ export const HostInfoStyled = styled.div`
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
+      font-size: 16px;
     }
     .hostSection {
       position: relative;
+    }
+    .procedure {
+      padding: 10px;
+      .procedureTitle {
+        font-size: 17px;
+      }
+      .procedureText {
+        font-size: 15px;
+      }
     }
   }
 `;

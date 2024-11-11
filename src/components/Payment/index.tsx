@@ -152,7 +152,7 @@ const Payment = () => {
     };
     //함수를 호출하여 결제 위젯 초기화
     initializePaymentWidget();
-  }, [clientKey]);
+  }, [clientKey, finalPrice]);
 
   //환불 규정 모달
   const showModal = () => {

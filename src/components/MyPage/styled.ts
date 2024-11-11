@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 export const MyPageStyled = styled.div`
-  padding: 20px 10px;
-  /* background-color: orange; */
+  padding: 0 10px;
   height: 1000px;
   .ant-tabs {
     height: 100%;
   }
-
   .user-info {
     text-align: center;
   }
@@ -51,7 +49,6 @@ export const MyPageStyled = styled.div`
     .review-total {
       padding: 10px 0;
       font-size: 20px;
-      border-bottom: 1px solid lightgray;
       margin-bottom: 20px;
     }
     .review-list {

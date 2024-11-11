@@ -71,6 +71,7 @@ const MainPage = () => {
   return (
     <MainStyled>
       <Swiper
+        className="banner-swiper"
         spaceBetween={10}
         autoplay={{
           delay: 7000,
