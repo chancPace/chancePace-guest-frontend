@@ -38,7 +38,7 @@ export const ItemDetailStyled = styled.div`
         .rate {
           display: flex;
           justify-content: space-between;
-          width: 60px;
+          width: 70px;
           padding: 5px 10px;
           background-color: #fec01f;
           border-radius: 30px;
@@ -55,6 +55,11 @@ export const ItemDetailStyled = styled.div`
   .detail-bottom {
     .detail-info {
       .anchor-sections {
+        #part-1,
+        #part-2,
+        #part-3 {
+          padding: 20px 0;
+        }
         .anchor-title {
           .ant-anchor {
             background-color: white;
@@ -65,9 +70,26 @@ export const ItemDetailStyled = styled.div`
         > div {
           .section {
             margin: 20px 0;
+            .section-title {
+              display: inline-block;
+              background-color: lightgray;
+              color: white;
+              padding: 2px 5px;
+              font-size: 17px;
+              margin-bottom: 5px;
+              border-radius: 8px;
+            }
+            > p:nth-of-type(2) {
+              font-size: 14px;
+            }
             .map {
               width: 100%;
               height: 200px;
+              .location-text {
+                margin-top: 5px;
+                font-size: 14px;
+                cursor: pointer;
+              }
             }
           }
         }
@@ -84,24 +106,26 @@ export const ItemDetailStyled = styled.div`
         width: 100%;
       }
       .payment-section {
-        width: 80%;
-        margin: auto;
+        width: 100%;
+        margin-top: 20px;
       }
     }
   }
   @media screen and (min-width: 1025px) {
     .detail-info {
       display: flex;
-      gap: 200px;
+      gap: 10%;
       position: relative;
       .anchor-sections {
-        width: 70%;
+        width: 60%;
+        background-color: blue;
       }
       .payment-section {
         width: 30%;
         position: sticky;
         top: 60px;
         height: 370px;
+        background-color: pink;
       }
     }
   }

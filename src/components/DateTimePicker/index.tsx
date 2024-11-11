@@ -59,6 +59,7 @@ const DateTimePicker = ({
   //종료시간
   const useEndTime = businessStartTime + (endTime ?? startTime ?? 0);
 
+  //
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
@@ -194,7 +195,7 @@ const DateTimePicker = ({
           slidesPerView={5}
           pagination={{ clickable: true }}
           modules={[Scrollbar]}
-          scrollbar={{ draggable: true }} 
+          scrollbar={{ draggable: true }}
         >
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
@@ -208,21 +209,13 @@ const DateTimePicker = ({
                   } ${isBooking(index) || isPastTime(time) ? 'booked' : ''}`}
                   onClick={() => !isPastTime(time) && handleTimeClick(index)}
                 >
-                  <div className="price">{price.toLocaleString()}원</div>
+                  <div className="price">{price.toLocaleString()}</div>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      {/* <div className="price-summary">
-        {startTime !== null && (
-          <>
-            <p>시간당 금액: {price.toLocaleString()}원</p>
-            <p>이용 시간: {useTime}</p>
-          </>
-        )}
-      </div> */}
     </DateTimePickerStyled>
   );
 };

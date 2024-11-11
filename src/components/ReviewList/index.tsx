@@ -68,7 +68,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
               alt="Space Image"
             />
           ) : (
-            <p>이미지가 없습니다</p>
+            <p>Non-Image</p>
           )}
           <div className="rating">
             <p>{x.space?.spaceName}</p>
@@ -88,8 +88,8 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
 
       <div className="bottom">
         {x.user?.email && <p>{x.user.email}</p>}
+        <p> {x.reviewComment}</p>
       </div>
-      {x.reviewComment}
     </ReviewListStyled>
   );
 };

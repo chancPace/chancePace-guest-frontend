@@ -54,14 +54,6 @@ export const ReservationStickyStyled = styled.div`
     background-color: ${({ theme }) => theme.color.main};
     border-radius: 15px;
     color: white;
-    margin-top: 50px;
-  }
-  @media screen and (max-width: 480px) {
-  }
-  @media screen and (min-width: 481px) and (max-width: 768px) {
-  }
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
-  }
-  @media screen and (min-width: 1025px) {
+    margin-top: 20px;
   }
 `;

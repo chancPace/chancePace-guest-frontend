@@ -22,6 +22,9 @@ export const ReviewListStyled = styled.div`
         border-radius: 100%;
         margin-right: 15px;
       }
+      .rating {
+        font-size: 14px;
+      }
       .ant-rate {
         .ant-rate-star {
           margin-inline-end: 2px;
@@ -40,5 +43,9 @@ export const ReviewListStyled = styled.div`
 
   .bottom {
     margin-top: 10px;
+    font-size: 14px;
+    > p:first-child {
+      margin-bottom: 5px;
+    }
   }
 `;

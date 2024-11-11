@@ -1,6 +1,6 @@
 import { GetReviewData, Space } from '@/types';
 import { ItemDetailStyled } from './styled';
-import { Anchor, Tabs } from 'antd';
+import { Anchor, message, Pagination, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import KakaoMap from '../KakaoMap';
 import ReservationSticky from '../ReservationSticky';
@@ -21,8 +21,14 @@ const ItemDetail = () => {
 
   //리뷰저장
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
+  //리뷰 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 5;
+
   //리뷰 갯수 저장
   const spacePrice = space?.spacePrice?.toLocaleString();
+
+  
 
   //공간 데이터 가져오기
   useEffect(() => {
@@ -55,6 +61,27 @@ const ItemDetail = () => {
     }
   }, [id]);
 
+  //주소 클립보드 복사
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        message.success('클립보드에 복사되었습니다!');
+      })
+      .catch((error) => {
+        console.error('복사에 실패했습니다:', error);
+      });
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const displayedReviews = reviews.slice(
+    (currentPage - 1) * reviewsPerPage,
+    currentPage * reviewsPerPage
+  );
+
   return (
     <ItemDetailStyled>
       <div className="detail-top">
@@ -73,7 +100,7 @@ const ItemDetail = () => {
             <div className="rate">
               <FaStar style={{ color: '#000000' }} />
               <p className="rate-number">
-                {reviews.length > 0 ? reviews.length : 0}
+                {space?.spaceRating}({reviews.length})
               </p>
             </div>
           </div>
@@ -123,49 +150,52 @@ const ItemDetail = () => {
             </div>
             <div id="part-1">
               <div className="section">
-                <p className="section-title">[공간소개]</p>
+                <p className="section-title">공간소개</p>
                 <p>{space?.description}</p>
               </div>
               <div className="section">
-                <p className="section-title">[편의시설]</p>
+                <p className="section-title">편의시설</p>
                 <p>{space?.amenities}</p>
               </div>
               <div className="section">
-                <p className="section-title">[위치]</p>
+                <p className="section-title">위치</p>
                 <div className="map">
                   {space?.spaceLocation && (
                     <KakaoMap address={space.spaceLocation} />
-                  )}{' '}
-                  <p>{space?.spaceLocation}</p>
+                  )}
+                  <p
+                    onClick={() => copyToClipboard(space?.spaceLocation || '')}
+                    className="location-text"
+                  >
+                    {space?.spaceLocation}
+                  </p>
                 </div>
               </div>
             </div>
             <div id="part-2">
               <div className="section">
-                <p className="section-title">[주의사항]</p>
+                <p className="section-title">주의사항</p>
                 <p>{space?.guidelines}</p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Impedit, explicabo saepe neque hic labore maiores illum
-                  dignissimos esse assumenda velit necessitatibus, laboriosam,
-                  sint similique quia architecto vel atque itaque earum.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Impedit, explicabo saepe neque hic labore maiores illum
-                  dignissimos esse assumenda velit necessitatibus, laboriosam,
-                  sint similique quia architecto vel atque itaque earum.
-                </p>
               </div>
             </div>
             <div id="part-3">
-              <p className="section-title">[리뷰]</p>
+              <div className="section">
+                <p className="section-title">리뷰</p>
 
-              {reviews && reviews.length > 0 ? (
-                reviews.map((x, i) => <ReviewList x={x} key={i} />)
-              ) : (
-                <p>리뷰가 없습니다</p>
-              )}
+                {displayedReviews.length > 0 ? (
+                  displayedReviews.map((x, i) => (
+                    <ReviewList x={x} key={i} />
+                  ))
+                ) : (
+                  <p>리뷰가 없습니다</p>
+                )}
+              </div>
+              <Pagination
+                current={currentPage}
+                pageSize={reviewsPerPage}
+                total={reviews.length}
+                onChange={handlePageChange}
+              />
             </div>
           </div>
           <div className="payment-section">
