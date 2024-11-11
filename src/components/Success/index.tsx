@@ -33,7 +33,7 @@ const Success = () => {
             paymentKey: String(paymentKey),
             orderId: String(orderId),
             amount: Number(amount),
-            couponPrice:Number(discountAmount)
+            couponPrice: Number(discountAmount),
           });
           if (paymentResult.result) {
             // console.log(paymentResult.data.id,'페이먼트리절트')
@@ -104,6 +104,7 @@ const Success = () => {
 
   return (
     <SuccessStyled>
+      <div>예약이 완료되었습니다</div>
       <div className="booking-info">
         <div className="img">
           <img src={`http://localhost:4000/${spaceData?.images[0].imageUrl}`} />
@@ -113,7 +114,6 @@ const Success = () => {
           <p>{spaceData?.spaceLocation}</p>
         </div>
       </div>
-      <div>예약이 완료되었습니다!</div>
     </SuccessStyled>
   );
 };

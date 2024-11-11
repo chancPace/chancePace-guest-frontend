@@ -22,7 +22,6 @@ const ItemDetail = () => {
   //리뷰저장
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   //리뷰 갯수 저장
-  // const [reviewCount, setReviewCount] = useState<number>(0);
   const spacePrice = space?.spacePrice?.toLocaleString();
 
   //공간 데이터 가져오기
@@ -73,7 +72,9 @@ const ItemDetail = () => {
             <p className="space-location">{space?.spaceLocation}</p>
             <div className="rate">
               <FaStar style={{ color: '#000000' }} />
-              <p className="rate-number">{space?.spaceRating}</p>
+              <p className="rate-number">
+                {reviews.length > 0 ? reviews.length : 0}
+              </p>
             </div>
           </div>
 
@@ -96,21 +97,6 @@ const ItemDetail = () => {
       </div>
       <div className="detail-bottom">
         <div className="detail-info">
-          <div className="paymentSection">
-            {space && (
-              <ReservationSticky
-                price={space.spacePrice}
-                businessStartTime={space.businessStartTime}
-                businessEndTime={space.businessEndTime}
-                spaceId={space.id}
-                cleanTime={space.cleanTime}
-                discount={space.discount}
-                maxGuests={space.maxGuests}
-                minGuests={space.minGuests}
-                addPrice={space.addPrice}
-              />
-            )}
-          </div>
           <div className="anchor-sections">
             <div className="anchor-title">
               <Anchor
@@ -129,26 +115,23 @@ const ItemDetail = () => {
                   {
                     key: 'part-3',
                     href: '#part-3',
-                    title: '리뷰',
+                    title: `리뷰(${reviews.length})`,
                   },
                 ]}
+                offsetTop={60}
               />
             </div>
-            <div id="part-1" style={{ padding: '20px 0' }}>
+            <div id="part-1">
               <div className="section">
-                <p className="section-title">공간소개</p>
+                <p className="section-title">[공간소개]</p>
                 <p>{space?.description}</p>
-                <p>
-                  영업시간: {space?.businessStartTime}:00 -{' '}
-                  {space?.businessEndTime}:00
-                </p>
               </div>
               <div className="section">
-                <p className="section-title">편의시설</p>
+                <p className="section-title">[편의시설]</p>
                 <p>{space?.amenities}</p>
               </div>
               <div className="section">
-                <p className="section-title">위치</p>
+                <p className="section-title">[위치]</p>
                 <div className="map">
                   {space?.spaceLocation && (
                     <KakaoMap address={space.spaceLocation} />
@@ -157,9 +140,9 @@ const ItemDetail = () => {
                 </div>
               </div>
             </div>
-            <div id="part-2" style={{ backgroundColor: 'green' }}>
+            <div id="part-2">
               <div className="section">
-                <p className="section-title">주의사항</p>
+                <p className="section-title">[주의사항]</p>
                 <p>{space?.guidelines}</p>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -175,16 +158,30 @@ const ItemDetail = () => {
                 </p>
               </div>
             </div>
-            <div
-              id="part-3"
-              style={{ height: '50vh', backgroundColor: 'pink' }}
-            >
+            <div id="part-3">
+              <p className="section-title">[리뷰]</p>
+
               {reviews && reviews.length > 0 ? (
                 reviews.map((x, i) => <ReviewList x={x} key={i} />)
               ) : (
                 <p>리뷰가 없습니다</p>
               )}
             </div>
+          </div>
+          <div className="payment-section">
+            {space && (
+              <ReservationSticky
+                price={space.spacePrice}
+                businessStartTime={space.businessStartTime}
+                businessEndTime={space.businessEndTime}
+                spaceId={space.id}
+                cleanTime={space.cleanTime}
+                discount={space.discount}
+                maxGuests={space.maxGuests}
+                minGuests={space.minGuests}
+                addPrice={space.addPrice}
+              />
+            )}
           </div>
         </div>
       </div>

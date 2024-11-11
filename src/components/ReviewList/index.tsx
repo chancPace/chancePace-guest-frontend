@@ -12,6 +12,7 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
+  console.log(x, 'xx');
   //작성일자 형식 바꾸기
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
   const spaceId = Number(x.space?.id);
@@ -86,7 +87,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
       </div>
 
       <div className="bottom">
-        {x.user?.email && <p>작성자: {x.user.email}</p>}
+        {x.user?.email && <p>{x.user.email}</p>}
       </div>
       {x.reviewComment}
     </ReviewListStyled>

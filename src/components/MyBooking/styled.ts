@@ -20,13 +20,11 @@ export const MyBookingStyled = styled.div`
   }
   .booking-data {
     display: flex;
-    height: 100%;
     position: relative;
     cursor: pointer;
     .booking-space-img {
-      width: 100px;
-      height: 100px;
-      background-color: aliceblue;
+      width: 80px;
+      height: 80px;
       margin-right: 10px;
       object-fit: cover;
       border-radius: 8px;
@@ -41,9 +39,8 @@ export const MyBookingStyled = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      height: 100%;
       > div {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
     }
     .review-btn-box {
@@ -54,9 +51,10 @@ export const MyBookingStyled = styled.div`
       display: flex;
       align-items: flex-end;
       .review-btn {
-        padding: 5px 10px;
+        padding: 3px 8px;
         border-radius: 15px;
         border: 1px solid gray;
+        font-size: 13px;
       }
     }
   }

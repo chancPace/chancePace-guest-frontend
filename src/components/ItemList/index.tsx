@@ -110,11 +110,7 @@ const ItemList = ({ x }: ItemListProps) => {
               {x.spaceRating}({reviewCount})
             </p>
           </div>
-          {/* <p>{x.spacePrice.toLocaleString()}원 / 시간</p>
-          {x.discount && (
-            <span className="discount">시간당 {x.discount}할인</span>
-          )} */}
-          <p className='price'>
+          <p className="price">
             <span
               style={{ textDecoration: x.discount ? 'line-through' : 'none' }}
             >
@@ -125,7 +121,7 @@ const ItemList = ({ x }: ItemListProps) => {
                 &nbsp;→&nbsp;
                 <span className="discount">
                   {(x.spacePrice - x.discount).toLocaleString()}원
-                  <span className='discount-tag'>반짝특가</span>
+                  <span className="discount-tag">반짝특가</span>
                 </span>
               </>
             )}

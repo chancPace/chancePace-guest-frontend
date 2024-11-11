@@ -6,6 +6,14 @@ export const SpaceListStyled = styled.div`
     text-align: center;
     margin: 50px 0;
   }
+  .type-title {
+    >span {
+      display: block;
+      font-size: 18px;
+      font-weight: lighter;
+      color: gray;
+    }
+  }
   .list {
     width: 100%;
     display: grid;
@@ -16,6 +24,11 @@ export const SpaceListStyled = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
+  }
+  .ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
   }
   @media screen and (max-width: 480px) {
     .list {

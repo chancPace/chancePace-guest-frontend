@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const HostInfoStyled = styled.div`
   text-align: center;
-  /* background-color: orange; */
   .hostInfoImg {
-    width: 300px;
+    width: 100%;
     height: 250px;
     border-radius: 30px;
     margin-bottom: 5px;
@@ -27,10 +26,14 @@ export const HostInfoStyled = styled.div`
   }
   .procedure {
     padding: 20px;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
     border-radius: 20px;
     margin: 0 auto;
+    /* background-color: pink; */
     .procedureTitle {
       display: flex;
       align-items: center;
@@ -55,23 +58,35 @@ export const HostInfoStyled = styled.div`
   @media screen and (max-width: 480px) {
     .hostInfoImg {
       width: 90%;
+      height: 150px;
     }
-    .hostText {
+    .host-text {
       margin-bottom: 5px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+    .hostSection {
+      position: relative;
     }
   }
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media screen and (min-width: 481px) and (max-width: 1024px) {
     .hostInfoImg {
       width: 90%;
+      height: 150px;
     }
-    .hostText {
+    .host-text {
       margin-bottom: 5px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
     }
-  }
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
-    /* margin: 50px 0; */
-  }
-  @media screen and (min-width: 1025px) {
-    /* margin: 50px 0; */
+    .hostSection {
+      position: relative;
+    }
   }
 `;

@@ -15,7 +15,8 @@ import Link from 'next/link';
 import router from 'next/router';
 import { CategoryType, Space } from '@/types';
 import Banner from '@/components/Banner';
-import { GetServerSideProps } from 'next';
+import { banner } from '@/utill/datas';
+
 interface ErrorResponseData {
   message: string;
 }
@@ -69,7 +70,22 @@ const MainPage = () => {
 
   return (
     <MainStyled>
-      <Banner />
+      <Swiper
+        spaceBetween={10}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        navigation={true}
+        modules={[Autoplay, Navigation]}
+      >
+        {banner.map((x, i) => (
+          <SwiperSlide key={i}>
+            <Banner x={x} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div className="trendingSpot">
         <p className="trendingSpotTitle">이달의 공간</p>
         <div className="trendingSpotRight">
@@ -83,7 +99,20 @@ const MainPage = () => {
               loop={true}
               navigation={true}
               modules={[Autoplay, Navigation]}
-              slidesPerView={2}
+              breakpoints={{
+                689: {
+                  slidesPerView: 1,
+                },
+                690: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 2,
+                },
+                1025: {
+                  slidesPerView: 2,
+                },
+              }}
             >
               {newSpace.map((x, i) => {
                 return (
@@ -97,7 +126,7 @@ const MainPage = () => {
         </div>
       </div>
       <div className="category">
-        <p className="categoryTitle">최적의 장소를 찾아보세요!</p>
+        <p className="category-title">최적의 장소를 찾아보세요!</p>
         <div className="categoryList">
           {bigCategory.map((x, i) => {
             return (
@@ -122,14 +151,14 @@ const MainPage = () => {
           navigation={true}
           modules={[Autoplay, Navigation]}
           breakpoints={{
-            480: {
-              slidesPerView: 2,
+            689: {
+              slidesPerView: 1,
             },
-            768: {
+            690: {
               slidesPerView: 2,
             },
             1024: {
-              slidesPerView: 3,
+              slidesPerView: 2,
             },
             1025: {
               slidesPerView: 4,

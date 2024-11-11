@@ -8,7 +8,7 @@ export const LoginStyled = styled.div`
   position: relative;
   .form {
     background-color: rgba(255, 255, 255, 0.8);
-    width: 500px;
+    width: 450px;
     margin: auto;
     padding: 50px;
     border-radius: ${({ theme }) => theme.borderRadius};

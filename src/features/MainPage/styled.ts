@@ -6,7 +6,7 @@ export const MainStyled = styled.div`
   margin: auto;
   margin-bottom: 100px;
   margin-top: 50px;
-  /* 스와이퍼 화살표 */
+
   .swiper-button-next,
   .swiper-button-prev {
     visibility: hidden;
@@ -30,7 +30,6 @@ export const MainStyled = styled.div`
       font-weight: bold;
       color: #363636;
       font-size: 35px;
-      /* margin-left: 10%; */
       z-index: 100000;
     }
     .trendingSpotRight {
@@ -45,8 +44,7 @@ export const MainStyled = styled.div`
   .category {
     width: 100%;
     margin-top: 100px;
-    .categoryTitle {
-      /* text-align: center; */
+    .category-title {
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       color: #8c73d8;
     }
@@ -113,17 +111,26 @@ export const MainStyled = styled.div`
     place-items: center;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 689px) {
     .placeSection {
       .itemListTitle {
         font-size: ${({ theme }) => theme.fontSizes.lg};
       }
     }
+    .itemList {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 5px;
+    }
+    .category {
+      .category-title {
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+      }
+    }
   }
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media screen and (min-width: 690px) and (max-width: 768px) {
     .placeSection {
       .itemListTitle {
         font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -136,7 +143,7 @@ export const MainStyled = styled.div`
   }
   @media screen and (min-width: 769px) and (max-width: 1024px) {
     .itemList {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 5px;
     }
   }

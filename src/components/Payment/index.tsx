@@ -166,50 +166,33 @@ const Payment = () => {
 
   return (
     <PaymentStyled>
-      <div className="reservation-space">
-        <div className="reservation-title">예약 공간</div>
-        {spaceDetails && (
-          <div className="reservation-space-info">
-            <div className="img">
-              <img src={spaceDetails.images[0].imageUrl}></img>
-            </div>
-            <div className="reservation-text">
-              <p>{spaceDetails.spaceName}</p>
-              <p>{spaceDetails.spaceLocation}</p>
-              <p>{spaceDetails.spaceAdminPhoneNumber}</p>
-            </div>
+      <div className="payment-left">
+        <div className="reservation-info">
+          <div className="reservation-title">예약자 정보</div>
+          <div className="reservation-text">
+            <p>
+              <span>예약자</span> {userInfo?.userName}
+            </p>
+            <p>
+              <span>이메일</span> {userInfo?.email}
+            </p>
+            <p>
+              <span>연락처</span> {userInfo?.phoneNumber}
+            </p>
           </div>
-        )}
-      </div>
-      <div className="reservation-info">
-        <div className="reservation-title">예약 정보</div>
-        <div className="reservation-text">
-          <p>예약일: {startDate}</p>
-          <p>
-            예약시간: {startTime}:00 - {endTime}:00
-          </p>
-          <p>예약자: {userInfo?.userName}</p>
-          <p>이메일: {userInfo?.email}</p>
-          <p>연락처: {userInfo?.phoneNumber}</p>
         </div>
-      </div>
-      <div className="refund-information">
-        <div className="reservation-title">환불 규정 안내</div>
-        <p>
-          예약 날짜인 {startDate} 전에 취소 시 부분 환불을 받으실 수 있습니다.
-          그 이후에는 취소 시점에 따라 환불액이 결정됩니다. <br />
-          <span onClick={showModal} className="modal-button">
-            자세히 알아보기
-          </span>
-        </p>
-      </div>
-      <div></div>
-
-      <div className="reservation-agreement">
-        <div className="reservation-title">주문 내용 확인 및 결제 동의</div>
-        <div className="reservation-pay">
-          <p>결제금액:{price.toLocaleString()}</p>
-          <p>쿠폰선택</p>
+        <div className="refund-information">
+          <div className="reservation-title">환불 규정 안내</div>
+          <p>
+            예약 날짜인 {startDate} 전에 취소 시 부분 환불을 받으실 수 있습니다.
+            그 이후에는 취소 시점에 따라 환불액이 결정됩니다. <br />
+            <span onClick={showModal} className="modal-button">
+              자세히 알아보기
+            </span>
+          </p>
+        </div>
+        <div>
+          <div className="reservation-title">쿠폰</div>
           <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
             <Select.Option value={-1}>선택안함</Select.Option>
 
@@ -223,14 +206,64 @@ const Payment = () => {
               );
             })}
           </Select>
-          <p>최종 결제 금액: {finalPrice.toLocaleString()}</p>
         </div>
-       
+
+        <div className="App">
+          <div id="payment-widget"></div>
+        </div>
       </div>
-      <div className="App">
-        <div id="payment-widget"></div>
-        <button onClick={handlePayment}>결제하기</button>
+      <div className="payment-right">
+        {spaceDetails && (
+          <div className="reservation-space">
+            <div className="img">
+              <img src={spaceDetails.images[0].imageUrl}></img>
+            </div>
+            <p>
+              <span>상호명</span>
+              {spaceDetails.spaceName}
+            </p>
+
+            <p>
+              <span>위치</span>
+              {spaceDetails.spaceLocation}
+            </p>
+            <p>
+              <span>연락처</span>
+              {spaceDetails.spaceAdminPhoneNumber}
+            </p>
+            <p>
+              <span>예약일</span> {startDate}
+            </p>
+            <p>
+              <span>예약시간</span> {startTime}:00 - {endTime}:00
+            </p>
+          </div>
+        )}
+
+        <div className="reservation-agreement">
+          <div className="agreement-title">결제 동의</div>
+          <div className="reservation-pay">
+            <p>
+              <span>상품 가격</span>
+              {price.toLocaleString()}
+            </p>
+            {discountAmount > 0 && (
+              <p>
+                <span>쿠폰 할인</span> -{discountAmount.toLocaleString()}원
+              </p>
+            )}
+
+            <p>
+              <span>총 결제 금액</span>
+              {finalPrice.toLocaleString()}
+            </p>
+          </div>
+        </div>
+        <button onClick={handlePayment} className="pay-button">
+          {finalPrice.toLocaleString()}원 결제하기
+        </button>
       </div>
+
       <Modal
         title="환불 정책"
         visible={isModalVisible}

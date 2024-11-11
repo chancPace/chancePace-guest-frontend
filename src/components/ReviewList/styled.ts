@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 export const ReviewListStyled = styled.div`
-  padding: 20px 10px;
+  padding: 10px 10px;
   width: 90%;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-
+  /* box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922); */
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 15px;
   .top {
     display: flex;
     align-items: start;
@@ -37,6 +39,6 @@ export const ReviewListStyled = styled.div`
   }
 
   .bottom {
-    margin-bottom: 10px;
+    margin-top: 10px;
   }
 `;

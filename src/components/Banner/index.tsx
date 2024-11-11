@@ -1,6 +1,16 @@
 import { BannerStyled } from './styled';
 
-const Banner = () => {
-  return <BannerStyled>배너</BannerStyled>;
+interface BannerProps {
+  x: {
+    img: string;
+  };
+}
+const Banner = ({ x }: BannerProps) => {
+  console.log(x, 'xxx');
+  return (
+    <BannerStyled>
+      <img src={x.img}></img>
+    </BannerStyled>
+  );
 };
 export default Banner;

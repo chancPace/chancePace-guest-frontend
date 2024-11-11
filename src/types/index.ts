@@ -228,8 +228,10 @@ export interface Wishlist {
   spaceId: number;
   userId: number;
   space?: {
+    id: number;
     spaceName: string;
     spacePrice: number;
+    discount: number;
     images?: {
       imageUrl: string;
     }[];

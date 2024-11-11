@@ -16,10 +16,10 @@ export const EditUserStyled = styled.div`
   .ant-input-password,
   .ant-input,
   .ant-collapse {
-    width: 400px;
+    width: 350px ;
   }
   .ant-collapse {
-    width: 450px;
+    width: 400px;
     text-align: left;
     font-weight: bold;
     border: 0;

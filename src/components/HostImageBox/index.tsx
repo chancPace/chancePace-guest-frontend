@@ -1,4 +1,4 @@
-import { HostInfoStyled } from './style';
+import { HostInfoStyled } from './styled';
 
 interface HostInfoProps {
   x: {
@@ -8,7 +8,7 @@ interface HostInfoProps {
     index?: string;
   };
 }
-const HostImageBox: React.FC<HostInfoProps> = ({ x }) => {
+const HostImageBox = ({ x }: HostInfoProps) => {
   return (
     <HostInfoStyled>
       {x.index ? (
@@ -21,10 +21,12 @@ const HostImageBox: React.FC<HostInfoProps> = ({ x }) => {
           <p className="procedureText">{x.text}</p>
         </div>
       ) : (
-        <div>
+        <div className="hostSection">
           <img className="hostInfoImg" src={x?.img?.src} alt={x?.img?.src} />
-          <p className="hostTitle">{x.title}</p>
-          <p className="hostText">{x.text}</p>
+          <div className="host-text">
+            <p className="hostTitle">{x.title}</p>
+            <p className="hostText">{x.text}</p>
+          </div>
         </div>
       )}
     </HostInfoStyled>

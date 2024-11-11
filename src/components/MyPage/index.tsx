@@ -2,13 +2,7 @@ import { MyPageStyled } from './styled';
 import { Pagination, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { getUser } from '@/pages/api/userApi';
-import {
-  BookingData,
-  GetReviewData,
-  MyBookingData,
-  UserData,
-  Wishlist,
-} from '@/types';
+import { GetReviewData, MyBookingData, UserData, Wishlist } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
@@ -27,6 +21,7 @@ import {
   faCalendarXmark,
   faStore,
 } from '@fortawesome/free-solid-svg-icons';
+import WishList from '../WishList';
 
 const MyPage = () => {
   const router = useRouter();
@@ -228,119 +223,117 @@ const MyPage = () => {
       label: '예약내역',
       key: '2',
       children: (
-        <div className="my-booking">
-          <p>나의 주문현황</p>
-          <div className="my-booking-board">
-            <div>
-              <p>총 주문 수</p>
-              <div className="board-list">
-                <div className="icon-box">
-                  <FontAwesomeIcon icon={faStore} />
+        <>
+          <div className="my-booking">
+            <div className="my-booking-board">
+              <div>
+                <p>총 주문 수</p>
+                <div className="board-list">
+                  <div className="icon-box">
+                    <FontAwesomeIcon icon={faStore} />
+                  </div>
+                  <p>{totalOrder}</p>
                 </div>
-                <p>{totalOrder}</p>
+              </div>
+              <div>
+                <p>이용 완료</p>
+                <div className="board-list">
+                  <div className="icon-box">
+                    <FontAwesomeIcon icon={faCalendarCheck} />
+                  </div>
+                  <p>
+                    {' '}
+                    <p>{completedOrder}</p>
+                  </p>
+                </div>
+              </div>
+              <div>
+                <p>이용 전</p>
+                <div className="board-list">
+                  <div className="icon-box">
+                    <FontAwesomeIcon icon={faCalendarXmark} />
+                  </div>
+                  <p>
+                    {' '}
+                    <p>{upcomingOrder}</p>
+                  </p>
+                </div>
+              </div>
+              <div>
+                <p>이용 취소</p>
+                <div className="board-list">
+                  <div className="icon-box">
+                    <FontAwesomeIcon icon={faArrowRotateLeft} />
+                  </div>
+                  <p>{cancleOrder}</p>
+                </div>
               </div>
             </div>
-            <div>
-              <p>이용 완료</p>
-              <div className="board-list">
-                <div className="icon-box">
-                  <FontAwesomeIcon icon={faCalendarCheck} />
-                </div>
-                <p>
-                  {' '}
-                  <p>{completedOrder}</p>
-                </p>
-              </div>
-            </div>
-            <div>
-              <p>이용 전</p>
-              <div className="board-list">
-                <div className="icon-box">
-                  <FontAwesomeIcon icon={faCalendarXmark} />
-                </div>
-                <p>
-                  {' '}
-                  <p>{upcomingOrder}</p>
-                </p>
-              </div>
-            </div>
-            <div>
-              <p>이용 취소</p>
-              <div className="board-list">
-                <div className="icon-box">
-                  <FontAwesomeIcon icon={faArrowRotateLeft} />
-                </div>
-                <p>{cancleOrder}</p>
-              </div>
-            </div>
+            {paginatedBookings.map((x, i) => (
+              <MyBooking key={i} x={x} />
+            ))}
           </div>
-          {paginatedBookings.map((x, i) => (
-            <MyBooking key={i} x={x} />
-          ))}
           <Pagination
             current={currentBookingPage}
             pageSize={pageSize}
             total={userBooking.length}
             onChange={handleBookingPageChange}
+            className="pagenation"
           />
-        </div>
+        </>
       ),
     },
     {
       label: '리뷰내역',
       key: '3',
       children: (
-        <div className="my-review">
-          <p className="review-total">내가 쓴 리뷰{userReviews.length}개</p>
-          <div className="review-list">
-            {paginatedReviews.map((x, i) => (
-              <ReviewList key={i} x={x} />
-            ))}
-            <Pagination
-              current={currentBookingPage}
-              pageSize={pageSize}
-              total={userBooking.length}
-              onChange={handleBookingPageChange}
-            />
+        <>
+          <div className="my-review">
+            <p className="review-total">내가 쓴 리뷰{userReviews.length}개</p>
+            <div className="review-list">
+              {paginatedReviews.map((x, i) => (
+                <ReviewList key={i} x={x} isDeletable={true} />
+              ))}
+            </div>
           </div>
-        </div>
+          <Pagination
+            current={currentBookingPage}
+            pageSize={pageSize}
+            total={userReviews.length}
+            onChange={handleBookingPageChange}
+            className="pagenation"
+          />
+        </>
       ),
     },
     {
       label: '찜',
       key: '4',
       children: (
-        <div className="wish">
-          {wishList.length > 0 ? (
-            wishList.map((x, i) => {
-              return (
-                <div className="wish-list" key={x.id}>
-                  <p>{x.space?.spaceName}</p>
-                  <div className="img-box">
-                    {x.space?.images && x.space.images.length > 0 ? (
-                      <img
-                        src={`http://localhost:4000/${x.space.images[0].imageUrl}`}
-                        className="wish-img"
-                        alt="Space Image"
-                      />
-                    ) : (
-                      <p>이미지가 없습니다</p> // 이미지가 없을 경우 표시할 내용
-                    )}
-                  </div>
-                  <p>{x.space?.spacePrice}</p>
-                  <button
-                    onClick={() => deleteWishlistItem(x.id)} // 삭제 버튼 클릭 시 해당 항목 삭제
-                    className="delete-wishlist-button"
-                  >
-                    삭제
-                  </button>
-                </div>
-              );
-            })
-          ) : (
-            <p>찜 목록이 없습니다.</p>
-          )}
-        </div>
+        <>
+          <div className="wish">
+            {wishList.length > 0 ? (
+              wishList.map((x, i) => {
+                return (
+                  <WishList
+                    x={x}
+                    key={i}
+                    onRemove={() => deleteWishlistItem(x.id)}
+                  />
+                );
+              })
+            ) : (
+              <p className="no-wish">찜 목록이 없습니다.</p>
+            )}
+          </div>
+          <Pagination
+            current={currentWishPage}
+            pageSize={pageSize}
+            total={wishList.length}
+            onChange={handleWishPageChange}
+            className="pagenation"
+          />
+        </>
       ),
     },
   ];
@@ -348,6 +341,7 @@ const MyPage = () => {
   return (
     <MyPageStyled>
       <Tabs tabPosition="left" items={tabItems} onChange={handleTabClick} />
+
       <p className="logout" onClick={handleLogout}>
         로그아웃
       </p>

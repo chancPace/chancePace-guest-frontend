@@ -156,35 +156,39 @@ const ReservationSticky = ({
         cleanTime={cleanTime}
         onDateSelect={handleDateChange}
       />
-      <div className="people-number">
-        <Button
-          onClick={handleDecrement}
-          disabled={peopleCount <= 1}
-          className="minus"
-        >
-          -
-        </Button>
-        <Input
-          value={peopleCount}
-          style={{ width: '50px', textAlign: 'center' }}
-          readOnly
-        />
-        <Button
-          onClick={handleIncrement}
-          disabled={peopleCount >= maxGuests}
-          className="plus"
-        >
-          +
-        </Button>
-      </div>
-      <div className="people-number-info">
-        {peopleCount > minGuests && (
-          <p>
-            추가 인원은 ({peopleCount - minGuests}명) 시간당{' '}
-            {addPrice.toLocaleString()}원 추가요금이 발생합니다. <br /> 추가 비용은 현장
-            결제 및 이용시 계좌이체로 진행됩니다
-          </p>
-        )}
+      <div className="people-info">
+        <div className="people-number-title">인원선택</div>
+        <div className="people-number">
+          <Button
+            onClick={handleDecrement}
+            disabled={peopleCount <= 1}
+            className="minus"
+          >
+            -
+          </Button>
+          <Input
+            value={peopleCount}
+            style={{ width: '50px', textAlign: 'center' }}
+            readOnly
+            className="people-input"
+          />
+          <Button
+            onClick={handleIncrement}
+            disabled={peopleCount >= maxGuests}
+            className="plus"
+          >
+            +
+          </Button>
+        </div>
+        <div className="people-number-info">
+          {peopleCount > minGuests && (
+            <p>
+              추가 인원은 ({peopleCount - minGuests}명) 시간당{' '}
+              {addPrice.toLocaleString()}원 추가요금이 발생합니다. <br /> 추가
+              비용은 현장 결제 및 이용시 계좌이체로 진행됩니다
+            </p>
+          )}
+        </div>
       </div>
       <button
         className="pay-button"

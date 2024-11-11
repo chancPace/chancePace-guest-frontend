@@ -125,11 +125,23 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
     }
     switch (type) {
       case 'new':
-        return '새로운 장소';
+        return (
+          <div className="type-title">
+            새로운 장소<span>이번 달 새로운 공간을 만나보세요</span>
+          </div>
+        );
       case 'popular':
-        return '인기 장소';
+        return (
+          <div className="type-title">
+            인기 장소<span></span>
+          </div>
+        );
       case 'recommended':
-        return '추천 장소';
+        return (
+          <div className="type-title">
+            추천 장소<span>찬스페이스가 추천해주는 이곳!</span>
+          </div>
+        );
     }
   };
 
@@ -147,8 +159,6 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
       {subCategory.length > 0 && (
         <div className="subcategory-list">
           {subCategory.map((x, i) => (
-            // console.log(x,'xxxx')
-
             <Category
               key={i}
               x={x}

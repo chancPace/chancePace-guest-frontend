@@ -24,9 +24,9 @@ const Header = () => {
               <Link
                 href="/mypage"
               >
-                <p>
+                <p className='header-icon'>
                   <span>
-                    <FiUser className="headerIcon" />
+                    <FiUser className="icon" />
                   </span>
                 </p>
               </Link>

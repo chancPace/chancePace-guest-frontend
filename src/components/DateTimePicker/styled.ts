@@ -55,7 +55,7 @@ export const DateTimePickerStyled = styled.div`
   }
   .time-select-title {
     text-align: left;
-    margin-top: 20px;
+    margin-top: 5px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
@@ -86,7 +86,7 @@ export const DateTimePickerStyled = styled.div`
       transition: background-color 0.3s ease;
     }
     .time-slot.booked {
-      background-color: orangered; /* 예약된 시간 슬롯 색상 */
+      background-color: orange;
       cursor: not-allowed;
       pointer-events: none;
     }
@@ -109,5 +109,13 @@ export const DateTimePickerStyled = styled.div`
     .unselected {
       color: black;
     }
+  }
+  @media screen and (max-width: 480px) {
+  }
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+  }
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+  }
+  @media screen and (min-width: 1025px) {
   }
 `;

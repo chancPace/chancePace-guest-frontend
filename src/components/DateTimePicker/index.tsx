@@ -194,7 +194,7 @@ const DateTimePicker = ({
           slidesPerView={5}
           pagination={{ clickable: true }}
           modules={[Scrollbar]}
-          scrollbar={{ draggable: true }} // 스크롤바 활성화 및 드래그 가능 설정
+          scrollbar={{ draggable: true }} 
         >
           {timeSlots.map((time, index) => (
             <SwiperSlide key={index}>
@@ -215,14 +215,14 @@ const DateTimePicker = ({
           ))}
         </Swiper>
       </div>
-      <div className="price-summary">
+      {/* <div className="price-summary">
         {startTime !== null && (
           <>
             <p>시간당 금액: {price.toLocaleString()}원</p>
             <p>이용 시간: {useTime}</p>
           </>
         )}
-      </div>
+      </div> */}
     </DateTimePickerStyled>
   );
 };

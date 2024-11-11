@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const HeaderStyled = styled.div`
   width: 100vw;
-  height: 70px;
+  height: 60px;
   position: fixed;
   top: 0;
   left: 0;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   background-color: white;
   z-index: 1000000;
-  padding: 0 50px;
+  padding: 0 10px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 
   nav {
@@ -42,14 +42,18 @@ export const HeaderStyled = styled.div`
         height: 70px;
         display: inline-block;
       }
-      .headerIcon {
-        width: 30px;
-        height: 70px;
-      }
-      .headerToggle {
-        position: absolute;
-        right: 2.5%;
+      .header-icon {
+        display: flex;
+        align-items: center;
+        height: 100%s;
+        .icon {
+          width: 25px;
+          height: 70px;
+        }
       }
     }
+  }
+  @media screen and (min-width: 1025px) {
+    padding: 0 50px;
   }
 `;
