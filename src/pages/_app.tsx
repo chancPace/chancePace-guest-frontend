@@ -7,18 +7,23 @@ import { Provider } from 'react-redux';
 import { store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '@/features/Footer';
+import { useEffect, useState } from 'react';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function App({ Component, pageProps }: AppProps) {
-    return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <ThemeProvider theme={theme}>
-                    <GlobalStyle />
-                    <Header />
-                    <Component {...pageProps} />
-                    <Footer />
-                </ThemeProvider>
-            </PersistGate>
-        </Provider>
-    );
+
+
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Header />
+          <Component {...pageProps} />
+          <ScrollToTop />
+          <Footer />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
+  );
 }

@@ -2,14 +2,18 @@ import styled from 'styled-components';
 
 export const MainStyled = styled.div`
   width: 100%;
-  padding: 0 50px;
+  padding: 0 10px;
   margin: auto;
   margin-bottom: 100px;
   margin-top: 50px;
-
+  max-width: 1280px;
+  
   .swiper-button-next,
   .swiper-button-prev {
     visibility: hidden;
+  }
+  .swiper {
+    padding: 5px;
   }
   .swiper:hover {
     cursor: pointer;
@@ -20,6 +24,7 @@ export const MainStyled = styled.div`
     }
   }
   .searchbar {
+    max-width: 1280px;
     height: 100px;
     display: flex;
     align-items: center;
@@ -43,6 +48,7 @@ export const MainStyled = styled.div`
   }
   .category {
     width: 100%;
+    max-width: 1280px;
     margin-top: 100px;
     .category-title {
       font-size: ${({ theme }) => theme.fontSizes.xxl};
@@ -147,6 +153,8 @@ export const MainStyled = styled.div`
       gap: 5px;
     }
   }
+
   @media screen and (min-width: 1025px) {
+    padding: 0 50px;
   }
 `;

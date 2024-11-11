@@ -22,7 +22,7 @@ const ReviewModal = ({
   if (!space) {
     return null; // space가 없을 경우 아무것도 렌더링하지 않음
   }
-
+  console.log(space, '스페이스');
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const userToken = useSelector(
@@ -54,7 +54,7 @@ const ReviewModal = ({
   };
   return (
     <Modal
-      title="리뷰 작성"
+      // title="리뷰 작성"
       visible={isVisible}
       onCancel={onClose}
       footer={[
@@ -68,24 +68,25 @@ const ReviewModal = ({
     >
       <ReviewModalStyled>
         <div className="space-info">
-          <div className="space-img"></div>
+          <div className="space-img">
+            <img src={space.images[0].imageUrl}></img>
+          </div>
           <h3 className="space-name">{space?.spaceName}</h3>
         </div>
-      </ReviewModalStyled>
-
-      <Input.TextArea
-        rows={4}
-        value={reviewComment}
-        onChange={(e) => setReviewComment(e.target.value)}
-        placeholder="리뷰를 작성하세요"
-      />
-      <div style={{ marginTop: '10px' }}>
-        <span>평점: </span>
-        <Rate
-          value={reviewRating}
-          onChange={(value) => setReviewRating(value)}
+        <Input.TextArea
+          rows={4}
+          value={reviewComment}
+          onChange={(e) => setReviewComment(e.target.value)}
+          placeholder="리뷰를 작성하세요"
         />
-      </div>
+        <div className="rating">
+          <span>평점 </span>
+          <Rate
+            value={reviewRating}
+            onChange={(value) => setReviewRating(value)}
+          />
+        </div>
+      </ReviewModalStyled>
     </Modal>
   );
 };

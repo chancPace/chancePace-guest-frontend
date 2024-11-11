@@ -73,7 +73,7 @@ const MainPage = () => {
       <Swiper
         spaceBetween={10}
         autoplay={{
-          delay: 3000,
+          delay: 7000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -139,7 +139,7 @@ const MainPage = () => {
           })}
         </div>
       </div>
-      <div className="searchbar">
+      <div className="searchar">
         <SearchBar />
       </div>
       <div className="placeSection">

@@ -100,9 +100,18 @@ export const HostStyled = styled.div`
       }
     }
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 689px) {
+    .section {
+      .procedure-list {
+        .hostProcedure {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+    }
   }
-  @media screen and (min-width: 481px) and (max-width: 1024px) {
+
+  @media screen and (min-width: 690px) and (max-width: 1024px) {
     .section {
       .hostMain {
         .mainImg {
@@ -116,6 +125,7 @@ export const HostStyled = styled.div`
           width: 100%;
           gap: 1px;
           grid-template-columns: repeat(1, 1fr);
+          font-size: 50px;
         }
       }
     }

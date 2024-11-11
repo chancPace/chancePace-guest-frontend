@@ -21,6 +21,10 @@ export const MyPageStyled = styled.div`
       display: flex;
       justify-content: center;
       text-align: center;
+      .my-booking-board-title {
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
       .board-list {
         display: flex;
         align-items: center;

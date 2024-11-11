@@ -7,7 +7,7 @@ export const SpaceListStyled = styled.div`
     margin: 50px 0;
   }
   .type-title {
-    >span {
+    > span {
       display: block;
       font-size: 18px;
       font-weight: lighter;
@@ -17,7 +17,6 @@ export const SpaceListStyled = styled.div`
   .list {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
   .subcategory-list {
@@ -30,12 +29,12 @@ export const SpaceListStyled = styled.div`
     justify-content: center;
     margin-top: 50px;
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 500px) {
     .list {
       grid-template-columns: repeat(1, 1fr);
     }
   }
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media screen and (min-width: 501px) and (max-width: 768px) {
     .list {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -46,5 +45,8 @@ export const SpaceListStyled = styled.div`
     }
   }
   @media screen and (min-width: 1025px) {
+    .list {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 `;

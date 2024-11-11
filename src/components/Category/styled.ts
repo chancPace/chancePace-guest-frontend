@@ -11,7 +11,9 @@ export const CategoryStyled = styled.div`
   font-family: 'TheJamsil5Bold';
   font-weight: bold;
   margin: 10px 20px 10px 0;
-  /* text-align: center; */
+  border-radius: 5px;
+  padding: 3px;
+  margin-bottom: 10px;
   line-height: 2;
   cursor: pointer;
   display: flex;

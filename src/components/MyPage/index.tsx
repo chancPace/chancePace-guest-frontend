@@ -227,7 +227,7 @@ const MyPage = () => {
           <div className="my-booking">
             <div className="my-booking-board">
               <div>
-                <p>총 주문 수</p>
+                <p className="my-booking-board-title">총 주문 수</p>
                 <div className="board-list">
                   <div className="icon-box">
                     <FontAwesomeIcon icon={faStore} />
@@ -236,7 +236,7 @@ const MyPage = () => {
                 </div>
               </div>
               <div>
-                <p>이용 완료</p>
+                <p className="my-booking-board-title">이용 완료</p>
                 <div className="board-list">
                   <div className="icon-box">
                     <FontAwesomeIcon icon={faCalendarCheck} />
@@ -248,7 +248,7 @@ const MyPage = () => {
                 </div>
               </div>
               <div>
-                <p>이용 전</p>
+                <p className="my-booking-board-title">이용 전</p>
                 <div className="board-list">
                   <div className="icon-box">
                     <FontAwesomeIcon icon={faCalendarXmark} />
@@ -260,7 +260,7 @@ const MyPage = () => {
                 </div>
               </div>
               <div>
-                <p>이용 취소</p>
+                <p className="my-booking-board-title">이용 취소</p>
                 <div className="board-list">
                   <div className="icon-box">
                     <FontAwesomeIcon icon={faArrowRotateLeft} />

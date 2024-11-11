@@ -4,6 +4,7 @@ export const ItemDetailStyled = styled.div`
   padding: 60px 50px 0 50px;
   margin: auto;
   position: relative;
+  max-width: 1280px;
   .ant-anchor-link-active,
   .ant-anchor-link-title {
     color: ${({ theme }) => theme.color.main} !important;

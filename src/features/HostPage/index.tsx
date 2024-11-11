@@ -8,6 +8,7 @@ const HostPage = () => {
   const text = 'Share Your Space';
   const [displayedText, setDisplayedText] = useState('');
 
+  //글자 한개씩 나타내기
   useEffect(() => {
     let currentIndex = 0;
     const intervalId = setInterval(() => {

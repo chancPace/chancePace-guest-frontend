@@ -33,7 +33,6 @@ export const HostInfoStyled = styled.div`
     height: 100%;
     border-radius: 20px;
     margin: 0 auto;
-    /* background-color: pink; */
     .procedureTitle {
       display: flex;
       align-items: center;
@@ -70,6 +69,12 @@ export const HostInfoStyled = styled.div`
     }
     .hostSection {
       position: relative;
+    }
+    .procedure {
+      padding: 5px;
+      .procedureTitle {
+        margin: 5px 0;
+      }
     }
   }
   @media screen and (min-width: 481px) and (max-width: 1024px) {
