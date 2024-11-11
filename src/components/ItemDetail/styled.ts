@@ -72,9 +72,10 @@ export const ItemDetailStyled = styled.div`
             margin: 20px 0;
             .section-title {
               display: inline-block;
-              background-color: lightgray;
-              color: white;
-              padding: 2px 5px;
+              color: gray;
+              /* background-color: lightgray; */
+              /* color: white; */
+              /* padding: 2px 5px; */
               font-size: 17px;
               margin-bottom: 5px;
               border-radius: 8px;
@@ -96,7 +97,13 @@ export const ItemDetailStyled = styled.div`
       }
     }
   }
-
+  .payment-section {
+    .payment-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  }
   @media screen and (max-width: 480px) {
   }
   @media screen and (min-width: 481px) and (max-width: 1024px) {
@@ -118,14 +125,12 @@ export const ItemDetailStyled = styled.div`
       position: relative;
       .anchor-sections {
         width: 60%;
-        background-color: blue;
       }
       .payment-section {
         width: 30%;
         position: sticky;
-        top: 60px;
+        top: 70px;
         height: 370px;
-        background-color: pink;
       }
     }
   }

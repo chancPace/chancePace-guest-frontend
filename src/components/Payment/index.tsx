@@ -152,7 +152,7 @@ const Payment = () => {
     };
     //함수를 호출하여 결제 위젯 초기화
     initializePaymentWidget();
-  }, [clientKey, finalPrice]);
+  }, [clientKey]);
 
   //환불 규정 모달
   const showModal = () => {
@@ -218,25 +218,27 @@ const Payment = () => {
             <div className="img">
               <img src={spaceDetails.images[0].imageUrl}></img>
             </div>
-            <p>
-              <span>상호명</span>
-              {spaceDetails.spaceName}
-            </p>
+            <div className="reservation-space-text">
+              <p>
+                <span>상호명</span>
+                {spaceDetails.spaceName}
+              </p>
 
-            <p>
-              <span>위치</span>
-              {spaceDetails.spaceLocation}
-            </p>
-            <p>
-              <span>연락처</span>
-              {spaceDetails.spaceAdminPhoneNumber}
-            </p>
-            <p>
-              <span>예약일</span> {startDate}
-            </p>
-            <p>
-              <span>예약시간</span> {startTime}:00 - {endTime}:00
-            </p>
+              <p>
+                <span>위치</span>
+                {spaceDetails.spaceLocation}
+              </p>
+              <p>
+                <span>연락처</span>
+                {spaceDetails.spaceAdminPhoneNumber}
+              </p>
+              <p>
+                <span>예약일</span> {startDate}
+              </p>
+              <p>
+                <span>예약시간</span> {startTime}:00 - {endTime}:00
+              </p>
+            </div>
           </div>
         )}
 

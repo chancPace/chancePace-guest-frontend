@@ -28,8 +28,6 @@ const ItemDetail = () => {
   //리뷰 갯수 저장
   const spacePrice = space?.spacePrice?.toLocaleString();
 
-  
-
   //공간 데이터 가져오기
   useEffect(() => {
     if (id) {
@@ -183,9 +181,7 @@ const ItemDetail = () => {
                 <p className="section-title">리뷰</p>
 
                 {displayedReviews.length > 0 ? (
-                  displayedReviews.map((x, i) => (
-                    <ReviewList x={x} key={i} />
-                  ))
+                  displayedReviews.map((x, i) => <ReviewList x={x} key={i} />)
                 ) : (
                   <p>리뷰가 없습니다</p>
                 )}
@@ -199,6 +195,7 @@ const ItemDetail = () => {
             </div>
           </div>
           <div className="payment-section">
+            <p className="payment-title">예약하기</p>
             {space && (
               <ReservationSticky
                 price={space.spacePrice}

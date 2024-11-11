@@ -9,6 +9,7 @@ import { UserCouponIsUsed } from '@/pages/api/couponApi';
 import { message } from 'antd';
 import { Space } from '@/types';
 import { getOneSpace } from '@/pages/api/spaceApi';
+import Link from 'next/link';
 const Success = () => {
   const router = useRouter();
   const {
@@ -104,15 +105,34 @@ const Success = () => {
 
   return (
     <SuccessStyled>
-      <div>예약이 완료되었습니다</div>
-      <div className="booking-info">
-        <div className="img">
-          <img src={`http://localhost:4000/${spaceData?.images[0].imageUrl}`} />
+      <div className="success">
+        <div>예약이 완료되었습니다</div>
+        <div className="booking-info">
+          <div className="img">
+            <img src={spaceData?.images[0].imageUrl} />
+          </div>
+          <div className="text">
+            <p>
+              <span>상호명</span>
+              {spaceData?.spaceName}
+            </p>
+            <p>
+              <span>주소</span>
+              {spaceData?.spaceLocation}
+            </p>
+            <p>
+              <span>이용일</span>
+              {startDate}
+            </p>
+            <p>
+              <span>이용시간</span>
+              {startTime}:00 - {endTime}:00
+            </p>
+          </div>
         </div>
-        <div className="text">
-          <p>{spaceData?.spaceName}</p>
-          <p>{spaceData?.spaceLocation}</p>
-        </div>
+        <Link href="/" passHref>
+          <button className="home-btn">메인으로</button>
+        </Link>
       </div>
     </SuccessStyled>
   );

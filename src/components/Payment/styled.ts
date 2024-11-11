@@ -35,23 +35,20 @@ export const PaymentStyled = styled.div`
       width: 300px;
       margin-bottom: 30px;
     }
-    #__next {
-      > div {
-        .payment-widget-cache-yniek8 {
-          padding: 0 !important;
-        }
-      }
+
+    #payment-widget {
+      margin-left: -30px !important;
     }
   }
+
   .payment-right {
     width: 30%;
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 8px;
+    height: 550px;
     .reservation-space {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       > .img {
         width: 100%;
         height: 200px;
@@ -62,15 +59,18 @@ export const PaymentStyled = styled.div`
           height: 100%;
         }
       }
-      > p {
+      .reservation-space-text {
         width: 100%;
-        line-height: 1.8;
-        display: flex;
-        font-size: 15px;
-        > span {
-          color: gray;
-          width: 70px;
-          display: block;
+        > p {
+          width: 100%;
+          line-height: 1.8;
+          display: flex;
+          font-size: 15px;
+          > span {
+            color: gray;
+            width: 70px;
+            display: block;
+          }
         }
       }
     }
@@ -99,6 +99,48 @@ export const PaymentStyled = styled.div`
       color: white;
       font-size: 16px;
       margin-top: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    .payment-left {
+      width: 100%;
+    }
+    .payment-right {
+      width: 100%;
+      height: 340px;
+      .reservation-space {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        > .img {
+          width: 30%;
+          height: 120px;
+          object-fit: cover;
+          margin-right: 20px;
+          > img {
+            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 901px) {
+    .payment-right {
+      width: 30%;
+      padding: 10px;
+      border: 1px solid lightgray;
+      border-radius: 8px;
+      height: 550px;
+      .reservation-space {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
 `;
