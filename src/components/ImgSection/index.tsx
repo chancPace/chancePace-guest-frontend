@@ -45,15 +45,17 @@ const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
             clickable: true,
           }}
           modules={[Grid, Pagination]}
+          slidesPerView={1}
+          grid={{ rows: 2 }}
           breakpoints={{
             479: {
-              slidesPerView: 2,
+              slidesPerView: 1,
               grid: {
-                rows: 1,
+                rows: 2,
               },
             },
             640: {
-              slidesPerView: 2,
+              slidesPerView: 1,
               grid: {
                 rows: 2,
               },

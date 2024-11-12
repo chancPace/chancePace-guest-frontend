@@ -61,6 +61,12 @@ export const ItemDetailStyled = styled.div`
         #part-3 {
           padding: 5px 0;
         }
+        #part-3 {
+          .ant-pagination {
+            display: flex;
+            justify-content: center;
+          }
+        }
         .anchor-title {
           .ant-anchor {
             background-color: white;

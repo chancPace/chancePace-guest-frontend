@@ -50,18 +50,18 @@ export const ImgSectionStyled = styled.div`
     }
   }
 
-  @media screen and (max-width: 479px) {
+  /* @media screen and (max-width: 479px) {
     display: block;
     .mainImg {
       width: 100%;
     }
     .smallImgs {
-      /* display: flex; */
+
       width: 50%;
       height: 280px;
       background-color: blue;
     }
-  }
+  } */
 `;
 
 export const PreviewOverlay = styled.div`
