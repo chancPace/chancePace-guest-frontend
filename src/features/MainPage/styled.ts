@@ -123,9 +123,17 @@ export const MainStyled = styled.div`
     gap: 10px;
   }
   @media screen and (max-width: 689px) {
+    .trendingSpot {
+      .itemListTitle {
+        font-size: 25px;
+      }
+    }
     .placeSection {
       .itemListTitle {
-        font-size: ${({ theme }) => theme.fontSizes.lg};
+        font-size: 25px;
+      }
+      .more-link {
+        font-size: 16px;
       }
     }
     .itemList {
@@ -139,6 +147,11 @@ export const MainStyled = styled.div`
     }
   }
   @media screen and (min-width: 690px) and (max-width: 768px) {
+    .trendingSpot {
+      .itemListTitle {
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+      }
+    }
     .placeSection {
       .itemListTitle {
         font-size: ${({ theme }) => theme.fontSizes.xl};

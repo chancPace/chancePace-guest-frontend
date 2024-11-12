@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BookingDetailStyled = styled.div`
-  width: 500px;
+  width: 450px;
   padding: 10px;
   margin: auto;
   .booking-detail {
@@ -22,6 +22,12 @@ export const BookingDetailStyled = styled.div`
       background-color: inherit;
       padding: 10px 15px;
       border: 1px solid lightgray;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    width: 370px;
+    h1 {
+      font-size: 25px;
     }
   }
 `;

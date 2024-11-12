@@ -42,6 +42,12 @@ module.exports = withTM({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
+  env: {
+    GENERATE_SOURCEMAP: process.env.GENERATE_SOURCEMAP || 'false',
+  },
 });
 
 // CommonJS 방식으로 설정 내보내기

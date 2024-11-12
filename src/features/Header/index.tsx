@@ -1,13 +1,18 @@
 import { HeaderStyled } from './styled';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { FiUser } from 'react-icons/fi';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { logout } from '@/redux/slices/userSlice';
 
 const Header = () => {
+  // const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const userRole = useSelector((state: RootState) => state.user.userInfo?.role);
-  console.log(userRole, '롤확인');
+
+
 
   return (
     <HeaderStyled>

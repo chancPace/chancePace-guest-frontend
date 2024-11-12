@@ -38,7 +38,6 @@ const LoginForm = () => {
         console.log('Calling postLogin...');
 
         const response = await postLogin({ email, password });
-        console.log('Login response:', response);
 
         if (response.token) {
           setEmailError(null);
@@ -110,8 +109,7 @@ const LoginForm = () => {
           <Link href="/signup" passHref>
             <span className="span1">아직 회원이 아니신가요?</span>
           </Link>
-          <Link href="/signup" passHref>
-          </Link>
+          <Link href="/signup" passHref></Link>
         </div>
       </form>
     </LoginStyled>

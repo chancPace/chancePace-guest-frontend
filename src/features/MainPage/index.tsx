@@ -88,7 +88,7 @@ const MainPage = () => {
         ))}
       </Swiper>
       <div className="trendingSpot">
-        <p className="trendingSpotTitle">이달의 공간</p>
+        <p className="itemListTitle">이달의 공간</p>
         <div className="trendingSpotRight">
           <div className="slider">
             <Swiper

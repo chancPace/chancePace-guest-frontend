@@ -59,7 +59,6 @@ export const MyBookingStyled = styled.div`
     }
   }
   @media screen and (max-width: 768px) {
-
     .booking-date {
       font-size: 13px;
     }

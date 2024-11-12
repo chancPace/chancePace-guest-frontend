@@ -5,10 +5,11 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { format } from 'date-fns';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Button, Input, message } from 'antd';
 import { FaDiceSix } from 'react-icons/fa';
+import { logout } from '@/redux/slices/userSlice';
 
 interface PaymentStickyProps {
   price: number;
@@ -32,6 +33,8 @@ const ReservationSticky = ({
   minGuests,
   addPrice,
 }: PaymentStickyProps) => {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   //총 이용시간
   const [totalTime, setTotalTime] = useState<number>(0); // 초기값 0으로 설정
@@ -113,8 +116,10 @@ const ReservationSticky = ({
     const token = Cookies.get('token');
     const orderId = generateOrderId();
 
+    // 쿠키가 없고 로그인 상태라면 로그아웃 처리
     if (!token) {
-      router.push('/login');
+      dispatch(logout());
+      router.replace('/login');
       return;
     }
 
@@ -123,7 +128,7 @@ const ReservationSticky = ({
       (!/^[^\d]+$/.test(userInfo.userName) || !userInfo.phoneNumber)
     ) {
       message.warning('이름과 전화번호를 입력해 주세요.');
-      router.push('/mypage'); // 회원정보수정 페이지로 이동
+      router.push('/mypage');
       return;
     }
 

@@ -4,6 +4,7 @@ export const HostStyled = styled.div`
   padding: 0 10px;
   .section {
     padding-top: 60px;
+    overflow: hidden;
     .hostMain {
       overflow: hidden;
       height: 100%;
@@ -89,12 +90,13 @@ export const HostStyled = styled.div`
       }
       .host-button {
         margin-top: 10px;
+        font-size: 18px;
+
         > a {
           padding: 10px;
           background-color: rgba(0, 0, 0, 0.5);
         }
         text-align: center;
-        font-size: 18px;
       }
     }
   }
@@ -103,6 +105,9 @@ export const HostStyled = styled.div`
       .hostMain {
         .mainImg {
           grid-template-columns: repeat(1, 1fr);
+        }
+        .mainTitle {
+          font-size: 60px;
         }
       }
     }
@@ -123,6 +128,16 @@ export const HostStyled = styled.div`
           width: 100%;
           gap: 1px;
           grid-template-columns: repeat(1, 1fr);
+        }
+      }
+    }
+    .section {
+      .go {
+        > p {
+          font-size: 50px;
+        }
+        .host-button {
+          font-size: 15px;
         }
       }
     }

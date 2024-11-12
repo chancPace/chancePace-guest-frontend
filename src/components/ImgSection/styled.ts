@@ -21,7 +21,6 @@ export const ImgSectionStyled = styled.div`
   }
   .smallImgs {
     width: 50%;
-    height: 400px;
     overflow: hidden;
     .swiper {
       width: 100%;
@@ -50,18 +49,29 @@ export const ImgSectionStyled = styled.div`
     }
   }
 
-  /* @media screen and (max-width: 479px) {
-    display: block;
+  @media screen and (max-width: 479px) {
+    flex-direction: column;
+    height: 300px;
     .mainImg {
       width: 100%;
+      height: 200px;
+      margin-bottom: 10px;
+      img {
+        height: 100%;
+      }
     }
     .smallImgs {
+      width: 100%;
+      height: 200px;
+      .swiper-slide {
+        height: 100%;
 
-      width: 50%;
-      height: 280px;
-      background-color: blue;
+        img {
+          height: 100%;
+        }
+      }
     }
-  } */
+  }
 `;
 
 export const PreviewOverlay = styled.div`

@@ -52,7 +52,7 @@ export const ReservationStickyStyled = styled.div`
     cursor: pointer;
     width: 90%;
     background-color: ${({ theme }) => theme.color.main};
-    border-radius: 15px;
+    border-radius: 8px;
     color: white;
     margin-top: 20px;
   }

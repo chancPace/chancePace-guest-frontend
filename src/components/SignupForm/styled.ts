@@ -4,6 +4,7 @@ export const SignupFormStyled = styled.div`
   height: calc(100vh - 70px);
   display: flex;
   align-items: center;
+  justify-content: center;
   .form {
     border-radius: ${({ theme }) => theme.borderRadius};
     width: 450px;
@@ -33,5 +34,18 @@ export const SignupFormStyled = styled.div`
     text-align: center;
     color: lightgray;
     margin-bottom: 25px;
+  }
+  @media screen and (max-width: 480px) {
+    .form {
+      padding: 10px;
+      width: auto;
+      .email-confirm {
+        margin: 0;
+        display: inline;
+      }
+      .number-confirm {
+        margin-bottom: 10px;
+      }
+    }
   }
 `;

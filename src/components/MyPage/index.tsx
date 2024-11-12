@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getUser } from '@/pages/api/userApi';
 import { GetReviewData, MyBookingData, UserData, Wishlist } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { persistor, RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
 import { getMyBooking } from '@/pages/api/bookingApi';
 import MyBooking from '../MyBooking';
@@ -51,14 +51,25 @@ const MyPage = () => {
   const handleLogout = () => {
     Cookies.remove('token');
     dispatch(logout());
+    persistor.purge();
     router.replace('/');
   };
 
+  //쿠키 검사해서 없으면 리덕스 날리기
   useEffect(() => {
-    if (!userInfo) {
+    const token = Cookies.get('token');
+    // 쿠키가 없고 로그인 상태라면 로그아웃 처리
+    if (!token) {
+      dispatch(logout());
       router.replace('/');
     }
-  }, [userInfo]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (!userInfo) {
+  //     router.replace('/');
+  //   }
+  // }, [userInfo]);
 
   useEffect(() => {
     const fetchUserData = async () => {

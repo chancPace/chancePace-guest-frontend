@@ -27,7 +27,7 @@ export const HostInfoStyled = styled.div`
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), 0px 0px 5px rgba(0, 0, 0, 0.1);
   }
   .procedure {
-    padding: 20px;
+    padding: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -38,7 +38,7 @@ export const HostInfoStyled = styled.div`
     .procedureTitle {
       display: flex;
       align-items: center;
-      margin: 20px 0;
+      margin: 10px 0;
       font-size: ${({ theme }) => theme.fontSizes.lg};
       font-weight: bold;
       .procedureImg {
@@ -88,6 +88,7 @@ export const HostInfoStyled = styled.div`
       }
     }
   }
+  
   @media screen and (min-width: 481px) and (max-width: 1024px) {
     .hostInfoImg {
       width: 90%;

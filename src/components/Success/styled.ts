@@ -12,7 +12,7 @@ export const SuccessStyled = styled.div`
     width: 400px;
     border: 1px solid lightgray;
     border-radius: 8px;
-    padding: 20px;
+    padding: 40px;
     > div:first-child {
       font-size: 23px;
       text-align: center;
@@ -21,7 +21,7 @@ export const SuccessStyled = styled.div`
     .booking-info {
       .img {
         width: 100%;
-        height: 150px;
+        height: 200px;
         object-fit: cover;
         margin-right: 20px;
         margin-bottom: 10px;
