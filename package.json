@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev -H 0.0.0.0 -p 3000",
     "build": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false next build",
-    "start": "cross-env NODE_ENV=production next start -H 13.124.125.159 -p 3000",
+    "start": "cross-env NODE_ENV=production next start -H 3.39.187.231 -p 3000",
     "lint": "next lint"
   },
   "dependencies": {
