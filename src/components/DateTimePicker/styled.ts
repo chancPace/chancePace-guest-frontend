@@ -60,6 +60,9 @@ export const DateTimePickerStyled = styled.div`
     justify-content: space-between;
     margin-bottom: 10px;
   }
+  .am-pm-label {
+    font-size: 12px;
+  }
   .selected-time-info {
     font-size: 14px;
     color: #6b5b95;

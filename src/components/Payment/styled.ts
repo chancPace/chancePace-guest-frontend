@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PaymentStyled = styled.div`
-  padding: 40px;
+  padding: 10px 10px;
   display: flex;
   gap: 20px;
   .payment-left {
@@ -103,10 +103,14 @@ export const PaymentStyled = styled.div`
       cursor: pointer;
     }
   }
+
   @media screen and (max-width: 900px) {
     flex-direction: column;
     .payment-left {
       width: 100%;
+      .ant-select {
+        width: 80%;
+      }
     }
     .payment-right {
       width: 100%;
@@ -131,6 +135,7 @@ export const PaymentStyled = styled.div`
     }
   }
   @media screen and (min-width: 901px) {
+    padding: 10px 50px;
     .payment-right {
       width: 30%;
       padding: 10px;

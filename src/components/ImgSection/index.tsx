@@ -40,18 +40,20 @@ const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
       </div>
       <div className="smallImgs">
         <Swiper
-          slidesPerView={3}
-          grid={{
-            rows: 2,
-          }}
           spaceBetween={5}
           pagination={{
             clickable: true,
           }}
           modules={[Grid, Pagination]}
           breakpoints={{
-            1024: {
-              slidesPerView: 3,
+            480: {
+              slidesPerView: 2,
+              grid: {
+                rows: 1,
+              },
+            },
+            640: {
+              slidesPerView: 2,
               grid: {
                 rows: 2,
               },
@@ -62,14 +64,8 @@ const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
                 rows: 2,
               },
             },
-            640: {
-              slidesPerView: 1,
-              grid: {
-                rows: 2,
-              },
-            },
-            480: {
-              slidesPerView: 1,
+            1024: {
+              slidesPerView: 3,
               grid: {
                 rows: 2,
               },
@@ -86,9 +82,7 @@ const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
                   onClick={() => handlePreview(x.src)}
                 />
               ) : (
-                <div
-                  className="placeholder"
-                ></div>
+                <div className="placeholder"></div>
               )}
             </SwiperSlide>
           ))}

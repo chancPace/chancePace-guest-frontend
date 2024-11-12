@@ -8,14 +8,16 @@ export const CategoryStyled = styled.div`
     font-weight: 700;
     font-style: normal;
   }
+  background-color: lightgray;
   font-family: 'TheJamsil5Bold';
   font-weight: bold;
   margin: 10px 20px 10px 0;
   border-radius: 5px;
-  padding: 3px;
+  padding: 3px 5px;
   margin-bottom: 10px;
   line-height: 2;
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
+  color: white;
 `;

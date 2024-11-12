@@ -58,4 +58,35 @@ export const MyBookingStyled = styled.div`
       }
     }
   }
+  @media screen and (max-width: 768px) {
+
+    .booking-date {
+      font-size: 13px;
+    }
+    .booking-data {
+      .booking-space-img {
+        width: 70px;
+        height: 70px;
+        margin-right: 10px;
+        object-fit: cover;
+        border-radius: 8px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+        }
+      }
+      .booking-info {
+        > div {
+          font-size: 13px;
+          margin-bottom: -5px;
+        }
+        .booking-time {
+          > span {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 `;

@@ -5,7 +5,6 @@ export const MainStyled = styled.div`
   padding: 0 10px;
   margin: auto;
   margin-bottom: 100px;
-  margin-top: 50px;
   max-width: 1280px;
   .banner-swiper {
     height: 200px;

@@ -86,7 +86,7 @@ const MyBooking = ({ x }: MyBookingProps) => {
         <div className="booking-info">
           <div className="booking-space-name">{x.space?.spaceName}</div>
           <div className="booking-time">
-            이용시간: {x.startTime}:00 - {x.endTime}:00 (
+            <span>이용시간</span> {x.startTime}:00 - {x.endTime}:00 (
             {x.endTime - x.startTime}시간)
           </div>
           <div className="booking-status">{bookingStatusText}</div>{' '}

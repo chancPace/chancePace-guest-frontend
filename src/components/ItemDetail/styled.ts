@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ItemDetailStyled = styled.div`
-  padding: 60px 50px 0 50px;
+  padding: 0 10px;
   margin: auto;
   position: relative;
   max-width: 1280px;
@@ -59,7 +59,7 @@ export const ItemDetailStyled = styled.div`
         #part-1,
         #part-2,
         #part-3 {
-          padding: 20px 0;
+          padding: 5px 0;
         }
         .anchor-title {
           .ant-anchor {
@@ -74,9 +74,6 @@ export const ItemDetailStyled = styled.div`
             .section-title {
               display: inline-block;
               color: gray;
-              /* background-color: lightgray; */
-              /* color: white; */
-              /* padding: 2px 5px; */
               font-size: 17px;
               margin-bottom: 5px;
               border-radius: 8px;
@@ -105,21 +102,55 @@ export const ItemDetailStyled = styled.div`
       text-align: center;
     }
   }
-  @media screen and (max-width: 480px) {
-  }
-  @media screen and (min-width: 481px) and (max-width: 1024px) {
-    .detail-info {
-      display: block;
-      .anchor-sections {
-        width: 100%;
+  /* @media screen and (max-width: 480px) {
+  } */
+  @media screen and (max-width: 1024px) {
+    .detail-top {
+      .detail-top-text {
+        .space-title {
+          .space-name {
+            font-size: 22px;
+          }
+          .space-location {
+            font-size: 14px;
+          }
+          .rate {
+            display: flex;
+            justify-content: space-between;
+            width: 60px;
+            padding: 4px 6px;
+            background-color: #fec01f;
+            border-radius: 30px;
+            font-size: 12px;
+          }
+        }
+        .space-price {
+          margin-top: 20px;
+          font-size: 20px;
+          font-weight: bold;
+        }
       }
-      .payment-section {
-        width: 100%;
-        margin-top: 20px;
+    }
+    .detail-bottom {
+      .detail-info {
+        display: block;
+        .anchor-sections {
+          width: 100%;
+          .anchor-title {
+            .ant-anchor {
+              height: 40px;
+            }
+          }
+        }
+        .payment-section {
+          width: 100%;
+          margin-top: 20px;
+        }
       }
     }
   }
   @media screen and (min-width: 1025px) {
+    padding: 0 50px;
     .detail-info {
       display: flex;
       gap: 10%;

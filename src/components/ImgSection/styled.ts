@@ -29,7 +29,7 @@ export const ImgSectionStyled = styled.div`
     }
     .swiper-slide {
       width: 100%;
-      height: 50%; /* 슬라이드가 전체 높이의 50%를 차지하도록 설정 */
+      height: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,6 +47,19 @@ export const ImgSectionStyled = styled.div`
           transition: 0.5s;
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    display: block;
+    .mainImg {
+      width: 100%;
+    }
+    .smallImgs {
+      /* display: flex; */
+      width: 50%;
+      height: 280px;
+      background-color: blue;
     }
   }
 `;

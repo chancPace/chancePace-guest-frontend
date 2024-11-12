@@ -52,7 +52,6 @@ const ReservationSticky = ({
   const [peopleCount, setPeopleCount] = useState<number>(1); // 기본 인원은 1로 설정
   //할인 적용 금액
   const discountPrice = price - discount;
-  // console.log(useTime, '유즈타임');
 
   //기준인원 +시키기 (최대인원 한도까지)
   const handleIncrement = () => {
@@ -88,12 +87,11 @@ const ReservationSticky = ({
   useEffect(() => {
     if (selectedStartTime !== null && selectedEndTime !== null) {
       const calculatedTotal = discountPrice * totalTime;
-      const calculatedDiscount = discount * totalTime;
       setTotalPrice(calculatedTotal);
     } else {
       setTotalPrice(0);
     }
-  }, [totalTime, price, discount, selectedStartTime, selectedEndTime]);
+  }, [totalTime, selectedStartTime, selectedEndTime]);
 
   const handleDateChange = (newDate: Date | null) => {
     setStartDate(newDate ? format(newDate, 'yyyy-MM-dd') : null);
@@ -133,10 +131,10 @@ const ReservationSticky = ({
       pathname: '/pay',
       query: {
         orderId,
-        price: discountPrice,
+        price: totalPrice,
         startDate,
         startTime: Number(selectedStartTime),
-        endTime: Number(selectedEndTime) + 1,
+        endTime: Number(selectedEndTime),
         spaceId,
       },
     });

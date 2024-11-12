@@ -9,4 +9,9 @@ export const ButtonsStyled = styled.div`
       background-color: gray;
     }
   }
+  @media screen and (max-width: 550px) {
+    .customButton {
+      width: 250px;
+    }
+  }
 `;

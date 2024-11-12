@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MyPageStyled = styled.div`
-  padding: 0 10px;
+  padding: 30px 10px;
   height: 1000px;
   .ant-tabs {
     height: 100%;
@@ -62,15 +62,6 @@ export const MyPageStyled = styled.div`
     flex-wrap: wrap;
     gap: 15px;
     cursor: pointer;
-    .img-box {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      img {
-        width: 100%;
-      }
-    }
-
     .no-wish {
       text-align: center;
     }
@@ -100,9 +91,52 @@ export const MyPageStyled = styled.div`
   }
   @media screen and (max-width: 480px) {
   }
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
+    .ant-tabs-tabpane {
+      padding: 5px !important;
+    }
+    .ant-tabs-tab {
+      padding: 5px 10px 5px 5px !important;
+    }
+    .my-booking {
+      .my-booking-board {
+        margin-bottom: 5px;
+
+        .my-booking-board-title {
+          white-space: nowrap;
+        }
+        .board-list {
+          margin: 0px 10px;
+          > p {
+            margin-left: 5px;
+            font-size: 14px;
+          }
+          .icon-box {
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+    .wish {
+      gap: 15px;
+      cursor: pointer;
+      .no-wish {
+        text-align: center;
+        font-size: 13px;
+      }
+    }
+    .my-review {
+      .review-total {
+        font-size: 15px;
+      }
+    }
   }
   @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .ant-tabs-tab {
+      padding: 5px 10px !important;
+    }
   }
   @media screen and (min-width: 1025px) {
     padding: 50px 50px;

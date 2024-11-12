@@ -28,6 +28,7 @@ const Payment = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
   //결제하려는 금액 (상세페이지에서 넘어온 금액)
   const [price, setPrice] = useState<number>(0); // 초기값 0으로 설정
+
   //쿠폰할인 반영된 최종 금액
   const [finalPrice, setFinalPrice] = useState<number>(0); // 최종 결제 금액 초기값도 0으로 설정
   //쿠폰 할인금액

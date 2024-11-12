@@ -2,14 +2,17 @@ import styled from 'styled-components';
 
 export const SuccessStyled = styled.div`
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  position: relative;
   .success {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
     width: 400px;
     border: 1px solid lightgray;
     border-radius: 8px;
-    padding: 10px;
+    padding: 20px;
     > div:first-child {
       font-size: 23px;
       text-align: center;
@@ -51,6 +54,11 @@ export const SuccessStyled = styled.div`
       margin: auto;
       margin-top: 15px;
       cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .success {
+      width: 300px;
     }
   }
 `;

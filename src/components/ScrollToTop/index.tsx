@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollToTopStyled } from './styled';
 import { CaretUpOutlined } from '@ant-design/icons';
 import kakao from '../../assets/image/kakao.png';
-import { Modal } from 'antd';
+import { Modal, notification } from 'antd';
 
 const ScrollToTop = () => {
   const [showBtn, setShowBtn] = useState(false);
@@ -27,32 +27,24 @@ const ScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
+  const showNotification = () => {
+    notification.info({
+      message: '알림',
+      description: '준비 중입니다.',
+      placement: 'topRight',
+      duration: 20,
+    });
   };
 
-  // 모달 닫기 함수
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
   return (
     <ScrollToTopStyled>
-      <div className="kakao-icon" onClick={showModal}>
+      <div className="kakao-icon" onClick={showNotification}>
         <img src={kakao.src}></img>
       </div>
       <div className="go-top-button" onClick={scrollToTop}>
         <CaretUpOutlined />
         <p>TOP</p>
       </div>
-      <Modal
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleOk}
-        cancelText="닫기"
-        okText="확인"
-      >
-        <p>준비 중입니다.</p>
-      </Modal>
     </ScrollToTopStyled>
   );
 };

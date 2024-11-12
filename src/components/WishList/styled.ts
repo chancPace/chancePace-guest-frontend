@@ -15,8 +15,19 @@ export const WishListStyled = styled.div`
   .wish-info-top {
     display: flex;
     justify-content: space-between;
+    margin-top: 3px;
     .wish-icon {
       cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 479px) {
+    width: 130px;
+    .wish-img {
+      width: 100%;
+      height: 90px;
+    }
+    .price {
+      font-size: 13px;
     }
   }
 `;

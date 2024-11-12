@@ -16,7 +16,7 @@ export const EditUserStyled = styled.div`
   .ant-input-password,
   .ant-input,
   .ant-collapse {
-    width: 350px ;
+    width: 350px;
   }
   .ant-collapse {
     width: 400px;
@@ -33,6 +33,13 @@ export const EditUserStyled = styled.div`
       .ant-form-item-control-input {
         width: 350px;
       }
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .ant-input-password,
+    .ant-input,
+    .ant-collapse {
+      width: 250px;
     }
   }
 `;
