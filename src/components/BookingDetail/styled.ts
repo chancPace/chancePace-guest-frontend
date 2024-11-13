@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const BookingDetailStyled = styled.div`
   width: 450px;
   padding: 10px;
-  margin: auto;
+  margin: 80px auto;
+  height: 100vh;
   .booking-detail {
     h1 {
       text-align: center;

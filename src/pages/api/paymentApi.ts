@@ -9,7 +9,6 @@ const API_URL = `${
     : `http://${process.env.NEXT_PUBLIC_SERVER_HOST}:${process.env.NEXT_PUBLIC_SERVER_PORT}`
 }/api/payment`;
 
-
 //브라우저 환경인지 확인하고 userInfo 가져오기 (서버측에서 렌더링하려하면 오류가 발생함)
 const getUserInfoFromLocalStorage = () => {
   if (typeof window !== 'undefined') {
@@ -37,7 +36,6 @@ export const verifyPayment = async (paymentData: Payment) => {
         },
       }
     );
-    console.log(response, '리스폰스페이먼트');
     return response.data;
   } catch (error) {
     console.error('결제확인 요청 실패', error);

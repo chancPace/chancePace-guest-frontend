@@ -3,12 +3,18 @@ import styled from 'styled-components';
 export const SpaceListStyled = styled.div`
   padding: 10px;
   /* background-color: pink; */
-  height: 100vh;
+  margin-top: 20px;
+  /* height: 100vh; */
   .title {
     text-align: center;
     padding: 80px 0 10px 0;
   }
+  .search-title {
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
   .type-title {
+    margin-bottom: 20px;
     > span {
       display: block;
       font-size: 18px;

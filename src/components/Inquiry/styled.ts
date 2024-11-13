@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const InquiryStyled = styled.div`
   padding: 50px 10px;
   max-width: 1280px;
-  margin: 0px auto;
+  margin: 60px auto;
 
   .wrapBox {
     display: flex;

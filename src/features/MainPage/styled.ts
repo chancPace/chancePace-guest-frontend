@@ -93,6 +93,7 @@ export const MainStyled = styled.div`
       text-align: center;
       margin: 50px auto;
       color: black;
+      cursor: pointer;
     }
   }
 

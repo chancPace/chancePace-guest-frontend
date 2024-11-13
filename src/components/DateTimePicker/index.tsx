@@ -135,7 +135,6 @@ const DateTimePicker = ({
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
-      console.log(response, 'fltmvjstm');
       setBookingTime(response.data);
     } catch (error) {
       console.error('예약 시간 조회 실패', error);

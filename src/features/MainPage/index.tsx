@@ -11,8 +11,7 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { getCategory } from '@/pages/api/categoryApi';
 import { getSpace } from '@/pages/api/spaceApi';
-import Link from 'next/link';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { CategoryType, Space } from '@/types';
 import Banner from '@/components/Banner';
 import { banner } from '@/utill/datas';
@@ -22,10 +21,16 @@ interface ErrorResponseData {
 }
 
 const MainPage = () => {
+  const router = useRouter();
   const [bigCategory, setBigCategory] = useState<CategoryType[]>([]);
+  //새로운 장소
   const [newSpace, setNewSpace] = useState([]);
+  //추천 장소
+  const [recommendedSpace, setRecommendedSpace] = useState<Space[]>([]);
+  //인기 장소
+  const [popularSpace, setPopularSpace] = useState<Space[]>([]);
 
-  //카테고리(대분류) 띄우기
+  //카테고리(대분류) 가져오기
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -33,7 +38,7 @@ const MainPage = () => {
         //대분류 가져오기
         setBigCategory(
           categoryData.data.filter(
-            (category: { pId: null }) => category.pId === null
+            (category: CategoryType) => category.pId === null
           )
         );
       } catch (error) {
@@ -51,21 +56,38 @@ const MainPage = () => {
     router.push(`/category/${categoryId}`);
   };
 
-  //새로 등록된 공간(8개 출력)
+  //더 보기 버튼 클릭
+  const handleTypeClick = (type: string) => {
+    router.push(`/spacelist/${type}`);
+  };
+
+  //공간 타입별 출력
   useEffect(() => {
-    const fetchSpace = async () => {
+    const fetchSpaces = async () => {
       const spaceData = await getSpace();
-      if (spaceData && spaceData.data && spaceData.data.length > 0) {
-        const availableSpaces = spaceData.data
-          .filter(
-            (space: Space) =>
-              space.spaceStatus === 'AVAILABLE' && space.isOpen === true
-          )
-          .slice(0, 8);
-        setNewSpace(availableSpaces);
+      if (spaceData?.data) {
+        //available 상태인것만 가져오기
+        const availableSpace = spaceData.data.filter(
+          (space: Space) =>
+            space.spaceStatus === 'AVAILABLE' && space.isOpen === true
+        );
+        //새로운 장소 설정
+        setNewSpace(availableSpace.slice(0, 8));
+        //추천장소 설정 (랜덤)
+        setRecommendedSpace(
+          availableSpace.sort(() => Math.random() - 0.5).slice(0, 8)
+        );
+        setPopularSpace(
+          availableSpace
+            .sort(
+              (a: Space, b: Space) =>
+                (b.bookings?.length || 0) - (a.bookings?.length || 0)
+            )
+            .slice(0, 8)
+        );
       }
     };
-    fetchSpace();
+    fetchSpaces();
   }, []);
 
   return (
@@ -172,31 +194,34 @@ const MainPage = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Link href="/newspace">
-          <span className="more-link">새로운 장소 더보기</span>
-        </Link>
+        <span className="more-link" onClick={() => handleTypeClick('new')}>
+          새로운 장소 더보기
+        </span>
       </div>
       <div className="placeSection">
         <p className="itemListTitle">추천 장소</p>
         <div className="itemList">
-          {newSpace.map((x, i) => {
+          {recommendedSpace.map((x, i) => {
             return <ItemList x={x} key={i} />;
           })}
         </div>
-        <Link href="/recommendspace">
-          <span className="more-link">추천 장소 더보기</span>
-        </Link>
+        <span
+          className="more-link"
+          onClick={() => handleTypeClick('recommended')}
+        >
+          추천 장소 더보기
+        </span>
       </div>
       <div className="placeSection">
         <p className="itemListTitle">주간 인기 장소</p>
         <div className="itemList">
-          {newSpace.map((x, i) => {
+          {popularSpace.map((x, i) => {
             return <ItemList x={x} key={i} />;
           })}
         </div>
-        <Link href="/popularspace">
-          <span className="more-link">주간인기 장소 더보기</span>
-        </Link>
+        <span className="more-link" onClick={() => handleTypeClick('popular')}>
+          주간인기 장소 더보기
+        </span>
       </div>
     </MainStyled>
   );

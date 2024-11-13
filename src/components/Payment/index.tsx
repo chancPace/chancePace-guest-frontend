@@ -45,6 +45,7 @@ const Payment = () => {
   const paymentMethodsWidgetRef = useRef<ReturnType<
     PaymentWidgetInstance['renderPaymentMethods']
   > | null>(null);
+  const paymentMethodsWidget = paymentMethodsWidgetRef.current;
 
   // URL 인코딩된 키라면, 디코딩 후 삭제
   localStorage.removeItem(
@@ -78,6 +79,13 @@ const Payment = () => {
 
       if (!paymentWidget) {
         console.error('결제 위젯이 초기화되지 않았습니다');
+        return;
+      }
+
+      const selectedPaymentMethod =
+        await paymentMethodsWidget?.getSelectedPaymentMethod();
+      if (!selectedPaymentMethod) {
+        message.error('결제 수단을 선택해주세요.');
         return;
       }
 

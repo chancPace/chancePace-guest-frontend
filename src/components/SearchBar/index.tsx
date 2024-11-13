@@ -17,9 +17,9 @@ const SearchBar = () => {
       <Input.Search
         placeholder="검색어를 입력해주세요"
         allowClear
-        size="middle"
+        size="large"
         onSearch={onSearch}
-        value={searchTerm} // state 값에 따라 값 설정
+        value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="custom-InputSearch"
         enterButton={

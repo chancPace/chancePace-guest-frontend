@@ -36,6 +36,7 @@ export interface Space {
     updatedAt: string;
     spaceId?: number; // 선택적 속성으로 변경
   }[];
+  bookings?: BookingData[]
   categoryId: number;
   userId: number;
   spaceRating: number | null;

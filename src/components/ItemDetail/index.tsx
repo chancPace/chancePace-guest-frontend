@@ -1,7 +1,6 @@
 import { GetReviewData, Space } from '@/types';
 import { ItemDetailStyled } from './styled';
-import { Anchor, message, Pagination, Tabs } from 'antd';
-import type { TabsProps } from 'antd';
+import { Anchor, message, Pagination} from 'antd';
 import KakaoMap from '../KakaoMap';
 import ReservationSticky from '../ReservationSticky';
 import { useEffect, useState } from 'react';
@@ -34,7 +33,6 @@ const ItemDetail = () => {
       const fetchSpace = async () => {
         try {
           const response = await getOneSpace(Number(id));
-          console.log(response);
           setSpace(response.data);
         } catch (error) {
           console.error('공간 정보를 불러오지 못했습니다.', error);

@@ -6,29 +6,35 @@ import { CategoryType, Space } from '@/types';
 import { getCategory } from '@/pages/api/categoryApi';
 import Category from '../Category';
 import { Pagination } from 'antd';
+import { useRouter } from 'next/router';
 
 interface SpaceListProps {
-  type?: 'new' | 'popular' | 'recommended';
   categoryId?: number;
   query?: string;
 }
 
-const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
+const SpaceList = ({ categoryId }: SpaceListProps) => {
+  const router = useRouter();
+  const { type, query } = router.query;
+
   const [subCategory, setSubCategory] = useState<CategoryType[]>([]);
-  const [spaces, setSpaces] = useState<Space[]>([]);
-  const [filterSpace, setFilterSpace] = useState<Space[]>([]); // 필터링된 공간을 저장
-  //공간 검색하기
+  const [space, setSpace] = useState<Space[]>([]);
+  const [filterSpace, setFilterSpace] = useState<Space[]>([]);
+
+  const isAvailableSpace = (space: Space) => {
+    return space.spaceStatus === 'AVAILABLE' && space.isOpen === true;
+  };
+
+  //공간 검색
   useEffect(() => {
     if (query) {
       const fetchSearchSpace = async () => {
         try {
-          const data = await getSearchSpace(query);
+          const data = await getSearchSpace(query as string);
           if (data?.data) {
-            const availableSpaces = data.data.filter(
-              (space: Space) => space.spaceStatus === 'AVAILABLE'
-            );
-            setSpaces(availableSpaces);
-            setFilterSpace(availableSpaces);
+            const availableSpace = data.data.filter(isAvailableSpace);
+            setSpace(availableSpace);
+            setFilterSpace(availableSpace);
           }
         } catch (error) {
           console.error('검색 데이터 로드 중 오류 발생:', error);
@@ -54,16 +60,16 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
             ...subCategoryList,
           ]);
           const spaceData = await getSpace();
-          const availableSpaces = spaceData.data.filter(
+          const availableSpace = spaceData.data.filter(
             (space: Space) =>
-              space.spaceStatus === 'AVAILABLE' &&
+              isAvailableSpace(space) &&
               (space.categoryId === categoryId ||
                 subCategoryList.some(
                   (sub: CategoryType) => sub.id === space.categoryId
                 ))
           );
-          setSpaces(availableSpaces);
-          setFilterSpace(availableSpaces);
+          setSpace(availableSpace);
+          setFilterSpace(availableSpace);
         } catch (error) {
           console.error('소분류 데이터 로드 중 오류 발생:', error);
         }
@@ -77,40 +83,41 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
   const handleSubCategoryClick = (subCategoryId: number | null) => {
     // 선택한 소분류 ID에 맞는 공간만 필터링
     if (subCategoryId === null) {
-      setFilterSpace(spaces); // 모든 공간을 표시
+      setFilterSpace(space);
     } else {
       setFilterSpace(
-        spaces.filter((space) => space.categoryId === subCategoryId)
+        space.filter((space) => space.categoryId === subCategoryId)
       );
     }
   };
 
+  //타입별 상품 보여주기
   useEffect(() => {
     if (type && !query && !categoryId) {
       const fetchTypeSpace = async () => {
         try {
           const data = await getSpace();
           if (data?.data) {
-            let filteredSpaces = data.data.filter(
-              (space: Space) => space.spaceStatus === 'AVAILABLE'
-            );
+            let filteredSpace = data.data.filter(isAvailableSpace);
             if (type === 'new') {
-              filteredSpaces = filteredSpaces.slice(0, 30);
+              filteredSpace = filteredSpace.slice(0, 30);
+            } else if (type === 'popular') {
+              filteredSpace = filteredSpace
+                .sort(
+                  (a: Space, b: Space) =>
+                    (b.bookings?.length || 0) - (a.bookings?.length || 0)
+                )
+                .slice(0, 30);
+            } else if (type === 'recommended') {
+              filteredSpace = filteredSpace
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 30);
             }
-            // else if (type === 'popular') {
-            //   filteredSpaces = filteredSpaces.filter(
-            //     (space:Space) => space.isPopular
-            //   );
-            // } else if (type === 'recommended') {
-            //   filteredSpaces = filteredSpaces.filter(
-            //     (space:Space) => space.isRecommended
-            //   );
-            // }
-            setSpaces(filteredSpaces);
-            setFilterSpace(filteredSpaces);
+            setSpace(filteredSpace);
+            setFilterSpace(filteredSpace);
           }
         } catch (error) {
-          console.error('타입 데이터 로드 중 오류 발생:', error);
+          console.error('오류 발생:', error);
         }
       };
       fetchTypeSpace();
@@ -119,7 +126,7 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
 
   const getTitle = () => {
     if (query) {
-      return `"${query}" 검색 결과`;
+      return <div className="search-title">"{query}" 검색 결과</div>;
     }
     switch (type) {
       case 'new':
@@ -143,8 +150,9 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
     }
   };
 
+  //페이지네이션 설정
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // 프론트엔드 페이지당 데이터 개수
+  const itemsPerPage = 10;
 
   const displayedSpaces = filterSpace.slice(
     (currentPage - 1) * itemsPerPage,

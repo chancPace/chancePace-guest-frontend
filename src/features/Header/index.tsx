@@ -7,7 +7,6 @@ import { FiUser } from 'react-icons/fi';
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const userRole = useSelector((state: RootState) => state.user.userInfo?.role);
-  console.log(userRole, '롤');
   if (window.location.pathname === '/login') return null;
   if (window.location.pathname === '/signup') return null;
 
