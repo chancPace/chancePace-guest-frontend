@@ -8,6 +8,14 @@ export const EditUserStyled = styled.div`
   .confirm {
     display: block;
   }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label {
+      width: 100%;
+    }
+  }
   label {
     font-size: 12px;
     display: block;
@@ -17,6 +25,9 @@ export const EditUserStyled = styled.div`
   .ant-input,
   .ant-collapse {
     width: 350px;
+  }
+  .ant-select-selector {
+    width: 350px !important;
   }
   .ant-collapse {
     width: 400px;
@@ -45,6 +56,9 @@ export const EditUserStyled = styled.div`
     .ant-input,
     .ant-collapse {
       width: 250px;
+    }
+    .ant-select-selector {
+      width: 250px !important;
     }
   }
 `;

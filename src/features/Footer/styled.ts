@@ -4,6 +4,7 @@ export const FooterStyled = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   background-color: #f8f9fa;
   padding: 20px;
+  margin-top: 50px;
   .footer1 {
     display: flex;
     flex-wrap: wrap;

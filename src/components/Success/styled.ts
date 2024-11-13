@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SuccessStyled = styled.div`
   height: 100vh;
-
+  margin-top: 60px;
   position: relative;
   .success {
     position: absolute;

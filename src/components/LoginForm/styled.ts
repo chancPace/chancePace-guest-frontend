@@ -5,7 +5,7 @@ export const LoginStyled = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  height: calc(100vh - 60px);
+  height: 100vh;
   .form {
     background-color: rgba(255, 255, 255, 0.8);
     width: 400px;
@@ -34,7 +34,7 @@ export const LoginStyled = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     text-align: center;
     color: lightgray;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 
   @media screen and (max-width: 550px) {

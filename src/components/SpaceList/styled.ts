@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 export const SpaceListStyled = styled.div`
-  padding: 0 10px;
+  padding: 10px;
+  /* background-color: pink; */
+  height: 100vh;
   .title {
     text-align: center;
-    margin: 50px 0;
+    padding: 80px 0 10px 0;
   }
   .type-title {
     > span {

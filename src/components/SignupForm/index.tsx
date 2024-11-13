@@ -111,8 +111,7 @@ const SignupForm = () => {
       } else if (
         !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{10,15}/.test(values.password)
       ) {
-        errors.password =
-          '영문자, 숫자, 특수문자를 포함하여 10-15자로 입력해주세요';
+        errors.password = '영문자, 숫자, 특수문자를 포함 10-15자';
       }
 
       if (values.confirm !== values.password) {
@@ -211,29 +210,32 @@ const SignupForm = () => {
         <Link href={'/'}>
           <p className="formLogo">ChancePace</p>
         </Link>
-        <Input
-          name="email"
-          placeholder="이메일"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          onBlur={formik.handleBlur}
-          disabled={isVerified}
-          className="email-confirm"
-        />{' '}
-        <Button
-          htmlType="button"
-          onClick={handleSendAuthCode}
-          disabled={!formik.values.email || isCodeSent}
-        >
-          인증받기
-        </Button>
+        <div className="authentication-form">
+          <Input
+            name="email"
+            placeholder="이메일"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            onBlur={formik.handleBlur}
+            disabled={isVerified}
+            className="email-confirm"
+          />
+          <Button
+            htmlType="button"
+            onClick={handleSendAuthCode}
+            disabled={!formik.values.email || isCodeSent}
+          >
+            인증받기
+          </Button>
+        </div>
+
         {formik.touched.email && formik.errors.email ? (
           <p className="error">{formik.errors.email}</p>
         ) : (
           <p className="error"></p>
         )}
         {isCodeSent && (
-          <>
+          <div className="authentication-form">
             <Input
               name="authCode"
               placeholder="인증번호 입력"
@@ -248,11 +250,11 @@ const SignupForm = () => {
             {formik.errors.authCode && (
               <p className="error">{formik.errors.authCode}</p>
             )}
-          </>
+          </div>
         )}
         <Input.Password
           name="password"
-          placeholder="영문자,숫자,특수문자를 포함하여 10 - 15자로 입력해주세요"
+          placeholder="영문자,숫자,특수문자 포함 10 - 15자"
           onChange={formik.handleChange}
           value={formik.values.password}
           onBlur={formik.handleBlur}

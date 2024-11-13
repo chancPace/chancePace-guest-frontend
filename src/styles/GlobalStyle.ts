@@ -11,14 +11,13 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 }
 body {
-    padding-top: 70px;
     .ant-message {
     z-index: 9000000 !important; 
     
   }
 }
 .error {
-      height: 20px;
+      height: 18px;
       display: flex;
       align-items: center;
       font-size: 10px;

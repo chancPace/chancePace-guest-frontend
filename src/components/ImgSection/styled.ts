@@ -25,6 +25,7 @@ export const ImgSectionStyled = styled.div`
     .swiper {
       width: 100%;
       height: 100%;
+      z-index: -10;
     }
     .swiper-slide {
       width: 100%;
@@ -34,12 +35,12 @@ export const ImgSectionStyled = styled.div`
       justify-content: center;
       border-radius: ${({ theme }) => theme.borderRadius};
       background-color: #f7f7f7f7;
-
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: ${({ theme }) => theme.borderRadius};
+
         cursor: pointer;
         &:hover {
           opacity: 0.8;

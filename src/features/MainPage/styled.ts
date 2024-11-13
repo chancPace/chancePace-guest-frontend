@@ -9,6 +9,7 @@ export const MainStyled = styled.div`
   .banner-swiper {
     height: 200px;
     margin-bottom: 50px;
+    margin-top: 65px;
   }
   .swiper-button-next,
   .swiper-button-prev {

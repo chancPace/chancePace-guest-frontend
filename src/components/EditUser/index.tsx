@@ -210,6 +210,7 @@ const EditUser = ({
               />
               {userData?.role === 'HOST' && (
                 <>
+                  <label>은행명</label>
                   <Select
                     placeholder="은행명"
                     options={bankOpt}
@@ -218,12 +219,14 @@ const EditUser = ({
                     }
                     value={profileFormik.values.bankAccountName}
                   />
+                  <label>계좌 소유주</label>
                   <Input
                     name="bankAccountOwner"
                     placeholder="계좌 소유주"
                     onChange={profileFormik.handleChange}
                     value={profileFormik.values.bankAccountOwner}
                   />
+                  <label>계좌번호</label>
                   <Input
                     name="bankAccountNumber"
                     placeholder="계좌 번호"

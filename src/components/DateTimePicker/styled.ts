@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const DateTimePickerStyled = styled.div`
   width: 100%;
   .react-datepicker-popper {
-    z-index: 9999999;
+    z-index: 90000;
   }
   .custom-datepicker {
-    background-color: inherit;
+    background-color: white;
     border: 1px solid gray;
     border-radius: 8px;
     width: 320px;
@@ -14,6 +14,7 @@ export const DateTimePickerStyled = styled.div`
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    z-index: 9000;
   }
   .react-datepicker {
     background-color: #ffff; /* 달력 배경색 */
@@ -111,6 +112,9 @@ export const DateTimePickerStyled = styled.div`
     }
     .unselected {
       color: black;
+    }
+    .swiper-scrollbar {
+      bottom: -1px; /* 스크롤바를 조금 아래로 이동 */
     }
   }
   @media screen and (max-width: 480px) {

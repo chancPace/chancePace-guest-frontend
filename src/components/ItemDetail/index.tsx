@@ -149,11 +149,11 @@ const ItemDetail = () => {
             <div id="part-1">
               <div className="section">
                 <p className="section-title">공간소개</p>
-                <p>{space?.description}</p>
+                <p className="out-text">{space?.description}</p>
               </div>
               <div className="section">
                 <p className="section-title">편의시설</p>
-                <p>{space?.amenities}</p>
+                <p className="out-text">{space?.amenities}</p>
               </div>
               <div className="section">
                 <p className="section-title">위치</p>
@@ -173,7 +173,7 @@ const ItemDetail = () => {
             <div id="part-2">
               <div className="section">
                 <p className="section-title">주의사항</p>
-                <p>{space?.guidelines}</p>
+                <p className="out-text">{space?.guidelines}</p>
               </div>
             </div>
             <div id="part-3">

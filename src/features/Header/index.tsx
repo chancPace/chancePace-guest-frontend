@@ -7,7 +7,7 @@ import { FiUser } from 'react-icons/fi';
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const userRole = useSelector((state: RootState) => state.user.userInfo?.role);
-
+  console.log(userRole, '롤');
   if (window.location.pathname === '/login') return null;
   if (window.location.pathname === '/signup') return null;
 
@@ -21,11 +21,17 @@ const Header = () => {
         <div className="userBar">
           {isLoggedIn ? (
             <>
-              <Link
-                href={userRole === 'HOST' ? 'http://localhost:3001/' : '/host'}
-              >
+              <Link href={'/host'}>
                 <p className="hostMenuBar">호스트 센터</p>
               </Link>
+              {userRole === 'HOST' ? (
+                <Link href="http://localhost:3001">
+                  <p className="hostMenuBar">내 공간</p>
+                </Link>
+              ) : (
+                ''
+              )}
+
               <Link href="/mypage">
                 <p className="header-icon">
                   <span>

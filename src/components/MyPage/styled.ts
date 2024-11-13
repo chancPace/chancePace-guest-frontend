@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const MyPageStyled = styled.div`
   padding: 30px 10px;
-  height: 1000px;
+  margin-top: 60px;
+  height: calc(100vh - 60px);
   .ant-tabs {
     height: 100%;
   }

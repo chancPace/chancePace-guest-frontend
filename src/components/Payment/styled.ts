@@ -4,6 +4,7 @@ export const PaymentStyled = styled.div`
   padding: 10px 10px;
   display: flex;
   gap: 20px;
+  margin-top: 65px;
   .payment-left {
     width: 70%;
     .reservation-title {

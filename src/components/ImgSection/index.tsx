@@ -25,10 +25,13 @@ const ImgSection = ({ mainImg, smallImgs }: ImageSectionProps) => {
   };
 
   //스몰 이미지 배열이 6개 미만일 경우 기본색상 채우기
-  const fullSmallImg = [
-    ...smallImgs,
-    ...Array(6 - smallImgs.length).fill({ src: '' }), // 빈 문자열로 채운 객체 추가
-  ];
+  const fullSmallImg =
+    smallImgs.length < 6
+      ? [
+          ...smallImgs,
+          ...Array(6 - smallImgs.length).fill({ src: '' }), // 빈 문자열로 채운 객체 추가
+        ]
+      : smallImgs;
   return (
     <ImgSectionStyled>
       <div className="mainImg">

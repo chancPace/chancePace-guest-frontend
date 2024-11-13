@@ -34,7 +34,7 @@ export const HeaderStyled = styled.div`
         background-color: #8c73d8;
         color: white;
         border-radius: 8px;
-        margin-right: 25px;
+        margin-right: 18px;
       }
       span {
         margin-right: 5px;

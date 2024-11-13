@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ItemDetailStyled = styled.div`
-  padding: 0 10px;
+  padding: 10px;
   margin: auto;
   position: relative;
   max-width: 1280px;
@@ -17,6 +17,7 @@ export const ItemDetailStyled = styled.div`
   }
   .detail-top {
     border-bottom: 1px solid lightgray;
+    padding-top: 65px;
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -83,6 +84,9 @@ export const ItemDetailStyled = styled.div`
               font-size: 17px;
               margin-bottom: 5px;
               border-radius: 8px;
+            }
+            .out-text {
+              white-space: pre-line;
             }
             > p:nth-of-type(2) {
               font-size: 14px;
