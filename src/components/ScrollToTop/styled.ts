@@ -20,10 +20,18 @@ export const ScrollToTopStyled = styled.div`
       border: 1px solid lightgray;
       margin-top: 10px;
     }
-    > img {
-      width: 130%;
-      height: 130%;
-      border-radius: 50%;
+    &:first-child {
+      > a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        > img {
+          width: 130%;
+          height: 110%;
+        }
+      }
     }
   }
   position: fixed;

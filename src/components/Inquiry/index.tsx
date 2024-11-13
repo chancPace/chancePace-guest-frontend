@@ -4,12 +4,21 @@ import { Button, Input, message, notification, Radio } from 'antd';
 import { useState } from 'react';
 import KakaoMap from '../KakaoMap';
 import { addInquiryApi } from '@/pages/api/inquiryApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faClock,
+  faEnvelope,
+  faLocationDot,
+  faPhone,
+} from '@fortawesome/free-solid-svg-icons';
 
 const { TextArea } = Input;
 
 const Inquiry = () => {
   // 회원 타입
   const [type, setType] = useState('');
+
+  const address = '서울 마포구 도화2길 53';
 
   const inquiryFormik = useFormik({
     initialValues: {
@@ -42,10 +51,20 @@ const Inquiry = () => {
 
   return (
     <InquiryStyled>
-      <div className="conect">CONECT US</div>
       <div className="wrapBox">
         <div className="left">
+          <p>HOST Inquiry</p>
+          <p>호스트 등록 문의사항을 입력해주세요</p>
           <form onSubmit={inquiryFormik.handleSubmit}>
+            <div className="inputBox">
+              <div className="title">제목</div>
+              <Input
+                required
+                name="title"
+                onChange={inquiryFormik.handleChange}
+                placeholder="제목을 입력해주세요"
+              />
+            </div>
             <div className="inputBox">
               <div className="title">이메일</div>
               <Input
@@ -53,6 +72,7 @@ const Inquiry = () => {
                 required
                 name="email"
                 onChange={inquiryFormik.handleChange}
+                placeholder="이메일을 입력해주세요"
               />
             </div>
             <div className="inputBox">
@@ -66,18 +86,11 @@ const Inquiry = () => {
                 <Radio value={'NONMEMBER'}>비회원</Radio>
               </Radio.Group>
             </div>
-            <div className="inputBox">
-              <div className="title">제목</div>
-              <Input
-                required
-                name="title"
-                onChange={inquiryFormik.handleChange}
-              />
-            </div>
+
             <div className="inputBox">
               <div className="title">문의 내역</div>
               <TextArea
-                className="contents"
+                className="content"
                 required
                 name="contents"
                 onChange={inquiryFormik.handleChange}
@@ -89,7 +102,50 @@ const Inquiry = () => {
         </div>
 
         <div className="right">
-          <KakaoMap address="서울 마포구 도화2길 53" />
+          <div className="conect">CONECT US</div>
+          <div className="right-section">
+            <div className="map">
+              <p>
+                <span>
+                  <FontAwesomeIcon icon={faLocationDot} />
+                </span>
+                ADDRESS
+              </p>
+              <p>{address}</p>
+              <KakaoMap address={address} />
+            </div>
+            <div className="company-info">
+              <div>
+                <p>
+                  <span>
+                    <FontAwesomeIcon icon={faEnvelope} />
+                  </span>
+                  EMAIL
+                </p>
+
+                <p>auctionchance13@gmail.com</p>
+              </div>
+              <div>
+                <p>
+                  <span>
+                    <FontAwesomeIcon icon={faClock} />
+                  </span>
+                  Working Hours
+                </p>
+
+                <p>평일 09:00 - 18:00</p>
+              </div>
+              <div>
+                <p>
+                  <span>
+                    <FontAwesomeIcon icon={faPhone} />
+                  </span>
+                  PHONE
+                </p>
+                <p>02-0000-0000</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </InquiryStyled>

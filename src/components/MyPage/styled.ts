@@ -78,12 +78,6 @@ export const MyPageStyled = styled.div`
   .ant-tabs-ink-bar {
     background-color: ${({ theme }) => theme.color.main};
   }
-  .logout {
-    width: 96.45px;
-    font-size: 12px;
-    text-align: center;
-    cursor: pointer;
-  }
   .pagenation {
     display: flex;
     justify-content: center;

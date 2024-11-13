@@ -35,6 +35,11 @@ export const EditUserStyled = styled.div`
       }
     }
   }
+  .logout {
+    width: 400px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
   @media screen and (max-width: 550px) {
     .ant-input-password,
     .ant-input,
