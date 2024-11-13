@@ -237,3 +237,10 @@ export interface Wishlist {
     }[];
   };
 }
+
+export interface inquiryData {
+  email: string;
+  title: string;
+  contents: string;
+  memberType: string;
+}

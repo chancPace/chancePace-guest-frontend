@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
 import { InquiryStyled } from './styled';
-import { Button, Input, notification, Radio } from 'antd';
+import { Button, Input, message, notification, Radio } from 'antd';
 import { useState } from 'react';
 import KakaoMap from '../KakaoMap';
+import { addInquiryApi } from '@/pages/api/inquiryApi';
 
 const { TextArea } = Input;
 
@@ -14,9 +15,9 @@ const Inquiry = () => {
     initialValues: {
       title: '',
       email: '',
-      content: '',
+      contents: '',
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (type === '') {
         notification.warning({
           message: '회원 유형을 선택해 주세요!',
@@ -25,6 +26,17 @@ const Inquiry = () => {
       }
 
       // 문의 클릭시 엑시오스 넣기
+      try {
+        const inquiryData = {
+          ...values,
+          memberType: type,
+        };
+        await addInquiryApi(inquiryData);
+
+        message.success('문의가 성공적으로 등록되었습니다.');
+      } catch (error) {
+        console.error('등록실패', error);
+      }
     },
   });
 
@@ -50,8 +62,8 @@ const Inquiry = () => {
                   setType(e.target.value);
                 }}
               >
-                <Radio value={'member'}>회원</Radio>
-                <Radio value={'none'}>비회원</Radio>
+                <Radio value={'MEMBER'}>회원</Radio>
+                <Radio value={'NONMEMBER'}>비회원</Radio>
               </Radio.Group>
             </div>
             <div className="inputBox">
@@ -65,9 +77,9 @@ const Inquiry = () => {
             <div className="inputBox">
               <div className="title">문의 내역</div>
               <TextArea
-                className="content"
+                className="contents"
                 required
-                name="content"
+                name="contents"
                 onChange={inquiryFormik.handleChange}
               />
             </div>
