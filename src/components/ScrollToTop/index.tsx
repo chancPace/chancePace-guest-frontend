@@ -1,9 +1,11 @@
 import { ScrollToTopStyled } from './styled';
 import { CaretUpOutlined } from '@ant-design/icons';
-import kakao from '../../assets/image/kakao.png';
+import kakao from '../../assets/image/kakao.jpg';
 import { notification } from 'antd';
 
 const ScrollToTop = () => {
+  if (window.location.pathname === '/host') return null;
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -20,7 +22,9 @@ const ScrollToTop = () => {
   return (
     <ScrollToTopStyled>
       <div className="kakao-icon" onClick={showNotification}>
-        <img src={kakao.src}></img>
+        <a href="https://open.kakao.com/o/sYLZ1JZg">
+          <img src={kakao.src}></img>
+        </a>
       </div>
       <div className="go-top-button" onClick={scrollToTop}>
         <CaretUpOutlined />

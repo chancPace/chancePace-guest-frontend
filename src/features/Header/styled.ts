@@ -8,7 +8,7 @@ export const HeaderStyled = styled.div`
   left: 0;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   background-color: white;
-  z-index: 1000000;
+  z-index: 50;
   padding: 0 10px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   margin: auto;

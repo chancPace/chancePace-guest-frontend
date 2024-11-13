@@ -33,11 +33,8 @@ export const MainStyled = styled.div`
   }
   .trendingSpot {
     margin: auto;
-    .trendingSpotTitle {
-      font-weight: bold;
-      color: #363636;
+    .itemListTitle {
       font-size: 35px;
-      z-index: 100000;
     }
     .trendingSpotRight {
       display: flex;
@@ -53,7 +50,7 @@ export const MainStyled = styled.div`
     max-width: 1280px;
     margin-top: 100px;
     .category-title {
-      margin-bottom:10px;
+      margin-bottom: 10px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       color: #8c73d8;
     }

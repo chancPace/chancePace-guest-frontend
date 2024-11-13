@@ -24,11 +24,14 @@ export const PaymentStyled = styled.div`
       }
     }
     .refund-information {
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 30px;
       .modal-button {
+        display: inline-block;
+        margin-top: 10px;
         cursor: pointer;
         border-bottom: 1px solid gray;
+        color: gray;
       }
     }
     .ant-select {
@@ -47,6 +50,7 @@ export const PaymentStyled = styled.div`
     border: 1px solid lightgray;
     border-radius: 8px;
     height: 550px;
+    font-size: 15px;
     .reservation-space {
       display: flex;
       > .img {
@@ -76,6 +80,7 @@ export const PaymentStyled = styled.div`
     }
     .reservation-agreement {
       margin-top: 20px;
+      font-size: 15px;
       .agreement-title {
         font-size: 20px;
         margin-bottom: 10px;
@@ -97,7 +102,7 @@ export const PaymentStyled = styled.div`
       width: 100%;
       padding: 10px;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 20px;
       border-radius: 8px;
       cursor: pointer;

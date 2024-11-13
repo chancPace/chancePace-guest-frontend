@@ -18,12 +18,21 @@ export const SpaceListStyled = styled.div`
     width: 100%;
     display: grid;
     gap: 10px;
+    position: relative;
+    .no-item {
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+    }
   }
   .subcategory-list {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
   }
   .ant-pagination {
     display: flex;
@@ -53,5 +62,7 @@ export const SpaceListStyled = styled.div`
     .list {
       grid-template-columns: repeat(4, 1fr);
     }
+
+    padding: 0 50px;
   }
 `;

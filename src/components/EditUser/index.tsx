@@ -4,11 +4,13 @@ import { Collapse, Input, message, Select } from 'antd';
 import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
 import { useDispatch } from 'react-redux';
-import { updateUserProfile } from '@/redux/slices/userSlice';
+import { logout, updateUserProfile } from '@/redux/slices/userSlice';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import Buttons from '../Buttons';
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { persistor } from '@/redux/store';
 const { Panel } = Collapse;
 
 interface ErrorResponseData {
@@ -51,6 +53,13 @@ const EditUser = ({
     { value: 'KBN', label: '경남은행' },
     { value: 'Jeju', label: '제주은행' },
   ];
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    dispatch(logout());
+    persistor.purge();
+    router.replace('/');
+  };
 
   //프로필 수정
   const profileFormik = useFormik({
@@ -265,6 +274,9 @@ const EditUser = ({
           </form>
         </Panel>
       </Collapse>
+      <p className="logout" onClick={handleLogout}>
+        로그아웃
+      </p>
     </EditUserStyled>
   );
 };

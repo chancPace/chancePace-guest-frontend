@@ -48,12 +48,7 @@ const MyPage = () => {
   const [currentWishPage, setCurrentWishPage] = useState(1);
   const pageSize = 5; // 한 페이지에 표시할 항목 수
 
-  const handleLogout = () => {
-    Cookies.remove('token');
-    dispatch(logout());
-    persistor.purge();
-    router.replace('/');
-  };
+
 
   //쿠키 검사해서 없으면 리덕스 날리기
   useEffect(() => {
@@ -353,9 +348,7 @@ const MyPage = () => {
     <MyPageStyled>
       <Tabs tabPosition="left" items={tabItems} onChange={handleTabClick} />
 
-      <p className="logout" onClick={handleLogout}>
-        로그아웃
-      </p>
+
     </MyPageStyled>
   );
 };

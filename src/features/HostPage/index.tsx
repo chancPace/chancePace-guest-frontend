@@ -72,7 +72,7 @@ const HostPage = () => {
                 <div className="go">
                   <p>Let&apos;s work together!</p>
                   <div className="host-button">
-                    <a href="http://localhost:3001/">호스트 등록하기</a>
+                    <a href="/inquiry">호스트 문의하기</a>
                   </div>
                 </div>
               </div>

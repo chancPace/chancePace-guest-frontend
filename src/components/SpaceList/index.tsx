@@ -166,10 +166,13 @@ const SpaceList = ({ type, query, categoryId }: SpaceListProps) => {
         </div>
       )}
       <div className="list">
-        {displayedSpaces.map((space, i) => (
-          <ItemList x={space} key={i} />
-        ))}
+        {displayedSpaces.length > 0 ? (
+          displayedSpaces.map((space, i) => <ItemList x={space} key={i} />)
+        ) : (
+          <p className="no-item">상품이 없습니다</p>
+        )}
       </div>
+
       <Pagination
         current={currentPage}
         pageSize={itemsPerPage}
