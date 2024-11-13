@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { SignupCoupon } from '@/pages/api/couponApi';
 import { useFormik } from 'formik';
 import { sendAuthNumber } from '@/pages/api/nodemailerApi';
+import Link from 'next/link';
 
 interface CheckBoxItem {
   value: string;
@@ -207,7 +208,9 @@ const SignupForm = () => {
   return (
     <SignupFormStyled>
       <form className="form" onSubmit={formik.handleSubmit}>
-        <p className="formLogo">ChancePace</p>
+        <Link href={'/'}>
+          <p className="formLogo">ChancePace</p>
+        </Link>
         <Input
           name="email"
           placeholder="이메일"

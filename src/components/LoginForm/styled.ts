@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 export const LoginStyled = styled.div`
-  margin: auto;
-  height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  height: calc(100vh - 60px);
   .form {
     background-color: rgba(255, 255, 255, 0.8);
-    width: 380px;
+    width: 400px;
     margin: auto;
     padding: 50px;
     border-radius: ${({ theme }) => theme.borderRadius};
@@ -37,7 +36,17 @@ export const LoginStyled = styled.div`
     color: lightgray;
     margin-bottom: 60px;
   }
-  @media screen and (max-width: 480px) {
-    padding: 25px;
+
+  @media screen and (max-width: 550px) {
+    .form {
+      width: 300px;
+      .ant-input,
+      .ant-input-password {
+        width: 250px;
+      }
+    }
+    .formLogo {
+      font-size: 40px;
+    }
   }
 `;

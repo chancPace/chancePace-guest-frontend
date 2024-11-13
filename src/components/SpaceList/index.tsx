@@ -1,4 +1,3 @@
-// components/SpaceList.tsx
 import { useEffect, useState } from 'react';
 import { getSearchSpace, getSpace } from '@/pages/api/spaceApi';
 import ItemList from '../ItemList';

@@ -79,8 +79,9 @@ const LoginForm = () => {
   return (
     <LoginStyled>
       <form onSubmit={formik.handleSubmit} className="form">
-        <p className="formLogo">ChancePace</p>
-
+        <Link href={'/'}>
+          <p className="formLogo">ChancePace</p>
+        </Link>
         <Input
           name="email"
           placeholder="이메일"

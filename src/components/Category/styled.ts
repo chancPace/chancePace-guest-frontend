@@ -11,13 +11,14 @@ export const CategoryStyled = styled.div`
   background-color: lightgray;
   font-family: 'TheJamsil5Bold';
   font-weight: bold;
-  margin: 10px 20px 10px 0;
+  margin: 10px 10px 10px 0;
   border-radius: 5px;
-  padding: 3px 5px;
-  margin-bottom: 10px;
+  padding: 3px 8px;
+  margin-bottom: 5px;
   line-height: 2;
   cursor: pointer;
-  display: flex;
-  flex-wrap: wrap;
   color: white;
+  > p {
+    white-space: nowrap;
+  }
 `;

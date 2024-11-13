@@ -4,6 +4,8 @@ export const SearchBarStyled = styled.div`
   width: 100%;
   text-align: center;
   margin-top: 20px;
+
+
   .custom-InputSearch {
     width: 60%;
     max-width: 600px;

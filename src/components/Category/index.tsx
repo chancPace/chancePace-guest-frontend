@@ -6,6 +6,10 @@ interface CategoryProps {
   onClick: () => void;
 }
 const Category = ({ x, onClick }: CategoryProps) => {
-  return <CategoryStyled onClick={onClick}>{x.categoryName}</CategoryStyled>;
+  return (
+    <CategoryStyled onClick={onClick}>
+      <p>{x.categoryName}</p>
+    </CategoryStyled>
+  );
 };
 export default Category;

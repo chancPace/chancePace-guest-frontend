@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SpaceListStyled = styled.div`
-  padding: 20px;
+  padding: 0 10px;
   .title {
     text-align: center;
     margin: 50px 0;
@@ -21,7 +21,8 @@ export const SpaceListStyled = styled.div`
   }
   .subcategory-list {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-bottom: 100px;
   }
   .ant-pagination {
@@ -32,6 +33,10 @@ export const SpaceListStyled = styled.div`
   @media screen and (max-width: 500px) {
     .list {
       grid-template-columns: repeat(1, 1fr);
+    }
+    .subcategory-list {
+      font-size: 14px;
+      margin-bottom: 50px;
     }
   }
   @media screen and (min-width: 501px) and (max-width: 768px) {

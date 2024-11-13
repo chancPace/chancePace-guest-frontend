@@ -32,7 +32,7 @@ const SearchBar = () => {
           >
             검색
           </Button>
-        } // 커스텀 버튼 전달
+        }
       />
     </SearchBarStyled>
   );
