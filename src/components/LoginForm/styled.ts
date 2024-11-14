@@ -21,13 +21,17 @@ export const LoginStyled = styled.div`
     .ant-input-password {
       width: 350px;
     }
-    span {
-      font-size: 13px;
+    .loginform-footer {
+      width: 115%;
+      span {
+        font-size: 13px;
+      }
+      .span1 {
+        display: block;
+        margin-top: 10px;
+      }
     }
-    .span1 {
-      display: block;
-      margin-top: 10px;
-    }
+
     z-index: 10;
   }
   .formLogo {
