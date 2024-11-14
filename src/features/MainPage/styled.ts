@@ -96,9 +96,6 @@ export const MainStyled = styled.div`
       cursor: pointer;
     }
   }
-  .placeSection:nth-child(even) {
-    background-color: lightgray;
-  }
 
   .itemList {
     place-items: center;
