@@ -22,7 +22,7 @@ const ScrollToTop = () => {
   return (
     <ScrollToTopStyled>
       <div className="kakao-icon" onClick={showNotification}>
-        <a href="https://open.kakao.com/o/sYLZ1JZg">
+        <a href="kakaoopen://join?l=sYLZ1JZg&r=EW%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fkakaoopen://join?l=sYLZ1JZg&r=EW%3Ahttp%3A%2F%2Flocalhost%3A3000%2F">
           <img src={kakao.src}></img>
         </a>
       </div>

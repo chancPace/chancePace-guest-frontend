@@ -106,11 +106,11 @@ const LoginForm = () => {
             ''}
         </p>
         <Buttons text="로그인"></Buttons>
-        <div className='loginform-footer'>
+        <div className="loginform-footer">
           <Link href="/signup" passHref>
             <span className="span1">아직 회원이 아니신가요?</span>
           </Link>
-          <Link href="/signup" passHref>
+          <Link href="/findpassword" passHref>
             <span className="span1">비밀번호 찾기</span>
           </Link>
         </div>

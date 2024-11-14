@@ -17,9 +17,22 @@ export const LoginStyled = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    .ant-input,
-    .ant-input-password {
+    .ant-input-outlined {
+      border: 0;
+    }
+    .ant-input {
       width: 350px;
+      border: 0;
+      border-bottom: 1px solid lightgray;
+      border-radius: 0px;
+      padding: 0;
+    }
+    .ant-input-password {
+      padding: 0 !important;
+      border-bottom: 1px solid lightgray;
+      width: 350px;
+      border: 0;
+      border-radius: 0px;
     }
     .loginform-footer {
       width: 115%;

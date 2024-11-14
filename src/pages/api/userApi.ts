@@ -94,3 +94,15 @@ export const patchProfile = async (updateData: UserData) => {
     throw error;
   }
 };
+
+export const updatePassword = async (email: string, password: string) => {
+  try {
+    await axios.patch(`${API_URL}/update-password`, {
+      email,
+      password,
+    });
+  } catch (error) {
+    console.error('비밀번호 변경 실패', error);
+    throw error;
+  }
+};

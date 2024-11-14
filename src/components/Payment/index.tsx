@@ -1,7 +1,3 @@
-//환경 변수에서 클라이언트 키 가져오기
-const clientKey: string = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
-//결제 시 식별할 수 있는 고유 고객 키 (고정 값)
-const customerKey = 'YbX2HuSlsC9uVJW6NMRMjsdgaawegwasergfwrfasdfsq';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useRef, useState } from 'react';
 //loadPaymentWidget: 클라이언트 키와 고유 고객 키를 사용해서 결제 위젯 인스턴스 생성
@@ -20,9 +16,15 @@ import { PaymentStyled } from './styled';
 import { getOneSpace } from '@/pages/api/spaceApi';
 
 const Payment = () => {
+  //환경 변수에서 클라이언트 키 가져오기
+  const clientKey: string = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
+  //결제 시 식별할 수 있는 고유 고객 키 (고정 값)
+  const customerKey = 'YbX2HuSlsC9uVJW6NMRMjsdgaawegwasergfwrfasdfsq';
+
   const router = useRouter();
   const { startDate, startTime, endTime, spaceId } = router.query;
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
+
   //유저 쿠폰 상태
   const [coupons, setCoupons] = useState<UserCoupon[]>([]); // 쿠폰 데이터를 저장할 상태 추가
   //유저가 선택한 쿠폰
@@ -37,14 +39,18 @@ const Payment = () => {
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
   //모달창
   const [isModalVisible, setIsModalVisible] = useState(false);
+  // 위젯 로딩 상태
+  const [isWidgetLoaded, setIsWidgetLoaded] = useState(false);
 
+  const paymentContainerRef = useRef<HTMLDivElement>(null);
   //결제 위젯의 인스턴스를 참조하기 위한 변수
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   //결제 방식 위젯(신용카드, 계좌이체) 등의 인스턴스를 참조하기 위한 변수
-  const paymentMethodsWidgetRef = useRef<ReturnType<
-    PaymentWidgetInstance['renderPaymentMethods']
-  > | null>(null);
-  const paymentMethodsWidget = paymentMethodsWidgetRef.current;
+
+  // const paymentMethodsWidgetRef = useRef<ReturnType<
+  //   PaymentWidgetInstance['renderPaymentMethods']
+  // > | null>(null);
+  // const paymentMethodsWidget = paymentMethodsWidgetRef.current;
 
   // URL 인코딩된 키라면, 디코딩 후 삭제
   localStorage.removeItem(
@@ -54,10 +60,10 @@ const Payment = () => {
   useEffect(() => {
     if (router.query.price) {
       const parsedPrice = Number(router.query.price);
-      setPrice(parsedPrice || 0);
-      setFinalPrice(parsedPrice || 0);
+      setPrice(parsedPrice);
+      setFinalPrice(parsedPrice);
     }
-  }, [router.query.price]);
+  }, []);
 
   //유저가 예약하려는 공간불러오기
   useEffect(() => {
@@ -73,6 +79,11 @@ const Payment = () => {
   }, [spaceId]);
 
   const handlePayment = async () => {
+    if (!isWidgetLoaded) {
+      console.error('결제 위젯이 아직 로드되지 않았습니다');
+      return;
+    }
+
     try {
       const paymentWidget = paymentWidgetRef.current;
 
@@ -123,44 +134,40 @@ const Payment = () => {
     setFinalPrice(price - discountAmount);
   }, [price, discountAmount]);
 
+  //결제 위젯 초기화
+
+  //toss payments 결제 위젯을 로드하여 초기화
+  const initializePaymentWidget = async () => {
+    //환경 변수에서 클라이언트 키를 가져오지 못한 경우
+    if (!clientKey) {
+      console.error('클라이언트 키가 설정되지 않았습니다');
+      return;
+    }
+    try {
+      //Toss Payments SDK의 loadPaymentWidget 함수를 통해 결제 위젯 인스턴스 생성
+      //클라이언트 키와 고객 키 사용
+      const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
+
+      //결제 방식 위젯 렌더링 (신용카드, 계좌이체 등 결제수단 목록을 보여줌))
+      //#payment-widget요소안에 렌더링  결제급액은 price상태 값
+      paymentWidget.renderPaymentMethods(
+        '#payment-widget', //위젯이 렌더링될 dom요소
+        { value: finalPrice }, // 최종 결제 금액 사용
+        { variantKey: 'DEFAULT' } //기본 테마 설정
+      );
+      //결제 위젯과 결제 방식 위젯의 인스턴스를 각각 참조 변수에 저장
+      paymentWidgetRef.current = paymentWidget;
+      setIsWidgetLoaded(true);
+    } catch (error) {
+      console.error('결제 위젯 로딩 중 오류가 발생함', error);
+    }
+  };
+  //함수를 호출하여 결제 위젯 초기화
+  initializePaymentWidget();
   useEffect(() => {
-    //결제 위젯 초기화
-
-    //toss payments 결제 위젯을 로드하여 초기화
-    const initializePaymentWidget = async () => {
-      //환경 변수에서 클라이언트 키를 가져오지 못한 경우
-      if (!clientKey) {
-        console.error('클라이언트 키가 설정되지 않았습니다');
-        return;
-      }
-      try {
-        //Toss Payments SDK의 loadPaymentWidget 함수를 통해 결제 위젯 인스턴스 생성
-        //클라이언트 키와 고객 키 사용
-        const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
-
-        //결제 방식 위젯 렌더링 (신용카드, 계좌이체 등 결제수단 목록을 보여줌))
-        //#payment-widget요소안에 렌더링  결제급액은 price상태 값
-        const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
-          '#payment-widget', //위젯이 렌더링될 dom요소
-          { value: finalPrice }, // 최종 결제 금액 사용
-          { variantKey: 'DEFAULT' } //기본 테마 설정
-        );
-        //결제 위젯과 결제 방식 위젯의 인스턴스를 각각 참조 변수에 저장
-        paymentWidgetRef.current = paymentWidget;
-        paymentMethodsWidgetRef.current = paymentMethodsWidget;
-        
-        const selectedPaymentMethod =
-          paymentMethodsWidget?.getSelectedPaymentMethod();
-        if (!selectedPaymentMethod) {
-          message.error('결제 수단을 선택해주세요.');
-          return;
-        }
-      } catch (error) {
-        console.error('결제 위젯 로딩 중 오류가 발생함', error);
-      }
-    };
-    //함수를 호출하여 결제 위젯 초기화
-    initializePaymentWidget();
+    if (clientKey && finalPrice > 0) {
+      initializePaymentWidget();
+    }
   }, [clientKey, finalPrice]);
 
   //환불 규정 모달
@@ -217,7 +224,7 @@ const Payment = () => {
         </div>
 
         <div className="App">
-          <div id="payment-widget"></div>
+          <div id="payment-widget" ref={paymentContainerRef}></div>
         </div>
       </div>
       <div className="payment-right">

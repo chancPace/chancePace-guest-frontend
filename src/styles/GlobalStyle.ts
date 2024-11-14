@@ -22,6 +22,12 @@ body {
       align-items: center;
       font-size: 10px;
       color: ${({ theme }) => theme.color.warning};
+      text-align: left;
+      /* background-color: green; */
+      width: 350px;
+    }
+    @media screen and (max-width: 550px) {
+      .error {width:250px;}
     }
 `;
 

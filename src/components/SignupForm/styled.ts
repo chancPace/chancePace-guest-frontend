@@ -20,6 +20,9 @@ export const SignupFormStyled = styled.div`
       gap: 10px;
       .ant-input {
         width: 80%;
+        border: 0;
+        border-bottom: 1px solid lightgray;
+        border-radius: 0;
       }
       .ant-btn {
         width: 20%;
@@ -34,6 +37,7 @@ export const SignupFormStyled = styled.div`
       margin-bottom: 20px;
     }
     .signup-button {
+      color: white;
       width: 350px;
       background-color: ${({ theme }) => theme.color.main};
     }
