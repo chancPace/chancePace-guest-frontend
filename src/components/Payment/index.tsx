@@ -4,19 +4,20 @@ const clientKey: string = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
 const customerKey = 'YbX2HuSlsC9uVJW6NMRMjsdgaawegwasergfwrfasdfsq';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect, useRef, useState } from 'react';
+//loadPaymentWidget: 클라이언트 키와 고유 고객 키를 사용해서 결제 위젯 인스턴스 생성
+//PaymentWidgetInstance: loadPaymentWidget 함수가 반환하는 인스턴스 타입 이 인스턴스를 통해 결제 요청이나 결제 수단 위젯 렌더링함
 import {
   loadPaymentWidget,
   PaymentWidgetInstance,
 } from '@tosspayments/payment-widget-sdk';
 import { useRouter } from 'next/router';
 import { message, Modal, Select } from 'antd';
-import { getUserAllCoupon, UserCouponIsUsed } from '@/pages/api/couponApi';
+import { getUserAllCoupon } from '@/pages/api/couponApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Space, UserCoupon } from '@/types';
 import { PaymentStyled } from './styled';
 import { getOneSpace } from '@/pages/api/spaceApi';
-import CheckboxGroup from '../CheckboxGroup';
 
 const Payment = () => {
   const router = useRouter();
@@ -28,12 +29,10 @@ const Payment = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
   //결제하려는 금액 (상세페이지에서 넘어온 금액)
   const [price, setPrice] = useState<number>(0); // 초기값 0으로 설정
-
   //쿠폰할인 반영된 최종 금액
   const [finalPrice, setFinalPrice] = useState<number>(0); // 최종 결제 금액 초기값도 0으로 설정
   //쿠폰 할인금액
   const [discountAmount, setDiscountAmount] = useState<number>(0);
-
   //결제하는 공간의 데이터
   const [spaceDetails, setSpaceDetails] = useState<Space | null>(null);
   //모달창
@@ -82,13 +81,6 @@ const Payment = () => {
         return;
       }
 
-      const selectedPaymentMethod =
-        await paymentMethodsWidget?.getSelectedPaymentMethod();
-      if (!selectedPaymentMethod) {
-        message.error('결제 수단을 선택해주세요.');
-        return;
-      }
-
       await paymentWidget.requestPayment({
         orderId: `ORDER-${nanoid()}`,
         orderName: 'test',
@@ -134,6 +126,7 @@ const Payment = () => {
   useEffect(() => {
     //결제 위젯 초기화
 
+    //toss payments 결제 위젯을 로드하여 초기화
     const initializePaymentWidget = async () => {
       //환경 변수에서 클라이언트 키를 가져오지 못한 경우
       if (!clientKey) {
@@ -155,6 +148,13 @@ const Payment = () => {
         //결제 위젯과 결제 방식 위젯의 인스턴스를 각각 참조 변수에 저장
         paymentWidgetRef.current = paymentWidget;
         paymentMethodsWidgetRef.current = paymentMethodsWidget;
+        
+        const selectedPaymentMethod =
+          paymentMethodsWidget?.getSelectedPaymentMethod();
+        if (!selectedPaymentMethod) {
+          message.error('결제 수단을 선택해주세요.');
+          return;
+        }
       } catch (error) {
         console.error('결제 위젯 로딩 중 오류가 발생함', error);
       }
@@ -168,7 +168,6 @@ const Payment = () => {
     setIsModalVisible(true);
   };
 
-  // Function to close the modal
   const handleClose = () => {
     setIsModalVisible(false);
   };

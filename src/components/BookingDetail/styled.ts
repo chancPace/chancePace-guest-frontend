@@ -5,6 +5,12 @@ export const BookingDetailStyled = styled.div`
   padding: 10px;
   margin: 80px auto;
   height: 100vh;
+  .ant-table-cell {
+    padding: 10px 10px !important; /* 전체 셀 패딩 줄이기 */
+  }
+  .ant-table {
+    font-size: 14px; /* 텍스트 크기 조정 */
+  }
   .booking-detail {
     h1 {
       text-align: center;

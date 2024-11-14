@@ -5,6 +5,7 @@ import { getOneBooking } from '@/pages/api/bookingApi';
 import { message, Modal, Table } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Refund } from '@/pages/api/paymentApi';
 
 const columns = [
   { dataIndex: 'label', key: 'label' },
@@ -18,14 +19,15 @@ const BookingDetail = () => {
   const [bookingDetails, setBookingDetails] = useState<MyBookingData | null>(
     null
   );
-  const [isModalVisible, setIsModalVisible] = useState(false); // 모달 표시 상태
 
+  const [isModalVisible, setIsModalVisible] = useState(false); 
+
+  //예약내역 가져오기
   useEffect(() => {
     if (!id) return;
-
     const fetchBookingDetails = async () => {
       try {
-        const data = await getOneBooking(Number(id)); // id를 숫자로 변환하여 사용
+        const data = await getOneBooking(Number(id)); 
         setBookingDetails(data.data);
       } catch (error) {
         message.error('예약 상세 정보를 불러오는 데 실패했습니다.');
@@ -35,55 +37,97 @@ const BookingDetail = () => {
     fetchBookingDetails();
   }, [id]);
 
-  const dataSource = bookingDetails
-    ? [
-        {
-          key: '1',
-          label: '예약 공간',
-          value: bookingDetails.space?.spaceName || '-',
-        },
-        {
-          key: '2',
-          label: '예약 위치',
-          value: bookingDetails.space?.spaceLocation || '-',
-        },
-        {
-          key: '3',
-          label: '예약 날짜',
-          value: bookingDetails.startDate || '-',
-        },
-        {
-          key: '4',
-          label: '이용 시간',
-          value: `${bookingDetails.startTime}:00 - ${bookingDetails.endTime}:00`,
-        },
-        {
-          key: '5',
-          label: '결제 방식',
-          value: bookingDetails.payment?.paymentMethod || '-',
-        },
-        {
-          key: '6',
-          label: '카드 번호',
-          value: bookingDetails.payment?.cardNumber || '-',
-        },
-        {
-          key: '7',
-          label: '결제 금액',
-          value:
-            bookingDetails.payment?.paymentPrice?.toLocaleString() + '원' ||
-            '-',
-        },
-        {
-          key: '8',
-          label: '쿠폰 할인',
-          value: bookingDetails.payment?.couponPrice
-            ? `${bookingDetails.payment.couponPrice}원`
-            : '-',
-        },
-      ]
-    : [];
+  //예약 환불
+  const refundBooking = async () => {
+    try {
+      const bookingId = id;
+      const cancelReason = '고객 요청에 따른 취소';
+      await Refund(Number(bookingId), cancelReason);
+      message.success('예약이 취소되었습니다');
 
+      // if(bookingDetails?.payment?.couponPrice) {
+      //   await 
+      // }
+
+      setIsModalVisible(false);
+      router.push('/');
+    } catch (error) {
+      message.error('예약 취소 실패');
+      console.error('예약취소실패', error);
+    }
+  };
+
+  const dataSource = [
+    {
+      key: '1',
+      label: '예약 공간',
+      value: bookingDetails?.space?.spaceName || '-',
+    },
+    {
+      key: '2',
+      label: '예약 위치',
+      value: bookingDetails?.space?.spaceLocation || '-',
+    },
+    {
+      key: '3',
+      label: '결제일',
+      value: bookingDetails?.createdAt
+        ? new Date(bookingDetails.createdAt).toLocaleDateString('en-CA')
+        : '-',
+    },
+    {
+      key: '4',
+      label: '예약 날짜',
+      value: bookingDetails?.startDate || '-',
+    },
+    {
+      key: '5',
+      label: '이용 시간',
+      value: `${bookingDetails?.startTime}:00 - ${bookingDetails?.endTime}:00`,
+    },
+    {
+      key: '6',
+      label: '결제 방식',
+      value: bookingDetails?.payment?.paymentMethod || '-',
+    },
+    {
+      key: '7',
+      label: '카드 번호',
+      value: bookingDetails?.payment?.cardNumber || '-',
+    },
+    {
+      key: '8',
+      label: '결제 금액',
+      value:
+        bookingDetails?.payment?.paymentPrice?.toLocaleString() + '원' || '-',
+    },
+    {
+      key: '9',
+      label: '쿠폰 할인',
+      value: bookingDetails?.payment?.couponPrice
+        ? `${bookingDetails?.payment.couponPrice.toLocaleString()}원`
+        : '-',
+    },
+    ...(bookingDetails?.bookingStatus === 'CANCELLED'
+      ? [
+          {
+            key: '10',
+            label: '환불 금액',
+            value:
+              bookingDetails?.payment?.paymentStatus === 'REFUNDED'
+                ? `${bookingDetails.payment.paymentPrice.toLocaleString()}원`
+                : '-',
+          },
+          {
+            key: '11',
+            label: '취소 일시',
+            value: new Date(bookingDetails.updatedAt).toLocaleDateString(
+              'en-CA'
+            ),
+          },
+        ]
+      : []),
+  ];
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -110,7 +154,9 @@ const BookingDetail = () => {
         </div>
       )}
       <div className="button-box">
-        <button onClick={showModal}>취소하기</button>
+        {bookingDetails?.bookingStatus !== 'CANCELLED' && (
+          <button onClick={showModal}>취소하기</button>
+        )}
         <Link href="/" passHref>
           <button>메인으로</button>
         </Link>{' '}
@@ -118,12 +164,12 @@ const BookingDetail = () => {
       <Modal
         title="안내"
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={refundBooking}
         onCancel={handleOk}
         cancelText="닫기"
         okText="확인"
       >
-        <p>준비 중입니다.</p>
+        <p>결제를 취소하시겠습니까?</p>
       </Modal>
     </BookingDetailStyled>
   );

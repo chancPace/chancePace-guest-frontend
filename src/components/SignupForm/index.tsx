@@ -176,10 +176,9 @@ const SignupForm = () => {
       console.log(response);
       if (response && response.result) {
         message.success(response.message);
-        setServerAuthCode(String(response.authNumber)); // 문자열로 변환하여 저장
+        setServerAuthCode(String(response.authNumber));
         setIsCodeSent(true);
       } else if (response && !response.result) {
-        // 중복된 이메일의 경우 메시지 처리
         message.error(response.message);
       } else {
         message.error('알 수 없는 오류가 발생했습니다.');

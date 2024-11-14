@@ -43,11 +43,11 @@ export const verifyPayment = async (paymentData: Payment) => {
   }
 };
 
-export const Refund = async (bookingId: number, cancleReason: string) => {
+export const Refund = async (bookingId: number, cancelReason: string) => {
   try {
     const response = await axios.post(`${API_URL}/refund`, {
       bookingId,
-      cancleReason,
+      cancelReason,
     });
     return response.data;
   } catch (error) {

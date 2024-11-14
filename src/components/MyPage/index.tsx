@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getUser } from '@/pages/api/userApi';
 import { GetReviewData, MyBookingData, UserData, Wishlist } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { persistor, RootState } from '@/redux/store';
+import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
 import { getMyBooking } from '@/pages/api/bookingApi';
 import MyBooking from '../MyBooking';
@@ -59,12 +59,6 @@ const MyPage = () => {
       router.replace('/');
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (!userInfo) {
-  //     router.replace('/');
-  //   }
-  // }, [userInfo]);
 
   useEffect(() => {
     const fetchUserData = async () => {

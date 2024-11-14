@@ -20,24 +20,26 @@ const MyBooking = ({ x }: MyBookingProps) => {
   useEffect(() => {
     const today = new Date();
     const bookingDate = new Date(x.startDate);
+    //오늘인지?
+    const isToday = bookingDate.toDateString() === today.toDateString();
+    //예약시간이 지났는지?
+    const isEnd = x.endTime <= today.getHours();
 
-    // 오늘 날짜의 예약인 경우, 현재 시간과 비교하여 상태 설정
-    if (bookingDate.toDateString() === today.toDateString()) {
-      if (x.endTime <= today.getHours()) {
-        // 오늘 날짜이면서 예약 종료 시간이 현재 시간보다 작거나 같은 경우
+    if (x.bookingStatus === 'CANCELLED') {
+      setBookingStatusText('예약 취소');
+      setIsModalVisible(false);
+    } else if (isToday) {
+      if (isEnd) {
         setBookingStatusText('이용완료');
-        setIsReviewBtnVisible(!x.review); // x.review가 null일 때만 버튼 표시
+        setIsReviewBtnVisible(!x.review);
       } else {
-        // 오늘 날짜이면서 예약 종료 시간이 아직 지나지 않은 경우
         setBookingStatusText('이용전');
         setIsReviewBtnVisible(false);
       }
     } else if (bookingDate < today) {
-      // 예약 날짜가 오늘 이전인 경우 '이용 완료'로 설정
       setBookingStatusText('이용완료');
-      setIsReviewBtnVisible(!x.review); // x.review가 null일 때만 버튼 표시
+      setIsReviewBtnVisible(!x.review);
     } else {
-      // 예약 날짜가 미래인 경우
       setBookingStatusText('이용전');
       setIsReviewBtnVisible(false);
     }

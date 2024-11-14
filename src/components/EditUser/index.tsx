@@ -1,7 +1,6 @@
 import { UserData } from '@/types';
 import { EditUserStyled } from './styled';
 import { Collapse, Input, message, Select } from 'antd';
-import { AxiosError } from 'axios';
 import { checkPassword, patchProfile } from '@/pages/api/userApi';
 import { useDispatch } from 'react-redux';
 import { logout, updateUserProfile } from '@/redux/slices/userSlice';
@@ -13,9 +12,8 @@ import Cookies from 'js-cookie';
 import { persistor } from '@/redux/store';
 const { Panel } = Collapse;
 
-interface ErrorResponseData {
-  message: string;
-}
+
+
 interface UserAccountFormProps {
   userData: UserData | null;
   setUserData: (user: UserData) => void;

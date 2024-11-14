@@ -22,6 +22,7 @@ export const HeaderStyled = styled.div`
     .logo {
       text-align: left;
       font-size: ${({ theme }) => theme.fontSizes.xl};
+      cursor: pointer;
     }
     .userBar {
       display: flex;
