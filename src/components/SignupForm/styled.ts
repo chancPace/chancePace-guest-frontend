@@ -14,6 +14,11 @@ export const SignupFormStyled = styled.div`
     z-index: 100;
     border: 1px solid lightgray;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    .ant-input-password {
+      border: 0;
+      border-bottom: 1px solid lightgray;
+      border-radius: 0;
+    }
     .authentication-form {
       display: flex;
       justify-content: space-between;
@@ -38,7 +43,7 @@ export const SignupFormStyled = styled.div`
     }
     .signup-button {
       color: white;
-      width: 350px;
+      width: 100%;
       background-color: ${({ theme }) => theme.color.main};
     }
   }
@@ -55,12 +60,16 @@ export const SignupFormStyled = styled.div`
     .form {
       padding: 10px;
       width: auto;
+      width: 320px;
       .email-confirm {
         margin: 0;
         display: inline;
       }
       .number-confirm {
         margin-bottom: 10px;
+      }
+      .signup-button {
+        width: 100%;
       }
     }
   }

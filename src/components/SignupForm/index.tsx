@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CheckboxGroup from '../CheckboxGroup';
 import { postSignup } from '@/pages/api/userApi';
-import Buttons from '../Buttons';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { AxiosError } from 'axios'; // AxiosError 타입을 import
+import { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { SignupCoupon } from '@/pages/api/couponApi';
 import { useFormik } from 'formik';
 import { sendAuthNumber } from '@/pages/api/nodemailerApi';
 import Link from 'next/link';
+import { ErrorResponse } from '@/types';
 
 interface CheckBoxItem {
   value: string;
@@ -48,8 +48,7 @@ const SignupForm = () => {
   //모든 체크박스가 선택되었는지
   const [isAllChecked, setIsAllChecked] = useState(false);
   //필수 체크박스가 선택되지 않았을 경우의 에러 메세지
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지 상태 추가
-  const [duplicateError, setDuplicateError] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); 
   //코드 발송 여부
   const [isCodeSent, setIsCodeSent] = useState(false);
   //서버에서 받은 인증코드 저장
@@ -92,23 +91,17 @@ const SignupForm = () => {
       email: 'test@daum.net',
       password: 'password1234!',
       confirm: 'password1234!',
-      authCode: '', // 인증 코드 입력 필드 추가
+      authCode: '', 
     },
     validate: (values) => {
       const errors: { email?: string; password?: string; confirm?: string } =
         {};
 
-      if (!values.email) {
-        errors.email = '이메일을 입력해주세요';
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
         errors.email = '유효하지 않은 이메일 주소입니다';
       }
 
-      if (!values.password) {
-        errors.password = '비밀번호를 입력해주세요';
-      } else if (
+      if (
         !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{10,15}/.test(values.password)
       ) {
         errors.password = '영문자, 숫자, 특수문자를 포함 10-15자';
@@ -160,15 +153,16 @@ const SignupForm = () => {
         router.push('/login');
         message.success(response.message);
       } catch (error) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError<ErrorResponse>;
+        const errorMessage = axiosError.response?.data?.message || '';
         if (axiosError.response && axiosError.response.status === 400) {
-          setDuplicateError('이미 존재하는 아이디입니다.');
+          message.error(errorMessage)
         } else {
           message.error('회원가입 실패');
         }
       }
     },
-  });
+  }); 
 
   const handleSendAuthCode = async () => {
     try {
@@ -184,9 +178,10 @@ const SignupForm = () => {
         message.error('알 수 없는 오류가 발생했습니다.');
       }
     } catch (error) {
-      const axiosError = error as AxiosError;
+      const axiosError = error as AxiosError<ErrorResponse>;
+      const errorMessage = axiosError.response?.data?.message || '';
       if (axiosError.response && axiosError.response.status === 404) {
-        message.error('이미 존재하는 회원입니다.');
+        message.error(errorMessage);
       } else {
         message.error('인증 코드 전송에 실패했습니다.');
       }
@@ -218,6 +213,7 @@ const SignupForm = () => {
             onBlur={formik.handleBlur}
             disabled={isVerified}
             className="email-confirm"
+            required
           />
           <Button
             htmlType="button"
@@ -242,6 +238,7 @@ const SignupForm = () => {
               value={formik.values.authCode}
               onBlur={formik.handleBlur}
               className="email-confirm number-confirm"
+              required
             />{' '}
             <Button onClick={handleVerifyCode} htmlType="button">
               인증하기
@@ -257,6 +254,7 @@ const SignupForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
           onBlur={formik.handleBlur}
+          required
         />
         {formik.touched.password && formik.errors.password ? (
           <p className="error">{formik.errors.password}</p>
@@ -269,6 +267,7 @@ const SignupForm = () => {
           onChange={formik.handleChange}
           value={formik.values.confirm}
           onBlur={formik.handleBlur}
+          required
         />
         {formik.touched.confirm && formik.errors.confirm ? (
           <p className="error">{formik.errors.confirm}</p>
