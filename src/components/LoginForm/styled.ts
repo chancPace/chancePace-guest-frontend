@@ -12,8 +12,9 @@ export const LoginStyled = styled.div`
     margin: auto;
     padding: 50px;
     border-radius: ${({ theme }) => theme.borderRadius};
-    border: 1px solid lightgray;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+      0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,7 +45,6 @@ export const LoginStyled = styled.div`
         margin-top: 10px;
       }
     }
-
     z-index: 10;
   }
   .formLogo {
@@ -64,6 +64,11 @@ export const LoginStyled = styled.div`
     }
     .formLogo {
       font-size: 40px;
+    }
+    .loginform-footer {
+      span {
+        font-size: 11px;
+      }
     }
   }
 `;

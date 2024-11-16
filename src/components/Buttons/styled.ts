@@ -6,7 +6,7 @@ export const ButtonsStyled = styled.div`
     width: 350px;
     background-color: ${({ theme }) => theme.color.main};
     &:hover {
-      background-color: gray;
+      background-color: ${({ theme }) => theme.color.main} !important;
     }
   }
   @media screen and (max-width: 550px) {

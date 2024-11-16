@@ -5,6 +5,8 @@ import { notification } from 'antd';
 
 const ScrollToTop = () => {
   if (window.location.pathname === '/host') return null;
+  if (window.location.pathname === '/login') return null;
+  if (window.location.pathname === '/signup') return null;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

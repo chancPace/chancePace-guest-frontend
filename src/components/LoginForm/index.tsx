@@ -10,41 +10,29 @@ import { loginSuccess } from '@/redux/slices/userSlice';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import Buttons from '../Buttons';
+import { ErrorResponse } from '@/types';
 
 const LoginForm = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: {
-      email: 'test@daum.net',
+      email: 'gksthddl43@daum.net',
       password: 'password1234!',
-    },
-    validate: (values) => {
-      const errors: { email?: string; password?: string } = {};
-      if (!values.email) {
-        errors.email = '아이디를 입력해주세요';
-      }
-      if (!values.password) {
-        errors.password = '비밀번호를 입력해주세요';
-      }
-      return errors;
     },
     onSubmit: async (values) => {
       const { email, password } = values;
       try {
-        console.log('Calling postLogin...');
-
         const response = await postLogin({ email, password });
 
         if (response.token) {
           setEmailError(null);
           setPasswordError(null);
           Cookies.set('token', response.token, { expires: 1 });
-          message.success('로그인 성공');
-
           dispatch(
             loginSuccess({
               email: response.data.email,
@@ -58,16 +46,19 @@ const LoginForm = () => {
           router.push('/');
         }
       } catch (error) {
-        const axiosError = error as AxiosError;
-
-        console.log('Axios Error:', axiosError);
+        const axiosError = error as AxiosError<ErrorResponse>;
+        const errorMessage = axiosError.response?.data?.message || '';
         if (axiosError.response) {
           if (axiosError.response.status === 404) {
-            setEmailError('존재하지 않는 회원입니다.');
+            setPasswordError(null);
+            setEmailError(errorMessage);
           } else if (axiosError.response.status === 401) {
-            setPasswordError('비밀번호가 틀렸습니다');
+            setEmailError(null);
+            setPasswordError(errorMessage);
           } else {
             message.error('로그인에 실패했습니다.');
+            setEmailError(null);
+            setPasswordError(null);
           }
         } else {
           message.error('서버와의 연결에 실패했습니다.');
@@ -88,10 +79,9 @@ const LoginForm = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
           onBlur={formik.handleBlur}
+          required
         />
-        <p className="error">
-          {(formik.touched.email && formik.errors.email) || emailError || ''}
-        </p>
+        <p className="error">{emailError}</p>
 
         <Input.Password
           name="password"
@@ -99,12 +89,9 @@ const LoginForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
           onBlur={formik.handleBlur}
+          required
         />
-        <p className="error">
-          {(formik.touched.password && formik.errors.password) ||
-            passwordError ||
-            ''}
-        </p>
+        <p className="error">{passwordError}</p>
         <Buttons text="로그인"></Buttons>
         <div className="loginform-footer">
           <Link href="/signup" passHref>
