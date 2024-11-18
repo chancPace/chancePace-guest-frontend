@@ -13,8 +13,7 @@ export const CategoryStyled = styled.div`
   font-weight: bold;
   margin: 10px 10px 10px 0;
   border-radius: 5px;
-  padding: 5px 0;
-  width: 80px;
+  padding: 5px 15px;
   margin-bottom: 5px;
   line-height: 2;
   text-align: center;

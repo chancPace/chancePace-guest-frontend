@@ -93,6 +93,26 @@ const MainPage = () => {
 
   return (
     <MainStyled>
+      <Swiper
+        className="banner-swiper"
+        spaceBetween={20}
+        autoplay={{
+          delay: 7000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Autoplay, Pagination]}
+        slidesPerView={3}
+      >
+        {banner.map((x, i) => (
+          <SwiperSlide key={i}>
+            <Banner x={x} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div className="trendingSpot">
         <div>이달의 공간</div>
         <p className="itemListTitle">Monthly Space</p>
@@ -222,26 +242,6 @@ const MainPage = () => {
           주간인기 장소 더보기
         </span>
       </div>
-      <Swiper
-        className="banner-swiper"
-        spaceBetween={20}
-        autoplay={{
-          delay: 7000,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Autoplay, Pagination]}
-        slidesPerView={3}
-      >
-        {banner.map((x, i) => (
-          <SwiperSlide key={i}>
-            <Banner x={x} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
     </MainStyled>
   );
 };

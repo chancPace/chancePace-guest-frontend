@@ -88,9 +88,9 @@ const SignupForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'test@daum.net',
-      password: 'password1234!',
-      confirm: 'password1234!',
+      email: '',
+      password: '',
+      confirm: '',
       authCode: '', 
     },
     validate: (values) => {

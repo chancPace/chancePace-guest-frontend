@@ -14,7 +14,7 @@ export const MainStyled = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 50px;
     border-radius: 8px;
     object-fit: cover;
