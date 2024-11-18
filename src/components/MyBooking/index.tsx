@@ -7,10 +7,6 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
-  if (!x.space || !x.space.images || x.space.spaceStatus === 'UNAVAILABLE') {
-    return null;
-  }
-
   const router = useRouter();
   //리뷰쓰기 버튼 보여주기 상태
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);
@@ -87,8 +83,8 @@ const MyBooking = ({ x }: MyBookingProps) => {
       </div>
       <div className="booking-data" onClick={handleClick}>
         <div className="booking-space-img">
-          {x.space?.images?.length > 0 && x.space.images[0]?.imageUrl ? (
-            <img src={x.space.images[0].imageUrl} alt="Space Image" />
+          {x.space?.images[0]?.imageUrl ? (
+            <img src={x.space?.images[0]?.imageUrl} alt="Space Image" />
           ) : (
             <p>No Image Available</p>
           )}

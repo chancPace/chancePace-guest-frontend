@@ -48,8 +48,6 @@ const MyPage = () => {
   const [currentWishPage, setCurrentWishPage] = useState(1);
   const pageSize = 5; // 한 페이지에 표시할 항목 수
 
-
-
   //쿠키 검사해서 없으면 리덕스 날리기
   useEffect(() => {
     const token = Cookies.get('token');
@@ -79,15 +77,19 @@ const MyPage = () => {
     try {
       if (userInfo?.id) {
         const myBooking = await getMyBooking(userInfo.id);
-        setUserBooking(myBooking.data);
+        const availableBookings = myBooking.data.filter(
+          (booking: MyBookingData) =>
+            booking.space?.spaceStatus !== 'UNAVAILABLE'
+        );
+        setUserBooking(availableBookings);
         setIsBookingFetched(true);
-
+        console.log(availableBookings, '보여주기부킹');
         //취소건 제외한 모든 예약 갯수
-        const noCancellBooking = myBooking.data.filter(
+        const noCancellBooking = availableBookings.filter(
           (booking: MyBookingData) => booking.bookingStatus !== 'CANCELLED'
         );
         setTotalOrder(noCancellBooking.length);
-
+        console.log(noCancellBooking, '취소아닌거');
         const today = new Date();
 
         const completedBookings = noCancellBooking.filter(
@@ -120,7 +122,7 @@ const MyPage = () => {
         ).length;
         setUpcomingOrder(upcomingBookings);
         // 취소건 갯수 필터링
-        const cancleOrders = myBooking.data.filter(
+        const cancleOrders = availableBookings.filter(
           (booking: MyBookingData) => booking.bookingStatus === 'CANCELLED'
         ).length;
         setCancleOrder(cancleOrders);
@@ -135,8 +137,10 @@ const MyPage = () => {
     try {
       if (userInfo?.id) {
         const reviews = await getMyReview(userInfo.id);
-        // console.log(reviews.data.map)
-        setUserReviews(reviews.data);
+        const availableReviews = reviews.data.filter(
+          (review: GetReviewData) => review.space?.spaceStatus !== 'UNAVAILABLE'
+        );
+        setUserReviews(availableReviews);
         setIsReviewFetched(true);
       }
     } catch (error) {
@@ -149,7 +153,10 @@ const MyPage = () => {
     try {
       if (userInfo?.id) {
         const response = await getWishlist(userInfo.id);
-        setWishList(response.data);
+        const availableWish = response.data.filter(
+          (wish: Wishlist) => wish.space?.spaceStatus !== 'UNAVAILABLE'
+        );
+        setWishList(availableWish);
         setIsWishFetched(true);
       }
     } catch (error) {
@@ -342,8 +349,6 @@ const MyPage = () => {
   return (
     <MyPageStyled>
       <Tabs tabPosition="left" items={tabItems} onChange={handleTabClick} />
-
-
     </MyPageStyled>
   );
 };
