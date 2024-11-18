@@ -3,7 +3,6 @@ import { WishListStyled } from './styled';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Wishlist } from '@/types';
-import { removeWishlist } from '@/pages/api/wishlistApi';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
 interface WishListProps {
@@ -22,7 +21,7 @@ const WishList = ({ x, onRemove }: WishListProps) => {
       setIsBookmarked(false); // UI 상태 업데이트
       message.success('찜 목록에서 삭제되었습니다.');
     } catch (error) {
-      console.error('위시리스트 삭제 실패:', error);
+      // console.error('위시리스트 삭제 실패:', error);
       message.error('위시리스트 삭제에 실패했습니다.');
     }
   };

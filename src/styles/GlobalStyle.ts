@@ -13,8 +13,8 @@ const GlobalStyle = createGlobalStyle`
 body {
     .ant-message {
     z-index: 9000000 !important; 
-    
   }
+
 }
 .error {
       height: 18px;
@@ -23,7 +23,6 @@ body {
       font-size: 10px;
       color: ${({ theme }) => theme.color.warning};
       text-align: left;
-      /* background-color: green; */
       width: 350px;
     }
     @media screen and (max-width: 550px) {

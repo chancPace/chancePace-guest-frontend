@@ -1,11 +1,11 @@
 import { MainStyled } from './styled';
 import SearchBar from '@/components/SearchBar';
 import ItemList from '@/components/ItemList';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import Category from '@/components/Category';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import TrendingSpot from '@/components/TrendingSpot';
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { CategoryType, Space } from '@/types';
 import Banner from '@/components/Banner';
 import { banner } from '@/utill/datas';
+import Link from 'next/link';
 
 interface ErrorResponseData {
   message: string;
@@ -92,25 +93,9 @@ const MainPage = () => {
 
   return (
     <MainStyled>
-      <Swiper
-        className="banner-swiper"
-        spaceBetween={10}
-        autoplay={{
-          delay: 7000,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        navigation={true}
-        modules={[Autoplay, Navigation]}
-      >
-        {banner.map((x, i) => (
-          <SwiperSlide key={i}>
-            <Banner x={x} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
       <div className="trendingSpot">
-        <p className="itemListTitle">이달의 공간</p>
+        <div>이달의 공간</div>
+        <p className="itemListTitle">Monthly Space</p>
         <div className="trendingSpotRight">
           <div className="slider">
             <Swiper
@@ -120,8 +105,10 @@ const MainPage = () => {
                 disableOnInteraction: false,
               }}
               loop={true}
-              navigation={true}
-              modules={[Autoplay, Navigation]}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Autoplay, Pagination]}
               breakpoints={{
                 689: {
                   slidesPerView: 1,
@@ -148,22 +135,24 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <div className="category">
-        <p className="category-title">최적의 장소를 찾아보세요!</p>
-        <div className="categoryList">
-          {bigCategory.map((x, i) => {
-            return (
-              <Category
-                x={x}
-                key={i}
-                onClick={() => handleCategoryClick(x.id)}
-              />
-            );
-          })}
+      <div className="search-zone">
+        <div className="category">
+          <p className="category-title">최적의 장소를 찾아보세요!</p>
+          <div className="categoryList">
+            {bigCategory.map((x, i) => {
+              return (
+                <Category
+                  x={x}
+                  key={i}
+                  onClick={() => handleCategoryClick(x.id)}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div className="searchar">
-        <SearchBar />
+        <div className="searchar">
+          <SearchBar />
+        </div>
       </div>
       <div className="placeSection">
         <p className="itemListTitle">새로운 장소</p>
@@ -198,6 +187,16 @@ const MainPage = () => {
           새로운 장소 더보기
         </span>
       </div>
+      <div className="hostSection">
+        <div className="hostSectionImg"></div>
+        <div className="hostSectionText">
+          <p>Share your space</p>
+          <p>여러분의 공간을 공유하세요</p>
+          <Link href="/host">
+            <Button htmlType="button">Go! HostCenter</Button>
+          </Link>
+        </div>
+      </div>
       <div className="placeSection">
         <p className="itemListTitle">추천 장소</p>
         <div className="itemList">
@@ -223,6 +222,26 @@ const MainPage = () => {
           주간인기 장소 더보기
         </span>
       </div>
+      <Swiper
+        className="banner-swiper"
+        spaceBetween={20}
+        autoplay={{
+          delay: 7000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Autoplay, Pagination]}
+        slidesPerView={3}
+      >
+        {banner.map((x, i) => (
+          <SwiperSlide key={i}>
+            <Banner x={x} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </MainStyled>
   );
 };

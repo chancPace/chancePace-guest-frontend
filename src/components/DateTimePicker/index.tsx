@@ -131,13 +131,13 @@ const DateTimePicker = ({
     onTimeSelect,
   ]);
 
-  //해당 공간의 예약데이터 가져오는 함수
+  // 해당 공간의 예약데이터 가져오는 함수
   const fetchBookingTime = async (spaceId: number, formattedDate: string) => {
     try {
       const response = await getBooking(spaceId, formattedDate);
       setBookingTime(response.data);
     } catch (error) {
-      console.error('예약 시간 조회 실패', error);
+      // console.error('예약 시간 조회 실패', error);
     }
   };
 

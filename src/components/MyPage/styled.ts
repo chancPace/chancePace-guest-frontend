@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const MyPageStyled = styled.div`
-  padding: 30px 10px;
-  margin-top: 60px;
+  margin-top: 80px;
   .ant-tabs {
     height: 100%;
   }
@@ -131,8 +130,5 @@ export const MyPageStyled = styled.div`
     .ant-tabs-tab {
       padding: 5px 10px !important;
     }
-  }
-  @media screen and (min-width: 1025px) {
-    padding: 50px 50px;
   }
 `;

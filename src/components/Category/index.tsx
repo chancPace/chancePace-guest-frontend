@@ -5,6 +5,7 @@ interface CategoryProps {
   x: CategoryType;
   onClick: () => void;
 }
+
 const Category = ({ x, onClick }: CategoryProps) => {
   return (
     <CategoryStyled onClick={onClick}>

@@ -37,7 +37,7 @@ const SpaceList = ({ categoryId }: SpaceListProps) => {
             setFilterSpace(availableSpace);
           }
         } catch (error) {
-          console.error('검색 데이터 로드 중 오류 발생:', error);
+          // console.error('검색 데이터 로드 중 오류 발생:', error);
         }
       };
       fetchSearchSpace();
@@ -71,7 +71,7 @@ const SpaceList = ({ categoryId }: SpaceListProps) => {
           setSpace(availableSpace);
           setFilterSpace(availableSpace);
         } catch (error) {
-          console.error('소분류 데이터 로드 중 오류 발생:', error);
+          // console.error('소분류 데이터 로드 중 오류 발생:', error);
         }
       };
       if (categoryId) {
@@ -117,7 +117,7 @@ const SpaceList = ({ categoryId }: SpaceListProps) => {
             setFilterSpace(filteredSpace);
           }
         } catch (error) {
-          console.error('오류 발생:', error);
+          // console.error('오류 발생:', error);
         }
       };
       fetchTypeSpace();

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PaymentStyled = styled.div`
-  padding: 10px 10px;
+  padding-top: 10px;
   display: flex;
   gap: 20px;
   margin-top: 65px;
@@ -141,7 +141,6 @@ export const PaymentStyled = styled.div`
     }
   }
   @media screen and (min-width: 901px) {
-    padding: 10px 50px;
     .payment-right {
       width: 30%;
       padding: 10px;

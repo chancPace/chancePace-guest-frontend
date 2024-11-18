@@ -167,7 +167,6 @@ const SignupForm = () => {
   const handleSendAuthCode = async () => {
     try {
       const response = await sendAuthNumber(formik.values.email);
-      console.log(response);
       if (response && response.result) {
         message.success(response.message);
         setServerAuthCode(String(response.authNumber));

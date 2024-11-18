@@ -11,6 +11,7 @@ import login from '@/assets/image/feed.svg';
 import house from '@/assets/image/house.svg';
 import allow from '@/assets/image/party-popper.svg';
 import banner1 from '../assets/image/banner1.png';
+import banner2 from '../assets/image/banner2.jpeg';
 
 import { HostMainImg, Explanation, Procedure } from '@/types';
 
@@ -64,9 +65,19 @@ const procedure: Procedure[] = [
 const banner = [
   {
     img: banner1.src,
+    link: '/signup',
+  },
+  {
+    img: banner2.src,
+    link: 'https://www.yeogi.com/event/4090/%EC%97%AC%ED%96%89%EB%B6%80%EC%BA%90%20%ED%85%8C%EC%8A%A4%ED%8A%B8/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4090',
   },
   {
     img: banner1.src,
+    link: '/signup',
+  },
+  {
+    img: banner2.src,
+    link: 'https://www.yeogi.com/event/4090/%EC%97%AC%ED%96%89%EB%B6%80%EC%BA%90%20%ED%85%8C%EC%8A%A4%ED%8A%B8/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4090',
   },
 ];
 

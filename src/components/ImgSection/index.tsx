@@ -1,6 +1,5 @@
 import { ImgSectionStyled, PreviewOverlay } from './styled';
 import { Swiper, SwiperSlide } from 'swiper/react'; // Swiper 및 SwiperSlide 가져오기
-// import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';

@@ -37,14 +37,12 @@ const Success = () => {
             couponPrice: Number(discountAmount),
           });
           if (paymentResult.result) {
-            // console.log(paymentResult.data.id,'페이먼트리절트')
             const paymentId = paymentResult.data.id;
-            // console.log(paymentId, '페이먼트아이디');
 
             const bookingData = {
               startDate: Array.isArray(startDate)
                 ? startDate[0]
-                : startDate || '', // string으로 변환
+                : startDate || '', 
               startTime: Array.isArray(startTime)
                 ? parseInt(startTime[0])
                 : parseInt(startTime || '0'),
@@ -70,7 +68,7 @@ const Success = () => {
             }
           }
         } catch (error) {
-          console.error('예약 처리 실패', error);
+          // console.error('예약 처리 실패', error);
         }
       }
     };
@@ -92,11 +90,10 @@ const Success = () => {
     const fetchSpaceData = async () => {
       if (spaceId) {
         try {
-          const data = await getOneSpace(Number(spaceId)); // spaceId로 공간 데이터 가져오기
-          console.log(data, '데이터터터터');
+          const data = await getOneSpace(Number(spaceId)); 
           setSpaceData(data.data);
         } catch (error) {
-          console.error('공간 데이터 로드 중 오류 발생:', error);
+          // console.error('공간 데이터 로드 중 오류 발생:', error);
         }
       }
     };

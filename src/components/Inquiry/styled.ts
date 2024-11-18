@@ -9,13 +9,13 @@ export const InquiryStyled = styled.div`
     display: flex;
     justify-content: space-between;
     .left {
-      box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.2); /* 적당한 그림자 */
+      box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.2); 
       padding: 20px;
       margin-right: 20px;
       width: 45%;
       transition: 0.3s;
       &:hover {
-        box-shadow: 2px 10px 18px rgba(0, 0, 0, 0.4); /* 더 진하고 깊은 그림자 */
+        box-shadow: 2px 10px 18px rgba(0, 0, 0, 0.4);
         transition: 0.5s;
       }
       > p {

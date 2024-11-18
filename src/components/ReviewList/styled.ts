@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const ReviewListStyled = styled.div`
   padding: 10px 10px;
   width: 90%;
-  /* box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922); */
 
   border-bottom: 1px solid lightgray;
   margin-bottom: 15px;

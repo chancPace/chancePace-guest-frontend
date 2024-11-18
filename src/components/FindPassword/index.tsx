@@ -3,8 +3,7 @@ import { FindPasswordStyled } from './styled';
 import { useState } from 'react';
 import { Button, Input, message } from 'antd';
 import { useFormik } from 'formik';
-import success from '@/pages/success';
-import { patchProfile, updatePassword } from '@/pages/api/userApi';
+import { updatePassword } from '@/pages/api/userApi';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 
@@ -14,7 +13,6 @@ const FindPassword = () => {
   const [isCodeSent, setIsCodeSent] = useState(false);
   //서버에서 받은 인증코드 저장
   const [serverAuthCode, setServerAuthCode] = useState<string>('');
-  console.log(serverAuthCode);
   //이메일 인증 완료 여부
   const [isVerified, setIsVerified] = useState(false);
 
@@ -44,11 +42,10 @@ const FindPassword = () => {
     onSubmit: async (values) => {
       try {
         const response = await updatePassword(values.email, values.password);
-        console.log(response, '리스펀스');
         message.success('비밀번호가 변경되었습니다.');
         router.push('/login');
       } catch (error) {
-        console.error('비밀번호 변경 실패', error);
+        // console.error('비밀번호 변경 실패', error);
       }
     },
   });
@@ -56,7 +53,6 @@ const FindPassword = () => {
   const handleSendPasswordAuthCode = async () => {
     try {
       const response = await getFindPassword(formik.values.email);
-      // console.log(response, '패스원드변경 리스펀스');
       message.success(response.message);
       if (response.result) {
         setIsCodeSent(true);

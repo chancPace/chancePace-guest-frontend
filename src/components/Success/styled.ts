@@ -46,11 +46,11 @@ export const SuccessStyled = styled.div`
     }
     .home-btn {
       border: 0;
-      padding: 5px 10px;
-      background-color: inherit;
+      padding: 7px 12px;
       display: block;
       text-align: center;
-      background-color: lightgray;
+      background-color: gray;
+      color: white;
       margin: auto;
       margin-top: 15px;
       cursor: pointer;

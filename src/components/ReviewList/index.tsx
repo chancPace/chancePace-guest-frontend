@@ -12,7 +12,6 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
-  console.log(x, 'xx');
   //작성일자 형식 바꾸기
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
   const spaceId = Number(x.space?.id);

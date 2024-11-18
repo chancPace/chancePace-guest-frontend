@@ -2,7 +2,7 @@ import { MyBookingData } from '@/types';
 import { BookingDetailStyled } from './styled';
 import { useEffect, useState } from 'react';
 import { getOneBooking } from '@/pages/api/bookingApi';
-import { message, Modal, Table } from 'antd';
+import { message, Modal, Spin, Table } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Refund } from '@/pages/api/paymentApi';
@@ -15,23 +15,25 @@ const columns = [
 const BookingDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-
+  //내 예약 정보 저장
   const [bookingDetails, setBookingDetails] = useState<MyBookingData | null>(
     null
   );
-
-  const [isModalVisible, setIsModalVisible] = useState(false); 
+  //취소하기 모달
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  // 로딩 상태
+  const [isLoading, setIsLoading] = useState(false);
 
   //예약내역 가져오기
   useEffect(() => {
     if (!id) return;
     const fetchBookingDetails = async () => {
       try {
-        const data = await getOneBooking(Number(id)); 
+        const data = await getOneBooking(Number(id));
         setBookingDetails(data.data);
       } catch (error) {
         message.error('예약 상세 정보를 불러오는 데 실패했습니다.');
-        console.error('데이터 불러오기 실패', error);
+        // console.error('데이터 불러오기 실패', error);
       }
     };
     fetchBookingDetails();
@@ -39,23 +41,27 @@ const BookingDetail = () => {
 
   //예약 환불
   const refundBooking = async () => {
+    setIsLoading(true); // 로딩 시작
+
     try {
       const bookingId = id;
       const cancelReason = '고객 요청에 따른 취소';
       await Refund(Number(bookingId), cancelReason);
       message.success('예약이 취소되었습니다');
 
-      // if(bookingDetails?.payment?.couponPrice) {
-      //   await 
-      // }
-
       setIsModalVisible(false);
       router.push('/');
     } catch (error) {
       message.error('예약 취소 실패');
-      console.error('예약취소실패', error);
+      // console.error('예약취소실패', error);
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
   };
+  //startDate = today 이면 취소하기 버튼 안보이게하기
+  const today = new Date();
+  const isTodayBooking =
+    bookingDetails?.startDate === today.toISOString().split('T')[0];
 
   const dataSource = [
     {
@@ -146,15 +152,15 @@ const BookingDetail = () => {
             <Table
               dataSource={dataSource}
               columns={columns}
-              pagination={false} // 페이지네이션 제거
+              pagination={false}
               bordered
-              showHeader={false} // 헤더 숨기기
+              showHeader={false}
             />
           </div>
         </div>
       )}
       <div className="button-box">
-        {bookingDetails?.bookingStatus !== 'CANCELLED' && (
+        {bookingDetails?.bookingStatus !== 'CANCELLED' && !isTodayBooking && (
           <button onClick={showModal}>취소하기</button>
         )}
         <Link href="/" passHref>
@@ -167,7 +173,8 @@ const BookingDetail = () => {
         onOk={refundBooking}
         onCancel={handleOk}
         cancelText="닫기"
-        okText="확인"
+        okText={isLoading ? <Spin size="small" /> : '확인'}
+        okButtonProps={{ disabled: isLoading }}
       >
         <p>결제를 취소하시겠습니까?</p>
       </Modal>

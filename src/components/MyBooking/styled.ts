@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const MyBookingStyled = styled.div`
   width: 90%;
-  padding: 10px;
   margin-bottom: 15px;
   border-radius: 15px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922);

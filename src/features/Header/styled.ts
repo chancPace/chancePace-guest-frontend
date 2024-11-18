@@ -27,32 +27,58 @@ export const HeaderStyled = styled.div`
     .userBar {
       display: flex;
       align-items: center;
-      p {
-        cursor: pointer;
-      }
-      .hostMenuBar {
-        padding: 10px;
-        background-color: #8c73d8;
-        color: white;
-        border-radius: 8px;
-        margin-right: 18px;
-      }
-      span {
-        margin-right: 5px;
-        width: 30px;
-        height: 70px;
-        display: inline-block;
-      }
-      .header-icon {
+      .headerRight {
         display: flex;
         align-items: center;
-        height: 100%s;
-        .icon {
-          width: 25px;
+        gap: 10px;
+        .host {
+          display: flex;
+          gap: 10px;
+        }
+        p {
+          cursor: pointer;
+        }
+        .hostMenuBar {
+          padding: 10px;
+          background-color: #8c73d8;
+          color: white;
+          border-radius: 8px;
+          white-space: nowrap;
+        }
+        span {
+          width: 30px;
           height: 70px;
+          display: inline-block;
+        }
+        .header-icon {
+          display: flex;
+          align-items: center;
+          height: 100%s;
+          .icon {
+            width: 25px;
+            height: 70px;
+          }
         }
       }
     }
+  }
+  @media screen and (max-width: 480px) {
+    nav {
+      .userBar {
+        .headerRight {
+          .host {
+            flex-direction: column;
+            gap: 3px;
+          }
+          .hostMenuBar {
+            padding: 3px 7px;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    font-size: 13px;
   }
   @media screen and (min-width: 1025px) {
     padding: 0 50px;

@@ -19,17 +19,20 @@ const Header = () => {
 
         <div className="userBar">
           {isLoggedIn ? (
-            <>
-              <Link href={'/host'}>
-                <p className="hostMenuBar">호스트 센터</p>
-              </Link>
-              {userRole === 'HOST' ? (
-                <Link href="http://localhost:3001">
-                  <p className="hostMenuBar">내 공간</p>
+            <div className="headerRight">
+              <div className="host">
+                {' '}
+                <Link href={'/host'}>
+                  <p className="hostMenuBar">호스트 센터</p>
                 </Link>
-              ) : (
-                ''
-              )}
+                {userRole === 'HOST' ? (
+                  <Link href="http://localhost:3001">
+                    <p className="hostMenuBar">내 공간</p>
+                  </Link>
+                ) : (
+                  ''
+                )}
+              </div>
 
               <Link href="/mypage">
                 <p className="header-icon">
@@ -38,16 +41,16 @@ const Header = () => {
                   </span>
                 </p>
               </Link>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="headerRight">
               <Link href="/host">
                 <p className="hostMenuBar">호스트 센터</p>
               </Link>
               <Link href="/login" passHref>
                 <p>로그인</p>
               </Link>
-            </>
+            </div>
           )}
         </div>
       </nav>

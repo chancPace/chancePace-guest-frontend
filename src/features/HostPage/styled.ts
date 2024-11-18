@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import together from '../../assets/image/together.jpg';
 export const HostStyled = styled.div`
   padding: 0 10px;
+  background-color: #f8f9fa;
+
   .section {
     padding-top: 60px;
     overflow: hidden;
@@ -16,10 +18,12 @@ export const HostStyled = styled.div`
         gap: 10px;
         grid-template-columns: repeat(3, 1fr);
         object-fit: cover;
+        border-radius: 15px;
         > img {
           object-fit: cover;
           width: 100%;
           height: 100%;
+          border-radius: 15px;
         }
       }
       .mainTitle {
@@ -29,6 +33,7 @@ export const HostStyled = styled.div`
         left: 3%;
         color: white;
         font-size: 100px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
       }
     }
   }
@@ -51,6 +56,9 @@ export const HostStyled = styled.div`
         display: grid;
         gap: 20px;
         grid-template-columns: repeat(3, 1fr);
+        background-color: white;
+        padding: 30px 20px;
+        border-radius: 20px;
       }
     }
   }
@@ -61,7 +69,8 @@ export const HostStyled = styled.div`
       flex-direction: column;
       justify-content: center;
       .procedureMainTitle {
-        font-size: 30px;
+        font-size: 25px;
+        padding: 8px;
       }
       .hostProcedure {
         display: grid;
@@ -116,6 +125,9 @@ export const HostStyled = styled.div`
         .hostProcedure {
           display: grid;
           grid-template-columns: repeat(1, 1fr);
+        }
+        .procedureMainTitle {
+          font-size: 20px;
         }
       }
     }

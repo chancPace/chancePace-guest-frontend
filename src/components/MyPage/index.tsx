@@ -68,7 +68,7 @@ const MyPage = () => {
         const response = await getUser();
         setUserData(response.data);
       } catch (error) {
-        console.error('사용자 데이터를 가져오는 중 오류 발생', error);
+        // console.error('사용자 데이터를 가져오는 중 오류 발생', error);
       }
     };
     fetchUserData();
@@ -126,7 +126,7 @@ const MyPage = () => {
         setCancleOrder(cancleOrders);
       }
     } catch (error) {
-      console.error('예약 데이터를 가져오는 중 오류 발생', error);
+      // console.error('예약 데이터를 가져오는 중 오류 발생', error);
     }
   };
 
@@ -139,7 +139,7 @@ const MyPage = () => {
         setIsReviewFetched(true);
       }
     } catch (error) {
-      console.error('리뷰 데이터를 가져오는 중 오류 발생', error);
+      // console.error('리뷰 데이터를 가져오는 중 오류 발생', error);
     }
   };
 
@@ -152,7 +152,7 @@ const MyPage = () => {
         setIsWishFetched(true);
       }
     } catch (error) {
-      console.error('찜 목록 데이터를 가져오는 중 오류 발생', error);
+      // console.error('찜 목록 데이터를 가져오는 중 오류 발생', error);
     }
   };
 
@@ -172,7 +172,7 @@ const MyPage = () => {
       await removeWishlist(wishlistId);
       setWishList((prev) => prev.filter((item) => item.id !== wishlistId));
     } catch (error) {
-      console.error('찜 목록 삭제 실패', error);
+      // console.error('찜 목록 삭제 실패', error);
     }
   };
 

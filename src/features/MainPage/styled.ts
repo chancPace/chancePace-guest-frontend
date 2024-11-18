@@ -1,23 +1,29 @@
 import styled from 'styled-components';
-
+import host from '../../assets/image/host.jpg';
+import main from '../../assets/image/main.jpg';
 export const MainStyled = styled.div`
   width: 100%;
-  padding: 0 10px;
-  margin: auto;
+  padding-top: 70px !important;
   margin-bottom: 100px;
   max-width: 1280px;
+  margin: auto;
+  color: #212529;
   .banner-swiper {
-    height: 200px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
     margin-bottom: 50px;
-    margin-top: 65px;
+    border-radius: 8px;
+    object-fit: cover;
   }
   .swiper-button-next,
   .swiper-button-prev {
     visibility: hidden;
   }
-  .swiper {
-    padding: 5px;
-  }
+
   .swiper:hover {
     cursor: pointer;
     .swiper-button-next,
@@ -25,12 +31,6 @@ export const MainStyled = styled.div`
       visibility: visible;
       color: white;
     }
-  }
-  .searchbar {
-    max-width: 1280px;
-    height: 100px;
-    display: flex;
-    align-items: center;
   }
   .trendingSpot {
     margin: auto;
@@ -46,27 +46,38 @@ export const MainStyled = styled.div`
       }
     }
   }
-  .category {
-    width: 100%;
-    max-width: 1280px;
-    margin-top: 100px;
-    .category-title {
-      margin-bottom: 10px;
-      font-size: ${({ theme }) => theme.fontSizes.xxl};
-      color: #8c73d8;
-    }
-    .categoryList {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+  .search-zone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+    padding: 50px 50px;
+    margin-bottom: 50px;
+    .category {
+      width: 100%;
+      max-width: 1280px;
+      .category-title {
+        margin-bottom: 10px;
+        font-size: ${({ theme }) => theme.fontSizes.xxl};
+        color: black;
+        font-weight: 500;
+      }
+      .categoryList {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
     }
   }
+
   .placeSection {
     width: 100%;
     margin-top: 100px;
     .swiper {
       padding-bottom: 10px;
+      padding: 5px;
     }
+
     .swiper-button-next,
     .swiper-button-prev {
       color: ${({ theme }) => theme.color.textDark};
@@ -96,13 +107,40 @@ export const MainStyled = styled.div`
       cursor: pointer;
     }
   }
-
-  .itemList {
-    place-items: center;
+  .hostSection {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    height: 300px;
+    background-color: #8c73d8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 8px;
+    .hostSectionImg {
+      width: 100%;
+      height: 100%;
+      background-image: url(${host.src});
+      background-position: center;
+      background-size: cover;
+      border-radius: 8px;
+    }
+    .hostSectionText {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translate(-10%, -50%);
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      > p:nth-of-type(1) {
+        font-size: 35px;
+      }
+      > p:nth-of-type(2) {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+    }
   }
   .itemListTitle {
     font-size: ${({ theme }) => theme.fontSizes.xxl};
@@ -167,9 +205,5 @@ export const MainStyled = styled.div`
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
     }
-  }
-
-  @media screen and (min-width: 1025px) {
-    padding: 0 50px;
   }
 `;

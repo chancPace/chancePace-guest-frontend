@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const ItemDetailStyled = styled.div`
-  padding: 10px;
   margin: auto;
   position: relative;
-  max-width: 1280px;
   .ant-anchor-link-active,
   .ant-anchor-link-title {
     color: ${({ theme }) => theme.color.main} !important;
@@ -160,7 +158,6 @@ export const ItemDetailStyled = styled.div`
     }
   }
   @media screen and (min-width: 1025px) {
-    padding: 0 50px;
     .detail-info {
       display: flex;
       gap: 10%;

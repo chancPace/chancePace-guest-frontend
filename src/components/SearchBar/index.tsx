@@ -2,14 +2,16 @@ import { Button, Input } from 'antd';
 import { SearchBarStyled } from './styled';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const SearchBar = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
   const onSearch = async (value: string) => {
-    router.push(`/search?query=${value}`); // 검색어를 쿼리 파라미터로 전달
-    setSearchTerm(''); // 검색 후 입력창 비우기
+    router.push(`/search?query=${value}`); 
+    setSearchTerm('');
   };
 
   return (
@@ -26,11 +28,11 @@ const SearchBar = () => {
           <Button
             type="primary"
             style={{
-              backgroundColor: '#8c73d8',
-              borderColor: '#8c73d8',
+              backgroundColor: 'white',
+              borderColor: 'white',
             }}
           >
-            검색
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Button>
         }
       />
