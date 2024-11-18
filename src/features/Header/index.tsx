@@ -26,7 +26,7 @@ const Header = () => {
                   <p className="hostMenuBar">호스트 센터</p>
                 </Link>
                 {userRole === 'HOST' ? (
-                  <Link href="http://localhost:3001">
+                  <Link href="http://43.202.44.75:3001">
                     <p className="hostMenuBar">내 공간</p>
                   </Link>
                 ) : (

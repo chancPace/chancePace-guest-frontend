@@ -92,13 +92,13 @@ const ItemList = ({ x }: ItemListProps) => {
 
   return (
     <ItemListStyled onClick={handleClick}>
-      <div className="itemImg">
+      {x && x.images ? ( <div className="itemImg">
         <img
           src={x.images[0].imageUrl}
           alt={x.images[0].imageUrl}
           className="img"
         ></img>
-      </div>
+      </div>):(<p>No-Image</p>)}
       <div className="item-bottom">
         <div className="itemText">
           <p>{x.spaceName}</p>
