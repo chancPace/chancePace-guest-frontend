@@ -36,6 +36,7 @@ const WishList = ({ x, onRemove }: WishListProps) => {
 
   return (
     <WishListStyled onClick={goToDetailPage}>
+      
       <div className="wish-img">
         <img
           src={x.space?.images?.[0]?.imageUrl || 'Not-Imgafe'}

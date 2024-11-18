@@ -96,8 +96,8 @@ const ItemList = ({ x }: ItemListProps) => {
       {x && x.images ? (
         <div className="itemImg">
           <img
-            src={x.images[0].imageUrl}
-            alt={x.images[0].imageUrl}
+            src={x.images[0]?.imageUrl}
+            alt={x.images[0]?.imageUrl}
             className="img"
           ></img>
         </div>

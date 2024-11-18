@@ -68,7 +68,7 @@ const ReviewModal = ({
       <ReviewModalStyled>
         <div className="space-info">
           <div className="space-img">
-            <img src={space.images[0].imageUrl}></img>
+            <img src={space.images[0]?.imageUrl}></img>
           </div>
           <h3 className="space-name">{space?.spaceName}</h3>
         </div>

@@ -66,7 +66,7 @@ const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
         <div className="top-left">
           {x.space?.images && x.space.images.length > 0 ? (
             <img
-              src={x.space.images[0].imageUrl}
+              src={x.space.images[0]?.imageUrl}
               className="wish-img"
               alt="Space Image"
             />

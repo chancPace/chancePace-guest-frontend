@@ -1,6 +1,6 @@
 import { GetReviewData, Space } from '@/types';
 import { ItemDetailStyled } from './styled';
-import { Anchor, message, Pagination} from 'antd';
+import { Anchor, message, Pagination } from 'antd';
 import KakaoMap from '../KakaoMap';
 import ReservationSticky from '../ReservationSticky';
 import { useEffect, useState } from 'react';
@@ -82,10 +82,10 @@ const ItemDetail = () => {
     <ItemDetailStyled>
       <div className="detail-top">
         <ImgSection
-          mainImg={space?.images[0].imageUrl}
+          mainImg={space?.images[0]?.imageUrl}
           smallImgs={
             space?.images?.slice(1)?.map((img) => ({
-              src: img.imageUrl,
+              src: img?.imageUrl,
             })) || []
           }
         />

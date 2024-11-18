@@ -228,7 +228,7 @@ const Payment = () => {
         {spaceDetails && (
           <div className="reservation-space">
             <div className="img">
-              <img src={spaceDetails.images[0].imageUrl}></img>
+              <img src={spaceDetails.images[0]?.imageUrl}></img>
             </div>
             <div className="reservation-space-text">
               <p>

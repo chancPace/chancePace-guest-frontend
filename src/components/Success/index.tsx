@@ -107,7 +107,7 @@ const Success = () => {
         <div>예약이 완료되었습니다</div>
         <div className="booking-info">
           <div className="img">
-            <img src={spaceData?.images[0].imageUrl} />
+            <img src={spaceData?.images[0]?.imageUrl} />
           </div>
           <div className="text">
             <p>
