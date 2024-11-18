@@ -79,17 +79,17 @@ const MyPage = () => {
         const myBooking = await getMyBooking(userInfo.id);
         const availableBookings = myBooking.data.filter(
           (booking: MyBookingData) =>
-            booking.space?.spaceStatus !== 'UNAVAILABLE'
+            booking.space?.spaceStatus === 'AVAILABLE' &&
+            booking.space?.isOpen === true &&
+            booking.space?.isDelete === false
         );
         setUserBooking(availableBookings);
         setIsBookingFetched(true);
-        console.log(availableBookings, '보여주기부킹');
         //취소건 제외한 모든 예약 갯수
         const noCancellBooking = availableBookings.filter(
           (booking: MyBookingData) => booking.bookingStatus !== 'CANCELLED'
         );
         setTotalOrder(noCancellBooking.length);
-        console.log(noCancellBooking, '취소아닌거');
         const today = new Date();
 
         const completedBookings = noCancellBooking.filter(
@@ -138,7 +138,10 @@ const MyPage = () => {
       if (userInfo?.id) {
         const reviews = await getMyReview(userInfo.id);
         const availableReviews = reviews.data.filter(
-          (review: GetReviewData) => review.space?.spaceStatus !== 'UNAVAILABLE'
+          (review: GetReviewData) =>
+            review.space?.spaceStatus === 'AVAILABLE' &&
+            review.space?.isOpen === true &&
+            review.space?.isDelete === false
         );
         setUserReviews(availableReviews);
         setIsReviewFetched(true);
@@ -154,7 +157,10 @@ const MyPage = () => {
       if (userInfo?.id) {
         const response = await getWishlist(userInfo.id);
         const availableWish = response.data.filter(
-          (wish: Wishlist) => wish.space?.spaceStatus !== 'UNAVAILABLE'
+          (wish: Wishlist) =>
+            wish.space?.spaceStatus === 'AVAILABLE' &&
+            wish.space?.isOpen === true &&
+            wish.space?.isDelete === false
         );
         setWishList(availableWish);
         setIsWishFetched(true);

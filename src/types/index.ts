@@ -198,6 +198,8 @@ export interface GetReviewData {
       imageUrl: string;
     }[];
     spaceStatus: string;
+    isOpen: boolean;
+    isDelete: boolean;
   };
 }
 
@@ -237,6 +239,8 @@ export interface Wishlist {
     spacePrice: number;
     discount: number;
     spaceStatus: string;
+    isOpen: boolean;
+    isDelete: boolean;
     images?: {
       imageUrl: string;
     }[];

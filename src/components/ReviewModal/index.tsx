@@ -53,7 +53,6 @@ const ReviewModal = ({
   };
   return (
     <Modal
-      // title="리뷰 작성"
       visible={isVisible}
       onCancel={onClose}
       footer={[
