@@ -1,5 +1,5 @@
 import { SignupFormStyled } from './styled';
-import { message, Input, Button } from 'antd';
+import { message, Input, Button, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CheckboxGroup from '../CheckboxGroup';
@@ -48,13 +48,15 @@ const SignupForm = () => {
   //모든 체크박스가 선택되었는지
   const [isAllChecked, setIsAllChecked] = useState(false);
   //필수 체크박스가 선택되지 않았을 경우의 에러 메세지
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   //코드 발송 여부
   const [isCodeSent, setIsCodeSent] = useState(false);
   //서버에서 받은 인증코드 저장
   const [serverAuthCode, setServerAuthCode] = useState<string>('');
   //이메일 인증 완료 여부
   const [isVerified, setIsVerified] = useState(false);
+  // 로딩 상태
+  const [isLoading, setIsLoading] = useState(false);
 
   //전체 체크박스 선택
   const onAllCheck = (e: CheckboxChangeEvent) => {
@@ -91,7 +93,7 @@ const SignupForm = () => {
       email: '',
       password: '',
       confirm: '',
-      authCode: '', 
+      authCode: '',
     },
     validate: (values) => {
       const errors: { email?: string; password?: string; confirm?: string } =
@@ -156,15 +158,16 @@ const SignupForm = () => {
         const axiosError = error as AxiosError<ErrorResponse>;
         const errorMessage = axiosError.response?.data?.message || '';
         if (axiosError.response && axiosError.response.status === 400) {
-          message.error(errorMessage)
+          message.error(errorMessage);
         } else {
           message.error('회원가입 실패');
         }
       }
     },
-  }); 
+  });
 
   const handleSendAuthCode = async () => {
+    setIsLoading(true);
     try {
       const response = await sendAuthNumber(formik.values.email);
       if (response && response.result) {
@@ -184,6 +187,8 @@ const SignupForm = () => {
       } else {
         message.error('인증 코드 전송에 실패했습니다.');
       }
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
   };
 
@@ -217,9 +222,9 @@ const SignupForm = () => {
           <Button
             htmlType="button"
             onClick={handleSendAuthCode}
-            disabled={!formik.values.email || isCodeSent}
+            disabled={!formik.values.email || isCodeSent || isLoading}
           >
-            인증받기
+            {isLoading ? <Spin size="small" /> : '인증받기'}
           </Button>
         </div>
 

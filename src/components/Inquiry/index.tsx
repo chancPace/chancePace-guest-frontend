@@ -26,7 +26,7 @@ const Inquiry = () => {
       email: '',
       contents: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       if (type === '') {
         notification.warning({
           message: '회원 유형을 선택해 주세요!',
@@ -41,8 +41,9 @@ const Inquiry = () => {
           memberType: type,
         };
         await addInquiryApi(inquiryData);
-
         message.success('문의가 성공적으로 등록되었습니다.');
+        resetForm();
+        setType('');
       } catch (error) {
         console.error('등록실패', error);
       }
@@ -63,6 +64,7 @@ const Inquiry = () => {
                 name="title"
                 onChange={inquiryFormik.handleChange}
                 placeholder="제목을 입력해주세요"
+                value={inquiryFormik.values.title}
               />
             </div>
             <div className="inputBox">
@@ -73,6 +75,7 @@ const Inquiry = () => {
                 name="email"
                 onChange={inquiryFormik.handleChange}
                 placeholder="이메일을 입력해주세요"
+                value={inquiryFormik.values.email}
               />
             </div>
             <div className="inputBox">
@@ -81,6 +84,7 @@ const Inquiry = () => {
                 onChange={(e: any) => {
                   setType(e.target.value);
                 }}
+                value={type}
               >
                 <Radio value={'MEMBER'}>회원</Radio>
                 <Radio value={'NONMEMBER'}>비회원</Radio>
@@ -94,6 +98,7 @@ const Inquiry = () => {
                 required
                 name="contents"
                 onChange={inquiryFormik.handleChange}
+                value={inquiryFormik.values.contents}
               />
             </div>
 
