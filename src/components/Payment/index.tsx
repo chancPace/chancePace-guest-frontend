@@ -27,6 +27,7 @@ const Payment = () => {
 
   //유저 쿠폰 상태
   const [coupons, setCoupons] = useState<UserCoupon[]>([]); // 쿠폰 데이터를 저장할 상태 추가
+  console.log(coupons,'쿠폰스')
   //유저가 선택한 쿠폰
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
   //결제하려는 금액 (상세페이지에서 넘어온 금액)
@@ -47,15 +48,14 @@ const Payment = () => {
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   //결제 방식 위젯(신용카드, 계좌이체) 등의 인스턴스를 참조하기 위한 변수
 
-  // const paymentMethodsWidgetRef = useRef<ReturnType<
-  //   PaymentWidgetInstance['renderPaymentMethods']
-  // > | null>(null);
-  // const paymentMethodsWidget = paymentMethodsWidgetRef.current;
-
   // URL 인코딩된 키라면, 디코딩 후 삭제
   localStorage.removeItem(
     decodeURIComponent('@payment-widget/previous-payment-method-id')
   );
+
+  if (!clientKey) {
+    console.error('클라이언트 키가 누락되었습니다.');
+  }
 
   useEffect(() => {
     if (router.query.price) {
@@ -121,18 +121,16 @@ const Payment = () => {
   const handleCouponSelect = (couponId: number) => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
+    // setFinalPrice(selected ? price - selected.coupon.discountPrice : price);
+
     if (selected) {
       const discount = selected.coupon.discountPrice;
-      setDiscountAmount(discount); // 선택한 쿠폰의 할인 금액 설정
-      setFinalPrice(price - discountAmount); // 할인 반영하여 결제 금액 설정)
+      setFinalPrice(price - discount); // 직접 할인 금액 적용
     } else {
-      setDiscountAmount(0); // 쿠폰 선택 해제 시 할인 금액을 0으로 설정
+      setDiscountAmount(0); // 할인 금액 초기화
+      setFinalPrice(price); // 원래 가격으로 설정
     }
   };
-
-  useEffect(() => {
-    setFinalPrice(price - discountAmount);
-  }, [price, discountAmount]);
 
   //결제 위젯 초기화
 
@@ -163,9 +161,9 @@ const Payment = () => {
     }
   };
   //함수를 호출하여 결제 위젯 초기화
-  initializePaymentWidget();
+
   useEffect(() => {
-    if (clientKey && finalPrice > 0) {
+    if (clientKey) {
       initializePaymentWidget();
     }
   }, [clientKey, finalPrice]);
@@ -208,7 +206,11 @@ const Payment = () => {
         </div>
         <div>
           <div className="reservation-title">쿠폰</div>
-          <Select placeholder="쿠폰을 선택하세요" onChange={handleCouponSelect}>
+          <Select
+            placeholder="쿠폰을 선택하세요"
+            onChange={handleCouponSelect}
+            value={selectedCoupon ? selectedCoupon.id : undefined}
+          >
             <Select.Option value={-1}>선택안함</Select.Option>
 
             {coupons?.map((x) => {

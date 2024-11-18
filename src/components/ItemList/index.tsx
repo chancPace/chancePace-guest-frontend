@@ -25,6 +25,7 @@ const ItemList = ({ x }: ItemListProps) => {
   const [reviewCount, setReviewCount] = useState<number>(0);
   const userId = useSelector((state: RootState) => state.user.userInfo?.id);
 
+
   //해당 공간의 리뷰 갯수 가져오기
   useEffect(() => {
     const fetchReviewCount = async () => {
@@ -92,13 +93,17 @@ const ItemList = ({ x }: ItemListProps) => {
 
   return (
     <ItemListStyled onClick={handleClick}>
-      {x && x.images ? ( <div className="itemImg">
-        <img
-          src={x.images[0].imageUrl}
-          alt={x.images[0].imageUrl}
-          className="img"
-        ></img>
-      </div>):(<p>No-Image</p>)}
+      {x && x.images ? (
+        <div className="itemImg">
+          <img
+            src={x.images[0].imageUrl}
+            alt={x.images[0].imageUrl}
+            className="img"
+          ></img>
+        </div>
+      ) : (
+        <p>No-Image</p>
+      )}
       <div className="item-bottom">
         <div className="itemText">
           <p>{x.spaceName}</p>

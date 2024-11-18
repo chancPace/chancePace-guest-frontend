@@ -70,7 +70,7 @@ const MainPage = () => {
         //available 상태인것만 가져오기
         const availableSpace = spaceData.data.filter(
           (space: Space) =>
-            space.spaceStatus === 'AVAILABLE' && space.isOpen === true
+            space.spaceStatus === 'AVAILABLE' && space.isOpen === true && space.isDelete === false
         );
         //새로운 장소 설정
         setNewSpace(availableSpace.slice(0, 8));

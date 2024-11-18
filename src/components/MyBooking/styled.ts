@@ -5,6 +5,7 @@ export const MyBookingStyled = styled.div`
   margin-bottom: 15px;
   border-radius: 15px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.23922);
+  padding: 10px;
   .booking-date {
     margin-bottom: 10px;
     display: flex;
