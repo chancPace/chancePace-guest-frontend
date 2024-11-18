@@ -11,7 +11,7 @@ interface WishListProps {
 }
 const WishList = ({ x, onRemove }: WishListProps) => {
   if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
-    return;
+    return null;
   }
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(true);
@@ -36,7 +36,6 @@ const WishList = ({ x, onRemove }: WishListProps) => {
 
   return (
     <WishListStyled onClick={goToDetailPage}>
-      
       <div className="wish-img">
         <img
           src={x.space?.images?.[0]?.imageUrl || 'Not-Imgafe'}

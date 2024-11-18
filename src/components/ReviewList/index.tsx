@@ -12,9 +12,8 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
-
   if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
-    return;
+    return null;
   }
   //작성일자 형식 바꾸기
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');

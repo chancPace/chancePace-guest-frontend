@@ -7,8 +7,8 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
-  if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
-    return;
+  if (!x.space || !x.space.images || x.space.spaceStatus === 'UNAVAILABLE') {
+    return null;
   }
 
   const router = useRouter();
@@ -87,7 +87,11 @@ const MyBooking = ({ x }: MyBookingProps) => {
       </div>
       <div className="booking-data" onClick={handleClick}>
         <div className="booking-space-img">
-          <img src={x.space?.images[0]?.imageUrl} />
+          {x.space?.images?.length > 0 && x.space.images[0]?.imageUrl ? (
+            <img src={x.space.images[0].imageUrl} alt="Space Image" />
+          ) : (
+            <p>No Image Available</p>
+          )}
         </div>
         <div className="booking-info">
           <div className="booking-space-name">{x.space?.spaceName}</div>
