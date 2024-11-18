@@ -25,6 +25,8 @@ const Inquiry = () => {
       title: '',
       email: '',
       contents: '',
+      phoneNumber: '',
+      name: '',
     },
     onSubmit: async (values, { resetForm }) => {
       if (type === '') {
@@ -76,6 +78,28 @@ const Inquiry = () => {
                 onChange={inquiryFormik.handleChange}
                 placeholder="이메일을 입력해주세요"
                 value={inquiryFormik.values.email}
+              />
+            </div>
+            <div className="inputBox">
+              <div className="title">이름</div>
+              <Input
+                type="text"
+                required
+                name="name"
+                onChange={inquiryFormik.handleChange}
+                placeholder="이름을 입력해주세요"
+                value={inquiryFormik.values.name}
+              />
+            </div>
+            <div className="inputBox">
+              <div className="title">연락처</div>
+              <Input
+                type="text"
+                required
+                name="phoneNumber"
+                onChange={inquiryFormik.handleChange}
+                placeholder="연락처를 입력해주세요"
+                value={inquiryFormik.values.phoneNumber}
               />
             </div>
             <div className="inputBox">
