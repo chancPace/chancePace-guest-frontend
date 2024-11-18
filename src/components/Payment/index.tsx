@@ -27,7 +27,6 @@ const Payment = () => {
 
   //유저 쿠폰 상태
   const [coupons, setCoupons] = useState<UserCoupon[]>([]); // 쿠폰 데이터를 저장할 상태 추가
-  console.log(coupons,'쿠폰스')
   //유저가 선택한 쿠폰
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
   //결제하려는 금액 (상세페이지에서 넘어온 금액)
@@ -52,10 +51,6 @@ const Payment = () => {
   localStorage.removeItem(
     decodeURIComponent('@payment-widget/previous-payment-method-id')
   );
-
-  if (!clientKey) {
-    console.error('클라이언트 키가 누락되었습니다.');
-  }
 
   useEffect(() => {
     if (router.query.price) {
@@ -121,10 +116,10 @@ const Payment = () => {
   const handleCouponSelect = (couponId: number) => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
-    // setFinalPrice(selected ? price - selected.coupon.discountPrice : price);
 
     if (selected) {
       const discount = selected.coupon.discountPrice;
+      setDiscountAmount(discount); // 할인 금액 설정
       setFinalPrice(price - discount); // 직접 할인 금액 적용
     } else {
       setDiscountAmount(0); // 할인 금액 초기화

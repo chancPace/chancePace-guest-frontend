@@ -135,6 +135,7 @@ const MyPage = () => {
     try {
       if (userInfo?.id) {
         const reviews = await getMyReview(userInfo.id);
+        // console.log(reviews.data.map)
         setUserReviews(reviews.data);
         setIsReviewFetched(true);
       }

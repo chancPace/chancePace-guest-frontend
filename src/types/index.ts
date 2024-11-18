@@ -196,6 +196,7 @@ export interface GetReviewData {
     images?: {
       imageUrl: string;
     }[];
+    spaceStatus: string;
   };
 }
 
@@ -234,6 +235,7 @@ export interface Wishlist {
     spaceName: string;
     spacePrice: number;
     discount: number;
+    spaceStatus: string;
     images?: {
       imageUrl: string;
     }[];

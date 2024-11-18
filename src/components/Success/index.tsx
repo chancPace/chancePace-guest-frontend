@@ -54,6 +54,7 @@ const Success = () => {
                 ? parseInt(spaceId[0])
                 : parseInt(spaceId || '0'),
               paymentId,
+
             };
             await addBooking(bookingData);
             const numericCouponId = Number(couponId);
