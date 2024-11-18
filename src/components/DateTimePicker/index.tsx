@@ -56,10 +56,35 @@ const DateTimePicker = ({
     (_, i) => businessStartTime + i
   );
 
+  const isOverlap = (
+    selectedStartIndex: number,
+    selectedEndIndex: number,
+    bookings: { startTime: number; endTime: number }[]
+  ): boolean => {
+    return bookings.some((booking) => {
+      const bookingStartIndex = booking.startTime - businessStartTime;
+      const bookingEndIndex = booking.endTime - businessStartTime;
+
+      // 겹치는 조건: 선택된 범위와 예약된 범위가 서로 교차하는지 확인
+      return (
+        selectedStartIndex <= bookingEndIndex &&
+        selectedEndIndex >= bookingStartIndex
+      );
+    });
+  };
+
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
     if (!selectedDate) {
       message.warning('날짜를 먼저 선택해주세요.');
+      return;
+    }
+    const selectedStartIndex = startTime !== null ? startTime : index;
+    const selectedEndIndex = startTime !== null ? index : index;
+
+    // 예약된 시간과 겹치는지 확인
+    if (isOverlap(selectedStartIndex, selectedEndIndex, bookingTime)) {
+      message.warning('선택한 시간이 예약된 시간과 겹칩니다.');
       return;
     }
     if (startTime === null) {
