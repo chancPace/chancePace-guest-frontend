@@ -120,6 +120,7 @@ export interface MyBookingData {
     vat: number;
   };
   space?: {
+    isDelete: boolean;
     addPrice: number;
     amenities: string;
     businessEndTime: number;

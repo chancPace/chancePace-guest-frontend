@@ -7,9 +7,10 @@ interface MyBookingProps {
   x: MyBookingData;
 }
 const MyBooking = ({ x }: MyBookingProps) => {
-  if (x.space?.spaceStatus === 'UNAVAILABLE') {
-    return null;
+  if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
+    return;
   }
+
   const router = useRouter();
   //리뷰쓰기 버튼 보여주기 상태
   const [isReviewBtnVisible, setIsReviewBtnVisible] = useState(false);

@@ -12,16 +12,15 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ x, fetchUserData, isDeletable }: ReviewListProps) => {
-  console.log(x, 'xxxx');
-  if (x.space?.spaceStatus === 'UNAVAILABLE') {
-    return null;
+
+  if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
+    return;
   }
   //작성일자 형식 바꾸기
   const formattedDate = new Date(x.createdAt).toLocaleDateString('en-CA');
   const spaceId = Number(x.space?.id);
 
   //리뷰 삭제
-
   const handleDeleteClick = async (reviewId: number) => {
     const reviewData = {
       spaceId,
