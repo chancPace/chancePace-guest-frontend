@@ -32,7 +32,7 @@ const ItemList = ({ x }: ItemListProps) => {
         const reviews = await getReviewBySpace(x.id);
         setReviewCount(reviews.data.length);
       } catch (error) {
-        // console.error(error);
+        console.error(error);
       }
     };
     fetchReviewCount();
@@ -49,7 +49,7 @@ const ItemList = ({ x }: ItemListProps) => {
         );
         setIsBookmarked(isWishlisted);
       } catch (error) {
-        // console.error('찜 목록 불러오기 실패', error);
+        console.error('찜 목록 불러오기 실패', error);
       }
     }
   };
@@ -81,7 +81,7 @@ const ItemList = ({ x }: ItemListProps) => {
       // API 호출 후 최신 wishlist 가져오기
       await fetchWishlist();
     } catch (error) {
-      // console.error('위시리스트 토글 실패', error);
+      console.error('위시리스트 토글 실패', error);
     }
   };
 

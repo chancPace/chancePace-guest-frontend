@@ -72,7 +72,7 @@ const Payment = () => {
         const response = await getOneSpace(Number(spaceId));
         setSpaceDetails(response.data);
       } catch (error) {
-        // console.error('공간 불러오기 실패', error);
+        console.error('공간 불러오기 실패', error);
       }
     };
     fetchSpaceData();
@@ -80,7 +80,7 @@ const Payment = () => {
 
   const handlePayment = async () => {
     if (!isWidgetLoaded) {
-      // console.error('결제 위젯이 아직 로드되지 않았습니다');
+      console.error('결제 위젯이 아직 로드되지 않았습니다');
       return;
     }
 
@@ -88,7 +88,7 @@ const Payment = () => {
       const paymentWidget = paymentWidgetRef.current;
 
       if (!paymentWidget) {
-        // console.error('결제 위젯이 초기화되지 않았습니다');
+        console.error('결제 위젯이 초기화되지 않았습니다');
         return;
       }
 
@@ -99,7 +99,7 @@ const Payment = () => {
         failUrl: `${window.location.origin}/fail`,
       });
     } catch (error) {
-      // console.error('결제확인실패', error);
+      console.error('결제확인실패', error);
     }
   };
 
@@ -140,7 +140,7 @@ const Payment = () => {
   const initializePaymentWidget = async () => {
     //환경 변수에서 클라이언트 키를 가져오지 못한 경우
     if (!clientKey) {
-      // console.error('클라이언트 키가 설정되지 않았습니다');
+      console.error('클라이언트 키가 설정되지 않았습니다');
       return;
     }
     try {
@@ -159,7 +159,7 @@ const Payment = () => {
       paymentWidgetRef.current = paymentWidget;
       setIsWidgetLoaded(true);
     } catch (error) {
-      // console.error('결제 위젯 로딩 중 오류가 발생함', error);
+      console.error('결제 위젯 로딩 중 오류가 발생함', error);
     }
   };
   //함수를 호출하여 결제 위젯 초기화

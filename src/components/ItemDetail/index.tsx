@@ -35,7 +35,7 @@ const ItemDetail = () => {
           const response = await getOneSpace(Number(id));
           setSpace(response.data);
         } catch (error) {
-          // console.error('공간 정보를 불러오지 못했습니다.', error);
+          console.error('공간 정보를 불러오지 못했습니다.', error);
         }
       };
       fetchSpace();
@@ -50,7 +50,7 @@ const ItemDetail = () => {
           const response = await getReviewBySpace(Number(id));
           setReviews(response.data);
         } catch (error) {
-          // console.error('리뷰를 불러오지 못했습니다.', error);
+          console.error('리뷰를 불러오지 못했습니다.', error);
         }
       };
       fetchReviews();
@@ -65,7 +65,7 @@ const ItemDetail = () => {
         message.success('클립보드에 복사되었습니다!');
       })
       .catch((error) => {
-        // console.error('복사에 실패했습니다:', error);
+        console.error('복사에 실패했습니다:', error);
       });
   };
 

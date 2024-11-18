@@ -45,7 +45,7 @@ const FindPassword = () => {
         message.success('비밀번호가 변경되었습니다.');
         router.push('/login');
       } catch (error) {
-        // console.error('비밀번호 변경 실패', error);
+        console.error('비밀번호 변경 실패', error);
       }
     },
   });

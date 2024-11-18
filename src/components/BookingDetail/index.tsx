@@ -33,7 +33,7 @@ const BookingDetail = () => {
         setBookingDetails(data.data);
       } catch (error) {
         message.error('예약 상세 정보를 불러오는 데 실패했습니다.');
-        // console.error('데이터 불러오기 실패', error);
+        console.error('데이터 불러오기 실패', error);
       }
     };
     fetchBookingDetails();
@@ -53,7 +53,7 @@ const BookingDetail = () => {
       router.push('/');
     } catch (error) {
       message.error('예약 취소 실패');
-      // console.error('예약취소실패', error);
+      console.error('예약취소실패', error);
     } finally {
       setIsLoading(false); // 로딩 종료
     }

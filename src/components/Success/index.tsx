@@ -68,7 +68,7 @@ const Success = () => {
             }
           }
         } catch (error) {
-          // console.error('예약 처리 실패', error);
+          console.error('예약 처리 실패', error);
         }
       }
     };
@@ -93,7 +93,7 @@ const Success = () => {
           const data = await getOneSpace(Number(spaceId)); 
           setSpaceData(data.data);
         } catch (error) {
-          // console.error('공간 데이터 로드 중 오류 발생:', error);
+          console.error('공간 데이터 로드 중 오류 발생:', error);
         }
       }
     };

@@ -44,7 +44,7 @@ const Inquiry = () => {
 
         message.success('문의가 성공적으로 등록되었습니다.');
       } catch (error) {
-        // console.error('등록실패', error);
+        console.error('등록실패', error);
       }
     },
   });

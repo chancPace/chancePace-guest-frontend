@@ -81,7 +81,7 @@ const EditUser = ({
         setUserData({ ...userData, ...updateData });
         router.push('/');
       } catch (error) {
-        // console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
+        console.error('회원 정보 업데이트 중 오류가 발생했습니다.', error);
       }
     },
   });

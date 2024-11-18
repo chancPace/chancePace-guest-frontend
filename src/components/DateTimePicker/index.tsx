@@ -137,7 +137,7 @@ const DateTimePicker = ({
       const response = await getBooking(spaceId, formattedDate);
       setBookingTime(response.data);
     } catch (error) {
-      // console.error('예약 시간 조회 실패', error);
+      console.error('예약 시간 조회 실패', error);
     }
   };
 

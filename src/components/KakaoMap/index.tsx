@@ -31,7 +31,7 @@ const KakaoMap = ({ address }:KakaoMapProps) => {
 
   const convertAddressToCoordinates = () => {
     if (!window.kakao || !window.kakao.maps) {
-      // console.error('Kakao 지도 API가 로드되지 않았습니다.');
+      console.error('Kakao 지도 API가 로드되지 않았습니다.');
       return;
     }
 
@@ -50,7 +50,7 @@ const KakaoMap = ({ address }:KakaoMapProps) => {
             longitude: parseFloat(longitude),
           });
         } else {
-          // console.error('주소 변환 실패');
+          console.error('주소 변환 실패');
         }
       }
     );
