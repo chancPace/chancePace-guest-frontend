@@ -14,7 +14,7 @@ const WishList = ({ x, onRemove }: WishListProps) => {
   if (x.space?.spaceStatus === 'UNAVAILABLE') {
     return null;
   }
-  const router = useRouter();
+  const router = useRouter();ㅈ
   const [isBookmarked, setIsBookmarked] = useState(true);
 
   const toggleWishlist = async (e: React.MouseEvent) => {

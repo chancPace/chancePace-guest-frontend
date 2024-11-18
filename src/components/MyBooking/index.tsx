@@ -26,13 +26,13 @@ const MyBooking = ({ x }: MyBookingProps) => {
     //오늘인지?
     const isToday = bookingDate.toDateString() === today.toDateString();
     //예약시간이 지났는지?
-    const isEnd = x.endTime <= today.getHours();
+    // const isEnd = x.endTime <= today.getHours();
 
     if (x.bookingStatus === 'CANCELLED') {
       setBookingStatusText('예약 취소');
       setIsModalVisible(false);
     } else if (isToday) {
-      if (isEnd) {
+      if (true) {
         setBookingStatusText('이용완료');
         setIsReviewBtnVisible(!x.review);
       } else {
@@ -86,7 +86,7 @@ const MyBooking = ({ x }: MyBookingProps) => {
       </div>
       <div className="booking-data" onClick={handleClick}>
         <div className="booking-space-img">
-          <img src={x.space?.images[0].imageUrl} />
+          <img src={x.space?.images[0]?.imageUrl} />
         </div>
         <div className="booking-info">
           <div className="booking-space-name">{x.space?.spaceName}</div>
