@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import together from '../../assets/image/together.jpg';
 export const HostStyled = styled.div`
-  padding: 0 10px;
-  background-color: #f8f9fa;
-
+  /* padding: 0 10px; */
+  /* padding: 0 !important; */
   .section {
     padding-top: 60px;
     overflow: hidden;
@@ -86,7 +85,6 @@ export const HostStyled = styled.div`
       background-image: url(${together.src});
       background-size: cover;
       background-position: center;
-      opacity: 0.8;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -102,8 +100,8 @@ export const HostStyled = styled.div`
         font-size: 18px;
 
         > a {
-          padding: 10px;
-          background-color: rgba(0, 0, 0, 0.5);
+          padding: 15px;
+          background-color: black;
         }
         text-align: center;
       }

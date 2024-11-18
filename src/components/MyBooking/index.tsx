@@ -23,13 +23,13 @@ const MyBooking = ({ x }: MyBookingProps) => {
     //오늘인지?
     const isToday = bookingDate.toDateString() === today.toDateString();
     //예약시간이 지났는지?
-    // const isEnd = x.endTime <= today.getHours();
+    const isEnd = x.endTime <= today.getHours();
 
     if (x.bookingStatus === 'CANCELLED') {
       setBookingStatusText('예약 취소');
       setIsModalVisible(false);
     } else if (isToday) {
-      if (true) {
+      if (isEnd) {
         setBookingStatusText('이용완료');
         setIsReviewBtnVisible(!x.review);
       } else {

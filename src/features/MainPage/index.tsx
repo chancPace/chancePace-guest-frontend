@@ -107,7 +107,21 @@ const MainPage = () => {
           clickable: true,
         }}
         modules={[Autoplay, Pagination]}
-        slidesPerView={3}
+        slidesPerView={1}
+        breakpoints={{
+          360: {
+            // 320px 이상
+            slidesPerView: 2,
+          },
+          768: {
+            // 768px 이상
+            slidesPerView: 3,
+          },
+          1024: {
+            // 1024px 이상
+            slidesPerView: 4,
+          },
+        }}
       >
         {banner.map((x, i) => (
           <SwiperSlide key={i}>
