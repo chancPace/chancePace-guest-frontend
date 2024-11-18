@@ -12,8 +12,6 @@ import Cookies from 'js-cookie';
 import { persistor } from '@/redux/store';
 const { Panel } = Collapse;
 
-
-
 interface UserAccountFormProps {
   userData: UserData | null;
   setUserData: (user: UserData) => void;
@@ -68,6 +66,17 @@ const EditUser = ({
       bankAccountOwner: userData?.bankAccountOwner || '',
       bankAccountNumber: userData?.bankAccountNumber || '',
     },
+    validate: (values) => {
+      const errors: { phoneNumber?: string } = {};
+
+      if (!values.phoneNumber) {
+        errors.phoneNumber = '전화번호를 입력해주세요.';
+      } else if (values.phoneNumber.replace(/\D/g, '').length !== 11) {
+        errors.phoneNumber = '전화번호는 11자리 숫자여야 합니다.';
+      }
+
+      return errors;
+    },
     onSubmit: async (values) => {
       try {
         const updateData = {
@@ -85,6 +94,17 @@ const EditUser = ({
       }
     },
   });
+
+  //핸드폰 번호 형태 바꾸기
+  const formatPhoneNumber = (phoneNumber: string) => {
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
+    if (cleaned.length === 11) {
+      return cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    }
+
+    return phoneNumber;
+  };
 
   //userData가 변경될때마다 input에 값 띄우기
   useEffect(() => {
@@ -144,7 +164,10 @@ const EditUser = ({
       }
     },
     validate: (values) => {
-      const errors: { newPassword?: string; confirmNewPassword?: string } = {};
+      const errors: {
+        newPassword?: string;
+        confirmNewPassword?: string;
+      } = {};
       if (
         !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,15}/.test(
           values.newPassword
@@ -202,10 +225,16 @@ const EditUser = ({
               <label>휴대폰 번호</label>
               <Input
                 name="phoneNumber"
-                placeholder="휴대폰 번호"
-                onChange={profileFormik.handleChange}
+                placeholder="휴대폰 번호 (숫자만 입력해주세요)"
+                onChange={(e) => {
+                  const formattedValue = formatPhoneNumber(e.target.value);
+                  profileFormik.setFieldValue('phoneNumber', formattedValue);
+                }}
                 value={profileFormik.values.phoneNumber}
               />
+              {profileFormik.errors.phoneNumber && (
+                <div className="error">{profileFormik.errors.phoneNumber}</div>
+              )}
               {userData?.role === 'HOST' && (
                 <>
                   <label>은행명</label>

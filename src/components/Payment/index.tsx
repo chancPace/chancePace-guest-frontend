@@ -22,7 +22,7 @@ const Payment = () => {
   const customerKey = 'YbX2HuSlsC9uVJW6NMRMjsdgaawegwasergfwrfasdfsq';
 
   const router = useRouter();
-  const { startDate, startTime, endTime, spaceId } = router.query;
+  const { startDate, startTime, endTime, spaceId, price } = router.query;
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
 
   //유저 쿠폰 상태
@@ -30,7 +30,7 @@ const Payment = () => {
   //유저가 선택한 쿠폰
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
   //결제하려는 금액 (상세페이지에서 넘어온 금액)
-  const [price, setPrice] = useState<number>(0); // 초기값 0으로 설정
+  const [priceState, setPriceState] = useState<number>(0); // 초기값 0으로 설정
   //쿠폰할인 반영된 최종 금액
   const [finalPrice, setFinalPrice] = useState<number>(0); // 최종 결제 금액 초기값도 0으로 설정
   //쿠폰 할인금액
@@ -53,12 +53,12 @@ const Payment = () => {
   );
 
   useEffect(() => {
-    if (router.query.price) {
-      const parsedPrice = Number(router.query.price);
-      setPrice(parsedPrice);
+    if (price) {
+      const parsedPrice = Number(price);
+      setPriceState(parsedPrice); // 쿼리에서 가격 가져오기
       setFinalPrice(parsedPrice);
     }
-  }, []);
+  }, [price]);
 
   //유저가 예약하려는 공간불러오기
   useEffect(() => {
@@ -120,10 +120,10 @@ const Payment = () => {
     if (selected) {
       const discount = selected.coupon.discountPrice;
       setDiscountAmount(discount); // 할인 금액 설정
-      setFinalPrice(price - discount); // 직접 할인 금액 적용
+      setFinalPrice(priceState - discount); // 직접 할인 금액 적용
     } else {
       setDiscountAmount(0); // 할인 금액 초기화
-      setFinalPrice(price); // 원래 가격으로 설정
+      setFinalPrice(priceState); // 원래 가격으로 설정
     }
   };
 
@@ -209,7 +209,7 @@ const Payment = () => {
             <Select.Option value={-1}>선택안함</Select.Option>
 
             {coupons?.map((x) => {
-              const isDisabled = price < x.coupon.discountPrice;
+              const isDisabled = priceState < x.coupon.discountPrice;
               return (
                 <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
                   {x.coupon.couponName} |
@@ -259,7 +259,7 @@ const Payment = () => {
           <div className="reservation-pay">
             <p>
               <span>상품 가격</span>
-              {price.toLocaleString()}
+              {priceState.toLocaleString()}원
             </p>
             {discountAmount > 0 && (
               <p>
@@ -269,7 +269,7 @@ const Payment = () => {
 
             <p>
               <span>총 결제 금액</span>
-              {finalPrice.toLocaleString()}
+              {finalPrice.toLocaleString()}원
             </p>
           </div>
         </div>

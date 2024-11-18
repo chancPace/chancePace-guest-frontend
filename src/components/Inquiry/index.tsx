@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { InquiryStyled } from './styled';
 import { Button, Input, message, notification, Radio } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import KakaoMap from '../KakaoMap';
 import { addInquiryApi } from '@/pages/api/inquiryApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,10 +11,16 @@ import {
   faLocationDot,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const { TextArea } = Input;
 
 const Inquiry = () => {
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  console.log(userInfo, '유저인포');
+  const dispatch = useDispatch();
+
   // 회원 타입
   const [type, setType] = useState('');
 
@@ -51,6 +57,15 @@ const Inquiry = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (userInfo?.email && userInfo.email !== '') {
+      inquiryFormik.setFieldValue('email', userInfo.email); // 이메일 값 설정
+      setType('MEMBER'); // 회원 유형 자동 선택
+    } else {
+      setType('NONMEMBER'); // 비회원 자동 선택
+    }
+  }, [userInfo]);
 
   return (
     <InquiryStyled>

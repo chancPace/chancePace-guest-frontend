@@ -234,7 +234,12 @@ const DateTimePicker = ({
                   } ${isBooking(index) || isPastTime(time) ? 'booked' : ''}`}
                   onClick={() => handleTimeClick(index)}
                 >
-                  <div className="price">{price.toLocaleString()}</div>
+                  <div className="price">
+                    {' '}
+                    {isBooking(index) || isPastTime(time)
+                      ? '예약불가'
+                      : price.toLocaleString()}
+                  </div>
                 </div>
               </div>
             </SwiperSlide>

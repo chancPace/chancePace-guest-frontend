@@ -6,6 +6,8 @@ import { message, Modal, Spin, Table } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Refund } from '@/pages/api/paymentApi';
+import TextArea from 'antd/es/input/TextArea';
+import { useFormik } from 'formik';
 
 const columns = [
   { dataIndex: 'label', key: 'label' },
@@ -40,28 +42,45 @@ const BookingDetail = () => {
   }, [id]);
 
   //예약 환불
-  const refundBooking = async () => {
-    setIsLoading(true); // 로딩 시작
+  // const refundBooking = async () => {};
 
-    try {
-      const bookingId = id;
-      const cancelReason = '고객 요청에 따른 취소';
-      await Refund(Number(bookingId), cancelReason);
-      message.success('예약이 취소되었습니다');
-
-      setIsModalVisible(false);
-      router.push('/');
-    } catch (error) {
-      message.error('예약 취소 실패');
-      console.error('예약취소실패', error);
-    } finally {
-      setIsLoading(false); // 로딩 종료
-    }
-  };
   //startDate = today 이면 취소하기 버튼 안보이게하기
   const today = new Date();
   const isTodayBooking =
     bookingDetails?.startDate === today.toISOString().split('T')[0];
+
+  const formik = useFormik({
+    initialValues: {
+      cancelReason: '',
+    },
+    validate: (values) => {
+      const errors: { cancelReason?: string } = {};
+
+      if (!values.cancelReason) {
+        message.error('취소 사유를 입력해주세요.');
+        errors.cancelReason = '취소사유를 입력해주세요';
+      }
+      return errors;
+    },
+    onSubmit: async (values) => {
+      setIsLoading(true); // 로딩 시작
+
+      try {
+        const bookingId = id;
+        const cancelReason = '고객 요청에 따른 취소';
+        await Refund(Number(bookingId), cancelReason);
+        message.success('예약이 취소되었습니다');
+
+        setIsModalVisible(false);
+        router.push('/');
+      } catch (error) {
+        message.error('예약 취소 실패');
+        console.error('예약취소실패', error);
+      } finally {
+        setIsLoading(false); // 로딩 종료
+      }
+    },
+  });
 
   const dataSource = [
     {
@@ -99,7 +118,11 @@ const BookingDetail = () => {
     {
       key: '7',
       label: '카드 번호',
-      value: bookingDetails?.payment?.cardNumber || '-',
+      value:
+        bookingDetails?.payment?.cardNumber === 'UNKNOWN' ||
+        !bookingDetails?.payment?.cardNumber
+          ? '-'
+          : bookingDetails?.payment?.cardNumber,
     },
     {
       key: '8',
@@ -139,7 +162,7 @@ const BookingDetail = () => {
   };
 
   // 모달 닫기 함수
-  const handleOk = () => {
+  const handleCancel = () => {
     setIsModalVisible(false);
   };
 
@@ -170,13 +193,21 @@ const BookingDetail = () => {
       <Modal
         title="안내"
         visible={isModalVisible}
-        onOk={refundBooking}
-        onCancel={handleOk}
+        onOk={() => formik.handleSubmit()} // 명시적으로 호출
+        onCancel={handleCancel}
         cancelText="닫기"
         okText={isLoading ? <Spin size="small" /> : '확인'}
         okButtonProps={{ disabled: isLoading }}
       >
         <p>결제를 취소하시겠습니까?</p>
+        <TextArea
+          name="cancelReason"
+          placeholder="취소 사유를 입력해주세요"
+          rows={4}
+          value={formik.values.cancelReason}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
       </Modal>
     </BookingDetailStyled>
   );

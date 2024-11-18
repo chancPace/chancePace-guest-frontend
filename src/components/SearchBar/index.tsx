@@ -17,7 +17,7 @@ const SearchBar = () => {
   return (
     <SearchBarStyled>
       <Input.Search
-        placeholder="검색어를 입력해주세요"
+        placeholder="장소명 및 주소를 입력해주세요"
         allowClear
         size="large"
         onSearch={onSearch}

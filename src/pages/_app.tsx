@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Footer from '@/features/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import styled from 'styled-components';
+import Head from 'next/head';
 
 const Layout = styled.div`
   display: flex;
@@ -26,21 +27,26 @@ const MainContent = styled.main`
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Header />
-          <Layout>
-            <MainContent>
-              <Component {...pageProps} />
-            </MainContent>
+    <>
+      <Head>
+        <title>🏠ChancePaceGuest</title>
+      </Head>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Header />
+            <Layout>
+              <MainContent>
+                <Component {...pageProps} />
+              </MainContent>
 
-            <ScrollToTop />
-          </Layout>
-          <Footer />
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
+              <ScrollToTop />
+            </Layout>
+            <Footer />
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
+    </>
   );
 }

@@ -6,7 +6,7 @@ export const BookingDetailStyled = styled.div`
   margin: 80px auto;
   height: 100vh;
   .ant-table-cell {
-    padding: 10px 10px !important; 
+    padding: 10px 10px !important;
   }
   .ant-table {
     font-size: 14px;
@@ -15,6 +15,11 @@ export const BookingDetailStyled = styled.div`
     h1 {
       text-align: center;
       margin-bottom: 10px;
+    }
+  }
+  .ant-modal-content {
+    .ant-input {
+      resize: none !important;
     }
   }
   .button-box {
