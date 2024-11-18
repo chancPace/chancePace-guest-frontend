@@ -10,9 +10,8 @@ interface WishListProps {
   onRemove: () => void; // 삭제 함수 prop
 }
 const WishList = ({ x, onRemove }: WishListProps) => {
-  // console.log(x,'xxxx')
-  if (x.space?.spaceStatus === 'UNAVAILABLE') {
-    return null;
+  if (!x.space || x.space.spaceStatus === 'UNAVAILABLE') {
+    return;
   }
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(true);
