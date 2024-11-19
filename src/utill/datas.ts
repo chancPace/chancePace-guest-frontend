@@ -12,6 +12,8 @@ import house from '@/assets/image/house.svg';
 import allow from '@/assets/image/party-popper.svg';
 import banner1 from '../assets/image/banner1.png';
 import banner2 from '../assets/image/banner2.jpeg';
+import banner3 from '../assets/image/banner3.jpeg';
+import banner4 from '../assets/image/banner4.jpeg';
 
 import { HostMainImg, Explanation, Procedure } from '@/types';
 
@@ -72,12 +74,12 @@ const banner = [
     link: 'https://www.yeogi.com/event/4090/%EC%97%AC%ED%96%89%EB%B6%80%EC%BA%90%20%ED%85%8C%EC%8A%A4%ED%8A%B8/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4090',
   },
   {
-    img: banner1.src,
-    link: '/signup',
+    img: banner3.src,
+    link: 'https://www.yeogi.com/event/4224/%EC%97%AC%EA%B8%B0%EC%96%B4%EB%95%8C%20%ED%88%AC%EC%96%B4/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4224',
   },
   {
-    img: banner2.src,
-    link: 'https://www.yeogi.com/event/4090/%EC%97%AC%ED%96%89%EB%B6%80%EC%BA%90%20%ED%85%8C%EC%8A%A4%ED%8A%B8/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4090',
+    img: banner4.src,
+    link: 'https://www.yeogi.com/event/4344/%ED%95%B4%EC%99%B8%20%EA%B2%A8%EC%9A%B8%ED%9C%B4%EA%B0%80%20%EC%BF%A0%ED%8F%B0%ED%8C%A9/https%3A%2F%2Fapi3.goodchoice.kr%2Fevent3%2Fweb%2FadEventView%3Faevno%3D4344',
   },
 ];
 

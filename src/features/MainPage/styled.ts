@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import host from '../../assets/image/host.jpg';
-import main from '../../assets/image/main.jpg';
 export const MainStyled = styled.div`
   width: 100%;
   padding-top: 70px !important;
@@ -181,7 +180,6 @@ export const MainStyled = styled.div`
     .search-zone {
       .category {
         .category-title {
-          /* font-size: ${({ theme }) => theme.fontSizes.xl}; */
           font-size: 24px;
         }
       }
