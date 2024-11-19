@@ -15,7 +15,6 @@ const SpaceList = () => {
   const [space, setSpace] = useState<Space[]>([]);
   const [filterSpace, setFilterSpace] = useState<Space[]>([]);
 
-
   const isAvailableSpace = (space: Space) => {
     return space.spaceStatus === 'AVAILABLE' && space.isOpen === true;
   };
@@ -48,7 +47,8 @@ const SpaceList = () => {
         try {
           const categoryData = await getCategory();
           const subCategoryList = categoryData.data.filter(
-            (category: CategoryType) => Number(category.pId) === Number(categoryId)
+            (category: CategoryType) =>
+              Number(category.pId) === Number(categoryId)
           );
           setSubCategory([
             { id: null, categoryName: '전체' },
@@ -97,14 +97,14 @@ const SpaceList = () => {
             if (type === 'new') {
               filteredSpace = filteredSpace.slice(0, 30);
             } else if (type === 'popular') {
-              filteredSpace = filteredSpace
+              filteredSpace = [...filteredSpace]
                 .sort(
                   (a: Space, b: Space) =>
                     (b.bookings?.length || 0) - (a.bookings?.length || 0)
                 )
                 .slice(0, 30);
             } else if (type === 'recommended') {
-              filteredSpace = filteredSpace
+              filteredSpace = [...filteredSpace]
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 30);
             }
