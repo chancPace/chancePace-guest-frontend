@@ -52,15 +52,17 @@ const Payment = () => {
     decodeURIComponent('@payment-widget/previous-payment-method-id')
   );
 
+  //기본 금액 저장
   useEffect(() => {
-    //기본 금액 저장
     if (price) {
       const parsedPrice = Number(price);
       setPriceState(parsedPrice);
       setFinalPrice(parsedPrice);
     }
+  }, [price]);
 
-    //공간 불러오기
+  //공간 불러오기
+  useEffect(() => {
     const fetchSpaceData = async () => {
       try {
         const response = await getOneSpace(Number(spaceId));
@@ -70,8 +72,10 @@ const Payment = () => {
       }
     };
     fetchSpaceData();
+  }, [spaceId]);
 
-    //쿠폰 불러오기
+  //쿠폰 불러오기
+  useEffect(() => {
     const fetchCoupon = async () => {
       try {
         const coupon = await getUserAllCoupon(Number(userInfo?.id));
