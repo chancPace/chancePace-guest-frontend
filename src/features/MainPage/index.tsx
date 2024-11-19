@@ -110,15 +110,12 @@ const MainPage = () => {
         slidesPerView={1}
         breakpoints={{
           360: {
-            // 320px 이상
             slidesPerView: 2,
           },
           768: {
-            // 768px 이상
             slidesPerView: 3,
           },
           1024: {
-            // 1024px 이상
             slidesPerView: 4,
           },
         }}

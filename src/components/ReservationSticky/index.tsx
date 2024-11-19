@@ -40,8 +40,6 @@ const ReservationSticky = ({
   const [totalTime, setTotalTime] = useState<number>(0); // 초기값 0으로 설정
   //총 이용금액
   const [totalPrice, setTotalPrice] = useState<number>(0); // 초기값 0으로 설정
-  //할인금액
-  // const [discountPrice, setDiscountPrice] = useState<number>(0);
   //예약일
   const [startDate, setStartDate] = useState<string | null>(null);
   //시작 시간
@@ -80,9 +78,7 @@ const ReservationSticky = ({
     setSelectedEndTime(endTime);
     if (!startDate) {
       const calculatedTotal = discountPrice * totalTime;
-      // const calculatedDiscount = discount * totalTime;
       setTotalPrice(calculatedTotal);
-      // setDiscountPrice(calculatedTotal - calculatedDiscount);
     }
   };
 

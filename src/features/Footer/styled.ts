@@ -5,6 +5,7 @@ export const FooterStyled = styled.div`
   background-color: lightgray;
   color: white;
   padding: 10px 20px;
+  margin-top: 150px;
 
   .footer-sns {
     display: flex;

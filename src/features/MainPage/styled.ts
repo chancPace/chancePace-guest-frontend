@@ -178,9 +178,12 @@ export const MainStyled = styled.div`
       grid-template-columns: repeat(1, 1fr);
       gap: 5px;
     }
-    .category {
-      .category-title {
-        font-size: ${({ theme }) => theme.fontSizes.xl};
+    .search-zone {
+      .category {
+        .category-title {
+          /* font-size: ${({ theme }) => theme.fontSizes.xl}; */
+          font-size: 24px;
+        }
       }
     }
   }

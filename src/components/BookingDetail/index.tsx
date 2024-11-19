@@ -41,9 +41,6 @@ const BookingDetail = () => {
     fetchBookingDetails();
   }, [id]);
 
-  //예약 환불
-  // const refundBooking = async () => {};
-
   //startDate = today 이면 취소하기 버튼 안보이게하기
   const today = new Date();
   const isTodayBooking =
@@ -68,6 +65,7 @@ const BookingDetail = () => {
       try {
         const bookingId = id;
         const cancelReason = '고객 요청에 따른 취소';
+        //예약환불
         await Refund(Number(bookingId), cancelReason);
         message.success('예약이 취소되었습니다');
 

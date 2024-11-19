@@ -5,7 +5,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 interface CheckboxItem {
     value: string;
-    children: ReactNode; // ReactNode 타입 사용
+    children: ReactNode; 
     checked: boolean;
 }
 

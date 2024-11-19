@@ -11,15 +11,13 @@ import {
   faLocationDot,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
 const { TextArea } = Input;
 
 const Inquiry = () => {
   const userInfo = useSelector((state: RootState) => state.user.userInfo);
-  console.log(userInfo, '유저인포');
-  const dispatch = useDispatch();
 
   // 회원 타입
   const [type, setType] = useState('');
@@ -34,7 +32,17 @@ const Inquiry = () => {
       phoneNumber: '',
       name: '',
     },
+    validate: (values) => {
+      const errors: { phoneNumber?: string } = {};
+      if (values.phoneNumber.replace(/\D/g, '').length !== 11) {
+        errors.phoneNumber = '전화번호는 11자리 숫자여야 합니다.';
+      }
+
+      return errors;
+    },
     onSubmit: async (values, { resetForm }) => {
+      console.log(typeof values.phoneNumber, '밸류즈');
+
       if (type === '') {
         notification.warning({
           message: '회원 유형을 선택해 주세요!',
@@ -57,6 +65,17 @@ const Inquiry = () => {
       }
     },
   });
+
+  //핸드폰 번호 형태 바꾸기
+  const formatPhoneNumber = (phoneNumber: string) => {
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
+    if (cleaned.length === 11) {
+      return cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    }
+
+    return phoneNumber;
+  };
 
   useEffect(() => {
     if (userInfo?.email && userInfo.email !== '') {
@@ -112,9 +131,18 @@ const Inquiry = () => {
                 type="text"
                 required
                 name="phoneNumber"
-                onChange={inquiryFormik.handleChange}
-                placeholder="연락처를 입력해주세요"
+                onChange={(e) => {
+                  const formattedValue = formatPhoneNumber(e.target.value);
+                  inquiryFormik.setFieldValue('phoneNumber', formattedValue);
+                }}
+                placeholder="연락처를 입력해주세요(하이픈 제외 숫자만 입력해주세요)"
                 value={inquiryFormik.values.phoneNumber}
+                onBlur={() => {
+                  const phoneError = inquiryFormik.errors.phoneNumber;
+                  if (phoneError) {
+                    message.error(phoneError);
+                  }
+                }}
               />
             </div>
             <div className="inputBox">

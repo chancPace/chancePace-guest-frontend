@@ -11,7 +11,6 @@ import 'swiper/css/scrollbar';
 import { format } from 'date-fns';
 import { getBooking } from '@/pages/api/bookingApi';
 import { message } from 'antd';
-import { start } from 'repl';
 
 interface DateTimePickerProps {
   businessStartTime: number;
@@ -56,6 +55,7 @@ const DateTimePicker = ({
     (_, i) => businessStartTime + i
   );
 
+  //겹치는 시간 확인 함수
   const isOverlap = (
     selectedStartIndex: number,
     selectedEndIndex: number,
@@ -64,7 +64,6 @@ const DateTimePicker = ({
     return bookings.some((booking) => {
       const bookingStartIndex = booking.startTime - businessStartTime;
       const bookingEndIndex = booking.endTime - businessStartTime;
-
       // 겹치는 조건: 선택된 범위와 예약된 범위가 서로 교차하는지 확인
       return (
         selectedStartIndex <= bookingEndIndex &&
@@ -180,6 +179,7 @@ const DateTimePicker = ({
       const startIndex = booking.startTime - businessStartTime;
       const endIndex =
         startIndex + (booking.endTime - booking.startTime) - 1 + cleanTime;
+      // 현재 시간 슬롯(index)이 예약 범위에 포함되는지 확인
       return index >= startIndex && index <= endIndex;
     });
   };

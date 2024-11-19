@@ -29,7 +29,7 @@ const EditUser = ({
   setShowPasswordInput,
   setUserData,
 }: UserAccountFormProps) => {
-  const dispatch = useDispatch(); // 디스패치 훅 추가
+  const dispatch = useDispatch(); 
   const router = useRouter();
   const [passwordError, setPasswordError] = useState<String>('');
 
