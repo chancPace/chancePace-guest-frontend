@@ -8,18 +8,13 @@ import Category from '../Category';
 import { Pagination } from 'antd';
 import { useRouter } from 'next/router';
 
-interface SpaceListProps {
-  categoryId?: number;
-  query?: string;
-}
-
-const SpaceList = ({ categoryId }: SpaceListProps) => {
+const SpaceList = () => {
   const router = useRouter();
-  const { type, query } = router.query;
-
+  const { type, query, categoryId } = router.query;
   const [subCategory, setSubCategory] = useState<CategoryType[]>([]);
   const [space, setSpace] = useState<Space[]>([]);
   const [filterSpace, setFilterSpace] = useState<Space[]>([]);
+
 
   const isAvailableSpace = (space: Space) => {
     return space.spaceStatus === 'AVAILABLE' && space.isOpen === true;
@@ -53,7 +48,7 @@ const SpaceList = ({ categoryId }: SpaceListProps) => {
         try {
           const categoryData = await getCategory();
           const subCategoryList = categoryData.data.filter(
-            (category: CategoryType) => Number(category.pId) === categoryId
+            (category: CategoryType) => Number(category.pId) === Number(categoryId)
           );
           setSubCategory([
             { id: null, categoryName: '전체' },
@@ -63,7 +58,7 @@ const SpaceList = ({ categoryId }: SpaceListProps) => {
           const availableSpace = spaceData.data.filter(
             (space: Space) =>
               isAvailableSpace(space) &&
-              (space.categoryId === categoryId ||
+              (space.categoryId === Number(categoryId) ||
                 subCategoryList.some(
                   (sub: CategoryType) => sub.id === space.categoryId
                 ))

@@ -29,7 +29,7 @@ const EditUser = ({
   setShowPasswordInput,
   setUserData,
 }: UserAccountFormProps) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const router = useRouter();
   const [passwordError, setPasswordError] = useState<String>('');
 
@@ -69,9 +69,7 @@ const EditUser = ({
     validate: (values) => {
       const errors: { phoneNumber?: string } = {};
 
-      if (!values.phoneNumber) {
-        errors.phoneNumber = '전화번호를 입력해주세요.';
-      } else if (values.phoneNumber.replace(/\D/g, '').length !== 11) {
+      if (values.phoneNumber.replace(/\D/g, '').length !== 11) {
         errors.phoneNumber = '전화번호는 11자리 숫자여야 합니다.';
       }
 
@@ -230,11 +228,15 @@ const EditUser = ({
                   const formattedValue = formatPhoneNumber(e.target.value);
                   profileFormik.setFieldValue('phoneNumber', formattedValue);
                 }}
+                onBlur={profileFormik.handleBlur} // 필드가 포커스를 잃었을 때 `touched` 상태 업데이트
                 value={profileFormik.values.phoneNumber}
               />
-              {profileFormik.errors.phoneNumber && (
-                <div className="error">{profileFormik.errors.phoneNumber}</div>
-              )}
+              {profileFormik.touched.phoneNumber &&
+                profileFormik.errors.phoneNumber && (
+                  <div className="error">
+                    {profileFormik.errors.phoneNumber}
+                  </div>
+                )}
               {userData?.role === 'HOST' && (
                 <>
                   <label>은행명</label>

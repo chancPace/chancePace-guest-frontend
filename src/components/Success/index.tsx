@@ -42,7 +42,7 @@ const Success = () => {
             const bookingData = {
               startDate: Array.isArray(startDate)
                 ? startDate[0]
-                : startDate || '', 
+                : startDate || '',
               startTime: Array.isArray(startTime)
                 ? parseInt(startTime[0])
                 : parseInt(startTime || '0'),
@@ -54,12 +54,10 @@ const Success = () => {
                 ? parseInt(spaceId[0])
                 : parseInt(spaceId || '0'),
               paymentId,
-
             };
             await addBooking(bookingData);
-            const numericCouponId = Number(couponId);
-            if (!isNaN(numericCouponId)) {
-              // couponId가 유효한 숫자일 때만 실행
+            const numerCouponId = Number(couponId);
+            if (!isNaN(numerCouponId)) {
               try {
                 await UserCouponIsUsed(Number(couponId));
                 message.success('쿠폰이 성공적으로 사용되었습니다.');
@@ -91,7 +89,7 @@ const Success = () => {
     const fetchSpaceData = async () => {
       if (spaceId) {
         try {
-          const data = await getOneSpace(Number(spaceId)); 
+          const data = await getOneSpace(Number(spaceId));
           setSpaceData(data.data);
         } catch (error) {
           console.error('공간 데이터 로드 중 오류 발생:', error);
@@ -136,6 +134,3 @@ const Success = () => {
   );
 };
 export default Success;
-function getSpaceById(arg0: number) {
-  throw new Error('Function not implemented.');
-}

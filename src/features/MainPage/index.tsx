@@ -80,6 +80,7 @@ const MainPage = () => {
         setRecommendedSpace(
           availableSpace.sort(() => Math.random() - 0.5).slice(0, 8)
         );
+        //인기 장소 (예약 많은 순)
         setPopularSpace(
           availableSpace
             .sort(

@@ -53,15 +53,14 @@ const Payment = () => {
   );
 
   useEffect(() => {
+    //기본 금액 저장
     if (price) {
       const parsedPrice = Number(price);
-      setPriceState(parsedPrice); // 쿼리에서 가격 가져오기
+      setPriceState(parsedPrice);
       setFinalPrice(parsedPrice);
     }
-  }, [price]);
 
-  //유저가 예약하려는 공간불러오기
-  useEffect(() => {
+    //공간 불러오기
     const fetchSpaceData = async () => {
       try {
         const response = await getOneSpace(Number(spaceId));
@@ -71,35 +70,8 @@ const Payment = () => {
       }
     };
     fetchSpaceData();
-  }, [spaceId]);
 
-  const handlePayment = async () => {
-    if (!isWidgetLoaded) {
-      console.error('결제 위젯이 아직 로드되지 않았습니다');
-      return;
-    }
-
-    try {
-      const paymentWidget = paymentWidgetRef.current;
-
-      if (!paymentWidget) {
-        console.error('결제 위젯이 초기화되지 않았습니다');
-        return;
-      }
-
-      await paymentWidget.requestPayment({
-        orderId: `ORDER-${nanoid()}`,
-        orderName: 'test',
-        successUrl: `${window.location.origin}/success?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&userId=${userInfo?.id}&spaceId=${spaceId}&couponId=${selectedCoupon?.id}&discountAmount=${discountAmount}`, // 필요한 예약 데이터 추가
-        failUrl: `${window.location.origin}/fail`,
-      });
-    } catch (error) {
-      console.error('결제확인실패', error);
-    }
-  };
-
-  //유저 쿠폰 조회
-  useEffect(() => {
+    //쿠폰 불러오기
     const fetchCoupon = async () => {
       try {
         const coupon = await getUserAllCoupon(Number(userInfo?.id));
@@ -110,17 +82,17 @@ const Payment = () => {
       }
     };
     fetchCoupon();
-  }, [userInfo?.id]);
+  }, []);
 
   //쿠폰 선택시 금액 반영
   const handleCouponSelect = (couponId: number) => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
-
+    console.log(selected, '셀렉티드');
     if (selected) {
       const discount = selected.coupon.discountPrice;
       setDiscountAmount(discount); // 할인 금액 설정
-      setFinalPrice(priceState - discount); // 직접 할인 금액 적용
+      setFinalPrice(priceState - discount); // 할인금액을 뺀 실 결제금액
     } else {
       setDiscountAmount(0); // 할인 금액 초기화
       setFinalPrice(priceState); // 원래 가격으로 설정
@@ -156,12 +128,36 @@ const Payment = () => {
     }
   };
   //함수를 호출하여 결제 위젯 초기화
-
   useEffect(() => {
     if (clientKey) {
       initializePaymentWidget();
     }
   }, [clientKey, finalPrice]);
+
+  const handlePayment = async () => {
+    if (!isWidgetLoaded) {
+      console.error('결제 위젯이 아직 로드되지 않았습니다');
+      return;
+    }
+
+    try {
+      const paymentWidget = paymentWidgetRef.current;
+
+      if (!paymentWidget) {
+        console.error('결제 위젯이 초기화되지 않았습니다');
+        return;
+      }
+
+      await paymentWidget.requestPayment({
+        orderId: `ORDER-${nanoid()}`,
+        orderName: 'test',
+        successUrl: `${window.location.origin}/success?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&userId=${userInfo?.id}&spaceId=${spaceId}&couponId=${selectedCoupon?.id}&discountAmount=${discountAmount}`, // 필요한 예약 데이터 추가
+        failUrl: `${window.location.origin}/fail`,
+      });
+    } catch (error) {
+      console.error('결제확인실패', error);
+    }
+  };
 
   //환불 규정 모달
   const showModal = () => {
@@ -204,7 +200,7 @@ const Payment = () => {
           <Select
             placeholder="쿠폰을 선택하세요"
             onChange={handleCouponSelect}
-            value={selectedCoupon ? selectedCoupon.id : undefined}
+            value={selectedCoupon ? selectedCoupon.id : -1}
           >
             <Select.Option value={-1}>선택안함</Select.Option>
 
