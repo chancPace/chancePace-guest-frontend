@@ -78,7 +78,7 @@ const MainPage = () => {
         setNewSpace(availableSpace.slice(0, 8));
         //추천장소 설정 (랜덤)
         setRecommendedSpace(
-          availableSpace.sort(() => Math.random() - 0.5).slice(0, 8)
+          availableSpace.sort(() => Math.random() - 0.5).slice(0, 6)
         );
         //인기 장소 (예약 많은 순)
         setPopularSpace(
@@ -87,7 +87,7 @@ const MainPage = () => {
               (a: Space, b: Space) =>
                 (b.bookings?.length || 0) - (a.bookings?.length || 0)
             )
-            .slice(0, 8)
+            .slice(0, 6)
         );
       }
     };

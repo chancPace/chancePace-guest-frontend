@@ -29,15 +29,28 @@ export const ItemListStyled = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: center;
-      p {
+      > p {
+        width: 100%;
         margin-bottom: 5px;
+
         &:nth-of-type(1) {
           font-weight: bold;
           color: #363636;
+          display: -webkit-box; /* Flexbox와 유사하지만 멀티라인 지원 */
+          -webkit-line-clamp: 1; /* 표시할 최대 줄 수 (여기서는 1줄) */
+          -webkit-box-orient: vertical; /* 세로 방향으로 내용 배치 */
+          overflow: hidden; /* 넘치는 텍스트 숨김 */
+          text-overflow: ellipsis;
         }
         &:nth-of-type(2) {
           font-size: ${({ theme }) => theme.fontSizes.sm};
           color: gray;
+          overflow: hidden;
+          display: -webkit-box; /* Flexbox와 유사하지만 멀티라인 지원 */
+          -webkit-line-clamp: 1; /* 표시할 최대 줄 수 (여기서는 1줄) */
+          -webkit-box-orient: vertical; /* 세로 방향으로 내용 배치 */
+          overflow: hidden; /* 넘치는 텍스트 숨김 */
+          text-overflow: ellipsis;
         }
         &:nth-of-type(3) {
           font-size: ${({ theme }) => theme.fontSizes.sm};
