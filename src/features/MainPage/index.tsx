@@ -160,7 +160,7 @@ const MainPage = () => {
                 },
               }}
             >
-              {newSpace.map((x, i) => {
+              {recommendedSpace?.slice(0, 6).map((x, i) => {
                 return (
                   <SwiperSlide key={i}>
                     <TrendingSpot x={x} />

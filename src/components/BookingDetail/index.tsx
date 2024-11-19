@@ -54,21 +54,17 @@ const BookingDetail = () => {
       const errors: { cancelReason?: string } = {};
 
       if (!values.cancelReason) {
-        message.error('취소 사유를 입력해주세요.');
         errors.cancelReason = '취소사유를 입력해주세요';
       }
       return errors;
     },
     onSubmit: async (values) => {
       setIsLoading(true); // 로딩 시작
-
       try {
         const bookingId = id;
-        const cancelReason = '고객 요청에 따른 취소';
         //예약환불
-        await Refund(Number(bookingId), cancelReason);
+        await Refund(Number(bookingId), values.cancelReason);
         message.success('예약이 취소되었습니다');
-
         setIsModalVisible(false);
         router.push('/');
       } catch (error) {
@@ -191,7 +187,7 @@ const BookingDetail = () => {
       <Modal
         title="안내"
         visible={isModalVisible}
-        onOk={() => formik.handleSubmit()} // 명시적으로 호출
+        onOk={() => formik.handleSubmit()}
         onCancel={handleCancel}
         cancelText="닫기"
         okText={isLoading ? <Spin size="small" /> : '확인'}
@@ -206,6 +202,9 @@ const BookingDetail = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
+        {formik.errors.cancelReason && formik.touched.cancelReason && (
+          <div className="error">{formik.errors.cancelReason}</div>
+        )}
       </Modal>
     </BookingDetailStyled>
   );

@@ -20,7 +20,7 @@ const ReviewModal = ({
   onReviewSubmit,
 }: ReviewModalProps) => {
   if (!space) {
-    return null; // space가 없을 경우 아무것도 렌더링하지 않음
+    return null;
   }
   const [reviewComment, setReviewComment] = useState('');
   const [reviewRating, setReviewRating] = useState(5);

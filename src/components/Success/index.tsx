@@ -40,19 +40,11 @@ const Success = () => {
             const paymentId = paymentResult.data.id;
 
             const bookingData = {
-              startDate: Array.isArray(startDate)
-                ? startDate[0]
-                : startDate || '',
-              startTime: Array.isArray(startTime)
-                ? parseInt(startTime[0])
-                : parseInt(startTime || '0'),
-              endTime: Array.isArray(endTime)
-                ? parseInt(endTime[0])
-                : parseInt(endTime || '0'),
-              userId,
-              spaceId: Array.isArray(spaceId)
-                ? parseInt(spaceId[0])
-                : parseInt(spaceId || '0'),
+              startDate: String(startDate),
+              startTime: Number(startTime),
+              endTime: Number(endTime),
+              userId: Number(userId),
+              spaceId: Number(spaceId),
               paymentId,
             };
             await addBooking(bookingData);

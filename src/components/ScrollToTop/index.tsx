@@ -12,18 +12,10 @@ const ScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const showNotification = () => {
-    notification.info({
-      message: '알림',
-      description: '준비 중입니다.',
-      placement: 'topRight',
-      duration: 1,
-    });
-  };
 
   return (
     <ScrollToTopStyled>
-      <div className="kakao-icon" onClick={showNotification}>
+      <div className="kakao-icon">
         <a href="kakaoopen://join?l=sYLZ1JZg&r=EW%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fkakaoopen://join?l=sYLZ1JZg&r=EW%3Ahttp%3A%2F%2Flocalhost%3A3000%2F">
           <img src={kakao.src}></img>
         </a>

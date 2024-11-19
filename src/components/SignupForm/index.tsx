@@ -222,7 +222,7 @@ const SignupForm = () => {
           <Button
             htmlType="button"
             onClick={handleSendAuthCode}
-            disabled={!formik.values.email || isCodeSent || isLoading}
+            disabled={!formik.values.email || isLoading}
           >
             {isLoading ? <Spin size="small" /> : '인증받기'}
           </Button>
