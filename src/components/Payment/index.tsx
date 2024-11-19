@@ -29,8 +29,6 @@ const Payment = () => {
   const [coupons, setCoupons] = useState<UserCoupon[]>([]); // 쿠폰 데이터를 저장할 상태 추가
   //유저가 선택한 쿠폰
   const [selectedCoupon, setSelectedCoupon] = useState<UserCoupon | null>(null); // 선택한 쿠폰
-  //결제하려는 금액 (상세페이지에서 넘어온 금액)
-  const [priceState, setPriceState] = useState<number>(0); // 초기값 0으로 설정
   //쿠폰할인 반영된 최종 금액
   const [finalPrice, setFinalPrice] = useState<number>(0); // 최종 결제 금액 초기값도 0으로 설정
   //쿠폰 할인금액
@@ -51,13 +49,12 @@ const Payment = () => {
   localStorage.removeItem(
     decodeURIComponent('@payment-widget/previous-payment-method-id')
   );
+  const priceNumber = Number(price);
 
-  //기본 금액 저장
+  //최종결제 금액에 기본 금액 저장
   useEffect(() => {
     if (price) {
-      const parsedPrice = Number(price);
-      setPriceState(parsedPrice);
-      setFinalPrice(parsedPrice);
+      setFinalPrice(priceNumber);
     }
   }, [price]);
 
@@ -92,21 +89,21 @@ const Payment = () => {
   const handleCouponSelect = (couponId: number) => {
     const selected = coupons.find((coupon) => coupon.id === couponId) || null;
     setSelectedCoupon(selected);
-    console.log(selected, '셀렉티드');
     if (selected) {
       const discount = selected.coupon.discountPrice;
       setDiscountAmount(discount); // 할인 금액 설정
-      setFinalPrice(priceState - discount); // 할인금액을 뺀 실 결제금액
+      setFinalPrice(priceNumber - discount); // 할인금액을 뺀 실 결제금액
     } else {
       setDiscountAmount(0); // 할인 금액 초기화
-      setFinalPrice(priceState); // 원래 가격으로 설정
+      setFinalPrice(priceNumber); // 원래 가격으로 설정
     }
   };
 
   //결제 위젯 초기화
-
   //toss payments 결제 위젯을 로드하여 초기화
   const initializePaymentWidget = async () => {
+    console.log('initializePaymentWidget 호출됨');
+
     //환경 변수에서 클라이언트 키를 가져오지 못한 경우
     if (!clientKey) {
       console.error('클라이언트 키가 설정되지 않았습니다');
@@ -131,10 +128,10 @@ const Payment = () => {
       console.error('결제 위젯 로딩 중 오류가 발생함', error);
     }
   };
-  //함수를 호출하여 결제 위젯 초기화
+  // 함수를 호출하여 결제 위젯 초기화
   useEffect(() => {
     if (clientKey) {
-      initializePaymentWidget();
+      initializePaymentWidget(); // 초기 금액 설정
     }
   }, [clientKey, finalPrice]);
 
@@ -209,7 +206,7 @@ const Payment = () => {
             <Select.Option value={-1}>선택안함</Select.Option>
 
             {coupons?.map((x) => {
-              const isDisabled = priceState < x.coupon.discountPrice;
+              const isDisabled = priceNumber < x.coupon.discountPrice;
               return (
                 <Select.Option key={x.id} value={x.id} disabled={isDisabled}>
                   {x.coupon.couponName} |
@@ -259,7 +256,7 @@ const Payment = () => {
           <div className="reservation-pay">
             <p>
               <span>상품 가격</span>
-              {priceState.toLocaleString()}원
+              {priceNumber.toLocaleString()}원
             </p>
             {discountAmount > 0 && (
               <p>

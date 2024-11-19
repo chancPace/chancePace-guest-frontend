@@ -43,12 +43,17 @@ export const ItemDetailStyled = styled.div`
           background-color: #fec01f;
           border-radius: 30px;
           font-size: 14px;
+          color: white;
         }
       }
       .space-price {
         margin-top: 20px;
         font-size: 25px;
         font-weight: bold;
+        .price1 {
+          text-decoration: line-through;
+          color: gray;
+        }
       }
     }
   }

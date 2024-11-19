@@ -14,17 +14,14 @@ import { getOneSpace } from '@/pages/api/spaceApi';
 const ItemDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-
   //공간 저장
   const [space, setSpace] = useState<Space | null>(null);
-
   //리뷰저장
   const [reviews, setReviews] = useState<GetReviewData[]>([]);
   //리뷰 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
-
-  //리뷰 갯수 저장
+  //가격에 , 넣기
   const spacePrice = space?.spacePrice?.toLocaleString();
 
   //공간 데이터 가져오기
@@ -69,11 +66,12 @@ const ItemDetail = () => {
       });
   };
 
+  //페이지네이션
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const displayedReviews = reviews.slice(
+  const displayReviews = reviews.slice(
     (currentPage - 1) * reviewsPerPage,
     currentPage * reviewsPerPage
   );
@@ -94,7 +92,7 @@ const ItemDetail = () => {
             <p className="space-name">{space?.spaceName}</p>
             <p className="space-location">{space?.spaceLocation}</p>
             <div className="rate">
-              <FaStar style={{ color: '#000000' }} />
+              <FaStar style={{ color: 'white' }} />
               <p className="rate-number">
                 {space?.spaceRating}({reviews.length})
               </p>
@@ -104,7 +102,7 @@ const ItemDetail = () => {
           <div className="space-price">
             {space?.discount ? (
               <>
-                <span style={{ textDecoration: 'line-through', color: 'gray' }}>
+                <span className="price1">
                   {space?.spacePrice.toLocaleString()}원
                 </span>
                 &nbsp;→&nbsp;
@@ -178,8 +176,8 @@ const ItemDetail = () => {
               <div className="section">
                 <p className="section-title">리뷰</p>
 
-                {displayedReviews.length > 0 ? (
-                  displayedReviews.map((x, i) => <ReviewList x={x} key={i} />)
+                {displayReviews.length > 0 ? (
+                  displayReviews.map((x, i) => <ReviewList x={x} key={i} />)
                 ) : (
                   <p>리뷰가 없습니다</p>
                 )}

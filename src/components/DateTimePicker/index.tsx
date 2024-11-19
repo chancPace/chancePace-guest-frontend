@@ -18,13 +18,8 @@ interface DateTimePickerProps {
   price: number;
   spaceId: number;
   cleanTime: number;
-  onTimeSelect: (
-    totalTime: number,
-    startTime: number,
-    endTime: number,
-    selectedDate: string
-  ) => void;
-  onDateSelect?: (date: Date | null) => void;
+  onTimeSelect: (totalTime: number, startTime: number, endTime: number) => void;
+  onDateSelect?: (date: string) => void;
 }
 const DateTimePicker = ({
   businessEndTime,
@@ -46,31 +41,23 @@ const DateTimePicker = ({
     { startTime: number; endTime: number }[]
   >([]);
 
-  const today = new Date();
-  const currentHour = new Date().getHours();
-
   //업체의 오픈시간부터 마감시간까지의 시간대를 배열로 만듬
   const timeSlots = Array.from(
     { length: businessEndTime - businessStartTime },
     (_, i) => businessStartTime + i
   );
 
-  //겹치는 시간 확인 함수
+  //예약된 시간과 겹치는지 확인
   const isOverlap = (
     selectedStartIndex: number,
     selectedEndIndex: number,
     bookings: { startTime: number; endTime: number }[]
-  ): boolean => {
-    return bookings.some((booking) => {
-      const bookingStartIndex = booking.startTime - businessStartTime;
-      const bookingEndIndex = booking.endTime - businessStartTime;
-      // 겹치는 조건: 선택된 범위와 예약된 범위가 서로 교차하는지 확인
-      return (
-        selectedStartIndex <= bookingEndIndex &&
-        selectedEndIndex >= bookingStartIndex
-      );
-    });
-  };
+  ): boolean =>
+    bookings.some(
+      (booking) =>
+        selectedStartIndex <= booking.endTime - businessStartTime &&
+        selectedEndIndex >= booking.startTime - businessStartTime
+    );
 
   //시간 슬롯 클릭이벤트
   const handleTimeClick = (index: number) => {
@@ -81,11 +68,11 @@ const DateTimePicker = ({
     const selectedStartIndex = startTime !== null ? startTime : index;
     const selectedEndIndex = startTime !== null ? index : index;
 
-    // 예약된 시간과 겹치는지 확인
     if (isOverlap(selectedStartIndex, selectedEndIndex, bookingTime)) {
       message.warning('선택한 시간이 예약된 시간과 겹칩니다.');
       return;
     }
+
     if (startTime === null) {
       // 첫 번째 클릭 시: startTime만 설정하고, endTime은 null로 둠
       setStartTime(index);
@@ -131,7 +118,6 @@ const DateTimePicker = ({
   const useStartTime = businessStartTime + (startTime ?? 0);
 
   //종료시간
-  //기본값은 영업시작시간
   //endTime이 있을경우 인덱스 + 1값
   const useEndTime =
     endTime !== null
@@ -142,8 +128,7 @@ const DateTimePicker = ({
 
   useEffect(() => {
     if (startTime !== null && selectedDate !== null) {
-      const formattedDate = format(selectedDate, 'yyyy-MM-dd'); // 날짜 포맷
-      onTimeSelect(useTime, useStartTime, useEndTime, formattedDate);
+      onTimeSelect(useTime, useStartTime, useEndTime);
     }
   }, [
     startTime,
@@ -174,15 +159,14 @@ const DateTimePicker = ({
   }, [selectedDate, spaceId]);
 
   //예약된 시간과 현재 슬롯 비교하기
-  const isBooking = (index: number) => {
-    return bookingTime.some((booking) => {
+  //boolean값으로 css설정
+  const isBooking = (index: number) =>
+    bookingTime.some((booking) => {
       const startIndex = booking.startTime - businessStartTime;
       const endIndex =
         startIndex + (booking.endTime - booking.startTime) - 1 + cleanTime;
-      // 현재 시간 슬롯(index)이 예약 범위에 포함되는지 확인
       return index >= startIndex && index <= endIndex;
     });
-  };
 
   //Am,Pm표시하기
   const getAmPm = (time: number) => {
@@ -191,25 +175,28 @@ const DateTimePicker = ({
     return '';
   };
 
+  const today = new Date();
+  const currentHour = new Date().getHours();
   //지난시간 확인하는법
   const isPastTime = (time: number) => {
     if (!selectedDate) return false;
     const isToday =
       format(selectedDate, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd');
+    //boolean값으로 css설정
     return isToday && time <= currentHour;
   };
 
-  //날짜 선택할때
+  //날짜 선택
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-
     // 시간 초기화
     setStartTime(null);
     setEndTime(null);
+    const formattedDate = date ? format(date, 'yyyy-MM-dd') : null;
 
     // 부모로부터 받은 onDateSelect 콜백 호출
-    if (onDateSelect) {
-      onDateSelect(date);
+    if (onDateSelect && formattedDate) {
+      onDateSelect(formattedDate);
     }
   };
 

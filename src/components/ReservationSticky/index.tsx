@@ -8,7 +8,6 @@ import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Button, Input, message } from 'antd';
-import { FaDiceSix } from 'react-icons/fa';
 import { logout } from '@/redux/slices/userSlice';
 
 interface PaymentStickyProps {
@@ -37,9 +36,9 @@ const ReservationSticky = ({
 
   const router = useRouter();
   //총 이용시간
-  const [totalTime, setTotalTime] = useState<number>(0); // 초기값 0으로 설정
+  const [totalTime, setTotalTime] = useState<number>(0);
   //총 이용금액
-  const [totalPrice, setTotalPrice] = useState<number>(0); // 초기값 0으로 설정
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   //예약일
   const [startDate, setStartDate] = useState<string | null>(null);
   //시작 시간
@@ -68,6 +67,7 @@ const ReservationSticky = ({
     }
   };
 
+  //선택된 시간 값 가져와서 정보 저장
   const handleTimeSelect = (
     totalTime: number,
     startTime: number,
@@ -76,30 +76,19 @@ const ReservationSticky = ({
     setTotalTime(totalTime);
     setSelectedStartTime(startTime);
     setSelectedEndTime(endTime);
-    if (!startDate) {
-      const calculatedTotal = discountPrice * totalTime;
-      setTotalPrice(calculatedTotal);
-    }
+    setTotalPrice(discountPrice * totalTime);
   };
 
-  //시작시간과 종료시간이 설정된경우
-  useEffect(() => {
-    if (selectedStartTime !== null && selectedEndTime !== null) {
-      const calculatedTotal = discountPrice * totalTime;
-      setTotalPrice(calculatedTotal);
-    } else {
-      setTotalPrice(0);
-    }
-  }, [totalTime, selectedStartTime, selectedEndTime]);
-
-  const handleDateChange = (newDate: Date | null) => {
-    setStartDate(newDate ? format(newDate, 'yyyy-MM-dd') : null);
+  //선택된 날짜 값 가져와서 정보 저장 및 시간 금액 초기화
+  const handleDateChange = (newDate: string) => {
+    setStartDate(newDate);
     setSelectedStartTime(null);
     setSelectedEndTime(null);
     setTotalTime(0);
     setTotalPrice(0);
   };
 
+  //결제시 tosspayment에 보낼 orderId생성
   const generateOrderId = () => {
     const today = new Date();
     const formattedDate = `${today.getFullYear()}${String(
@@ -108,19 +97,22 @@ const ReservationSticky = ({
     return `ORDER-${formattedDate}-${nanoid()}`;
   };
 
+  //결제하기 버튼
   const handlePayment = () => {
     const token = Cookies.get('token');
     const orderId = generateOrderId();
 
-    // 쿠키가 없고 로그인 상태라면 로그아웃 처리
+    //로그인 유효성검사
     if (!token) {
       dispatch(logout());
       router.replace('/login');
       return;
     }
 
+    //이름과 전화번호 있는지 유효성검사
     if (
       userInfo &&
+      //이름에는 숫자나 특수문자 들어갈수없음
       (!/^[^\d]+$/.test(userInfo.userName) || !userInfo.phoneNumber)
     ) {
       message.warning('이름과 전화번호를 입력해 주세요.');
@@ -128,6 +120,7 @@ const ReservationSticky = ({
       return;
     }
 
+    //pay페이지로 이동 
     router.push({
       pathname: '/pay',
       query: {
