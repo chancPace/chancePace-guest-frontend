@@ -76,19 +76,21 @@ const MainPage = () => {
         );
         //새로운 장소 설정
         setNewSpace(availableSpace.slice(0, 8));
+        console.log(newSpace, '새로운장소');
+
         //추천장소 설정 (랜덤)
-        setRecommendedSpace(
-          availableSpace.sort(() => Math.random() - 0.5).slice(0, 6)
-        );
+        const recommendedSpace = [...availableSpace]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 6);
+        setRecommendedSpace(recommendedSpace);
         //인기 장소 (예약 많은 순)
-        setPopularSpace(
-          availableSpace
-            .sort(
-              (a: Space, b: Space) =>
-                (b.bookings?.length || 0) - (a.bookings?.length || 0)
-            )
-            .slice(0, 6)
-        );
+        const popularSpace = [...availableSpace]
+          .sort(
+            (a: Space, b: Space) =>
+              (b.bookings?.length || 0) - (a.bookings?.length || 0)
+          )
+          .slice(0, 6);
+        setPopularSpace(popularSpace);
       }
     };
     fetchSpaces();
