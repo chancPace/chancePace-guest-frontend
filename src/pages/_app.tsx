@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>🏠ChancePaceGuest</title>
+        <title>CHANS'PACE</title>
       </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
