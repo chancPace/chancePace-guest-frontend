@@ -32,7 +32,7 @@ const MyPage = () => {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(true);
   const [userBooking, setUserBooking] = useState<MyBookingData[]>([]);
-  const [userReviews, setUserReviews] = useState<GetReviewData[]>([]); // 리뷰 데이터 상태 추가
+  const [userReviews, setUserReviews] = useState<GetReviewData[]>([]); 
   const [wishList, setWishList] = useState<Wishlist[]>([]);
   const [isBookingFetched, setIsBookingFetched] = useState(false);
   const [isReviewFetched, setIsReviewFetched] = useState(false);
@@ -46,7 +46,7 @@ const MyPage = () => {
   const [currentBookingPage, setCurrentBookingPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [currentWishPage, setCurrentWishPage] = useState(1);
-  const pageSize = 5; // 한 페이지에 표시할 항목 수
+  const pageSize = 5; 
 
   //쿠키 검사해서 없으면 리덕스 날리기
   useEffect(() => {

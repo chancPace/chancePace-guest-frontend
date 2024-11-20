@@ -41,16 +41,12 @@ const Inquiry = () => {
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
-      console.log(typeof values.phoneNumber, '밸류즈');
-
       if (type === '') {
         notification.warning({
           message: '회원 유형을 선택해 주세요!',
         });
         return;
       }
-
-      // 문의 클릭시 엑시오스 넣기
       try {
         const inquiryData = {
           ...values,
@@ -79,10 +75,10 @@ const Inquiry = () => {
 
   useEffect(() => {
     if (userInfo?.email && userInfo.email !== '') {
-      inquiryFormik.setFieldValue('email', userInfo.email); // 이메일 값 설정
-      setType('MEMBER'); // 회원 유형 자동 선택
+      inquiryFormik.setFieldValue('email', userInfo.email); 
+      setType('MEMBER'); 
     } else {
-      setType('NONMEMBER'); // 비회원 자동 선택
+      setType('NONMEMBER'); 
     }
   }, [userInfo]);
 
