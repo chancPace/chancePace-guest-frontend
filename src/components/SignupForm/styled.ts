@@ -46,16 +46,16 @@ export const SignupFormStyled = styled.div`
       width: 100%;
       background-color: ${({ theme }) => theme.color.main};
     }
+    .formLogo {
+      width: 100%;
+      height: auto;
+      margin-bottom: 40px;
+    }
   }
   .styled__CheckboxGroupStyled-sc-1ff6502c-0 {
     margin-top: 20px;
   }
-  .formLogo {
-    font-size: ${({ theme }) => theme.fontSizes.xxl};
-    text-align: center;
-    color: lightgray;
-    margin-bottom: 25px;
-  }
+
   @media screen and (max-width: 480px) {
     .form {
       padding: 10px;

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { FiUser } from 'react-icons/fi';
+import Image from 'next/image';
+import logo from '../../assets/image/1.png';
 
 const Header = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
@@ -14,7 +16,13 @@ const Header = () => {
     <HeaderStyled>
       <nav>
         <Link href="/" passHref>
-          <span className="logo">ChancePace</span>
+          <Image
+            src={logo}
+            alt="Logo"
+            className="logo"
+            width={80}
+            height={50}
+          />
         </Link>
 
         <div className="userBar">

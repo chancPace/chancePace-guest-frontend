@@ -12,6 +12,8 @@ import { useFormik } from 'formik';
 import { sendAuthNumber } from '@/pages/api/nodemailerApi';
 import Link from 'next/link';
 import { ErrorResponse } from '@/types';
+import Image from 'next/image';
+import logo from '../../assets/image/2.png';
 
 interface CheckBoxItem {
   value: string;
@@ -206,7 +208,7 @@ const SignupForm = () => {
     <SignupFormStyled>
       <form className="form" onSubmit={formik.handleSubmit}>
         <Link href={'/'}>
-          <p className="formLogo">ChancePace</p>
+          <Image src={logo} alt="Logo" className="formLogo" />
         </Link>
         <div className="authentication-form">
           <Input

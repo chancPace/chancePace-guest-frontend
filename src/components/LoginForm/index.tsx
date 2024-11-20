@@ -11,6 +11,8 @@ import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import Buttons from '../Buttons';
 import { ErrorResponse } from '@/types';
+import Image from 'next/image';
+import logo from '../../assets/image/2.png';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -71,7 +73,7 @@ const LoginForm = () => {
     <LoginStyled>
       <form onSubmit={formik.handleSubmit} className="form">
         <Link href={'/'}>
-          <p className="formLogo">ChancePace</p>
+          <Image src={logo} alt="Logo" className="formLogo" />
         </Link>
         <Input
           name="email"

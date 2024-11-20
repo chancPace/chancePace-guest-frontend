@@ -48,10 +48,9 @@ export const LoginStyled = styled.div`
     z-index: 10;
   }
   .formLogo {
-    font-size: ${({ theme }) => theme.fontSizes.xxl};
-    text-align: center;
-    color: lightgray;
+    width: 100%;
     margin-bottom: 40px;
+    height: auto;
   }
 
   @media screen and (max-width: 550px) {
