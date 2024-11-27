@@ -44,7 +44,7 @@ const BookingDetail = () => {
   //startDate = today 이면 취소하기 버튼 안보이게하기
   const today = new Date();
   const isDisabled = bookingDetails
-    ? new Date(bookingDetails.startDate) >= today
+    ? new Date(bookingDetails.startDate) <= today
     : true;
   const formik = useFormik({
     initialValues: {
