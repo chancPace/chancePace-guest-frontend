@@ -43,9 +43,9 @@ const BookingDetail = () => {
 
   //startDate = today 이면 취소하기 버튼 안보이게하기
   const today = new Date();
-  const isTodayBooking =
-    bookingDetails?.startDate === today.toISOString().split('T')[0];
-
+  const isDisabled = bookingDetails
+    ? new Date(bookingDetails.startDate) >= today
+    : true;
   const formik = useFormik({
     initialValues: {
       cancelReason: '',
@@ -177,7 +177,7 @@ const BookingDetail = () => {
         </div>
       )}
       <div className="button-box">
-        {bookingDetails?.bookingStatus !== 'CANCELLED' && !isTodayBooking && (
+        {bookingDetails?.bookingStatus !== 'CANCELLED' && !isDisabled && (
           <button onClick={showModal}>취소하기</button>
         )}
         <Link href="/" passHref>

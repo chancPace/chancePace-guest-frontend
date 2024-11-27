@@ -25,7 +25,7 @@ export const ImgSectionStyled = styled.div`
     .swiper {
       width: 100%;
       height: 100%;
-      z-index: -10;
+      z-index: 10;
     }
     .swiper-slide {
       width: 100%;

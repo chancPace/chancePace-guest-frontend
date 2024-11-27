@@ -3,7 +3,10 @@ import styled from 'styled-components';
 export const DateTimePickerStyled = styled.div`
   width: 100%;
   .react-datepicker-popper {
-    z-index: 90000;
+    z-index: 90000 !important;
+  }
+  .contents {
+    z-index: 90000 !important;
   }
   .custom-datepicker {
     background-color: white;
@@ -22,7 +25,7 @@ export const DateTimePickerStyled = styled.div`
     border: 2px solid #f0f0f0; /* 테두리 색상 */
     padding: 10px;
     font-family: Arial, sans-serif; /* 폰트 */
-    z-index: 1000;
+    z-index: 90000 !important;
   }
   .react-datepicker__triangle {
     display: none;
