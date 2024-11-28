@@ -76,7 +76,7 @@ const MainPage = () => {
         );
         //새로운 장소 설정
         setNewSpace(availableSpace.slice(0, 8));
-        console.log(newSpace, '새로운장소');
+        // console.log(newSpace, '새로운장소');
 
         //추천장소 설정 (랜덤)
         const recommendedSpace = [...availableSpace]

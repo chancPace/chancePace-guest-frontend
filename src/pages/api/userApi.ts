@@ -23,7 +23,7 @@ export const postSignup = async (userData: SignupData) => {
 export const postLogin = async (userData: LoginData) => {
   try {
     const response = await axios.post(`${API_URL}/login`, userData);
-    console.log('Server Response:', response.status, response.data);
+    // console.log('Server Response:', response.status, response.data);
 
     return response.data;
   } catch (error) {

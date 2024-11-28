@@ -102,7 +102,7 @@ const Payment = () => {
   //결제 위젯 초기화
   //toss payments 결제 위젯을 로드하여 초기화
   const initializePaymentWidget = async () => {
-    console.log('initializePaymentWidget 호출됨');
+    // console.log('initializePaymentWidget 호출됨');
 
     //환경 변수에서 클라이언트 키를 가져오지 못한 경우
     if (!clientKey) {
