@@ -252,6 +252,7 @@ export interface inquiryData {
   title: string;
   contents: string;
   memberType: string;
+  phoneNumber: string;
 }
 
 export interface ErrorResponse {
