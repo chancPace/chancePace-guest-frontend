@@ -23,8 +23,8 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'gksthddl43@daum.net',
-      password: 'password1234!',
+      email: '',
+      password: '',
     },
     onSubmit: async (values) => {
       const { email, password } = values;

@@ -19,12 +19,13 @@ interface ItemListProps {
   x: Space;
 }
 const ItemList = ({ x }: ItemListProps) => {
+  const sortedImages = x.images.sort((a, b) => a.id - b.id);
+  console.log(sortedImages);
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [wishlist, setWishlist] = useState<Wishlist[]>([]);
   const [reviewCount, setReviewCount] = useState<number>(0);
   const userId = useSelector((state: RootState) => state.user.userInfo?.id);
-
 
   //해당 공간의 리뷰 갯수 가져오기
   useEffect(() => {
@@ -93,11 +94,11 @@ const ItemList = ({ x }: ItemListProps) => {
 
   return (
     <ItemListStyled onClick={handleClick}>
-      {x && x.images ? (
+      {sortedImages ? (
         <div className="itemImg">
           <img
-            src={x.images[0]?.imageUrl}
-            alt={x.images[0]?.imageUrl}
+            src={sortedImages[0]?.imageUrl}
+            alt={sortedImages[0]?.imageUrl}
             className="img"
           ></img>
         </div>
