@@ -75,7 +75,6 @@ const ItemDetail = () => {
     (currentPage - 1) * reviewsPerPage,
     currentPage * reviewsPerPage
   );
-console.log(space?.images,'스페이스이미지')
   return (
     <ItemDetailStyled>
       <div className="detail-top">

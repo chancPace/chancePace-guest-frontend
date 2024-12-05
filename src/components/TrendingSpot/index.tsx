@@ -5,13 +5,17 @@ interface TrendingSpotProps {
   x: Space;
 }
 const TrendingSpot = ({ x }: TrendingSpotProps) => {
+  const sortedImages = x.images.sort((a, b) => a.id - b.id);
   const router = useRouter();
   const handleClick = () => {
     router.push(`/spacedetail/${x.id}`);
   };
   return (
     <TrendingSpotStyled onClick={handleClick}>
-      <img src={x.images[0]?.imageUrl} alt={x.images[0]?.imageUrl}></img>
+      <img
+        src={sortedImages[0]?.imageUrl}
+        alt={sortedImages[0]?.imageUrl}
+      ></img>
       <div className="trandingSpotText">
         <p>{x.spaceName}</p>
         <p>{x.spaceLocation}</p>

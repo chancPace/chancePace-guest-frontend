@@ -20,7 +20,6 @@ interface ItemListProps {
 }
 const ItemList = ({ x }: ItemListProps) => {
   const sortedImages = x.images.sort((a, b) => a.id - b.id);
-  console.log(sortedImages);
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [wishlist, setWishlist] = useState<Wishlist[]>([]);
